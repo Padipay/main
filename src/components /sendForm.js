@@ -137,8 +137,8 @@ function SendForm({type, labelOne, labelTwo}) {
                     </select>
                     {country === 'ngn' && <img src={nig} alt="btc" className="select-token-image"/>}
                 </div>
-                {errors.receive && <p className="errors ms-lg-5 ms-sm-3 mt-3">{errors.receive?.message}</p>}
-                <div className="conversion ms-5">
+                {errors.receive && <p className="errors ms-lg-3 ms-sm-3 mt-3">{errors.receive?.message}</p>}
+                <div className="conversion">
                     <p>1 BTC = 10,000 NGN</p>
                 </div>
                 <div className="homepage-seperator"></div>
