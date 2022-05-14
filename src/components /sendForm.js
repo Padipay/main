@@ -12,12 +12,15 @@ import * as yup from "yup";
 import { TransferContext } from "../contextApi/TransferContext";
 
 const schema  = yup.object({
-    receive: yup.string("Enter a amount to send")
-    .required("Please enter an amount to send")
-    .typeError("Please enter an amount to send")
+    receive: yup.string("Enter an amount to receive")
+    .required("Please enter an amount receive")
+    .typeError("Please enter an amount receive")
     .test("receive amount", "Minimum amount to send is 500 NGN", (val) => {
         return String(val).replace(/,/g, '') >= 500
-    })
+    }),
+    send: yup.string("Enter an amount to send")
+    .required("Please enter an amount send")
+    .typeError("Please enter an amount send")
 }).required();
 
 function SendForm({type, labelOne, labelTwo}) {
@@ -45,21 +48,32 @@ function SendForm({type, labelOne, labelTwo}) {
         if(value) {
             const formattedValue = (Number(value.replace(/\D/g, '')) || '').toLocaleString();
             setReceive(formattedValue);
-            setReceiveAmount(formattedValue);
+            // setReceiveAmount(formattedValue);
 
             setSend(String(receive).replace(/,/g, '') / 10000)
-            setSendAmount(String(receive).replace(/,/g, '') / 10000);
+            // setSendAmount(String(receive).replace(/,/g, '') / 10000);
         }else {
             setReceive('')
+            setSend('')
         }
         // setReceive(e.target.value)
     };
 
     const handleSend = (e) => {
-        setSend(e.target.value)
-        // setReceive(send * 10000)
-        setSendAmount(e.target.value);
-        setSendAmount(e.target.value);
+        const { value } = e.target;
+        if(value) {
+            const formattedValue = (Number(value.replace(/\D/g, '')) || '').toLocaleString();
+            setSend(formattedValue);
+            setReceive(String(send).replace(/,/g, '') * 10000)
+        }else {
+            setSend('')
+            setReceive('')
+        }
+        
+        // setSend(e.target.value)
+        // // setReceive(send * 10000)
+        // setSendAmount(e.target.value);
+        // setSendAmount(e.target.value);
     };
 
     const handleSwitch = () => {
@@ -96,12 +110,12 @@ function SendForm({type, labelOne, labelTwo}) {
                     <label className="label-send">{labelOne}</label>
                     <input 
                         type="text" 
-                        placeholder="0.005"
-                        {...register("send", { required: true })}
+                        placeholder="0.0001"
+                        {...register("send")}
                         className="input-amount" 
                         value={send}
                         onChange={handleSend}
-                    /> 
+                    />
                     <select 
                         {...register("token")}
                         defaultValue="BTC"
@@ -116,7 +130,7 @@ function SendForm({type, labelOne, labelTwo}) {
                     {token === 'usdt' && <img src={usdt} alt="usdt" className="select-token-image"/>}
                     {token === 'eth' && <img src={eth} alt="eth" className="select-token-image"/>}
                 </div>
-                { errors.send && <p className="errors ms-lg-5 ms-sm-3 mt-3">Enter an amount greater than 0</p>}
+                { errors.send && <p className="errors mt-3">{errors.send?.message}</p>}
                 <div className="input-border">
                     <label className="label-send">{labelTwo}</label>
                     <input 
@@ -137,7 +151,7 @@ function SendForm({type, labelOne, labelTwo}) {
                     </select>
                     {country === 'ngn' && <img src={nig} alt="btc" className="select-token-image"/>}
                 </div>
-                {errors.receive && <p className="errors ms-lg-3 ms-sm-3 mt-3">{errors.receive?.message}</p>}
+                {errors.receive && <p className="errors">{errors.receive?.message}</p>}
                 <div className="conversion">
                     <p>1 BTC = 10,000 NGN</p>
                 </div>

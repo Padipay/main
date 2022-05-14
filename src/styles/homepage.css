@@ -135,7 +135,7 @@
 }
 @media (max-width: 557px) {
     .homepage .input-amount {
-        max-width: 41%;
+        max-width: 44%;
     }
 }
 
@@ -159,7 +159,9 @@
 .select-token-image {
     width: 25px;
     height: 25px;
-    margin: -10px;
+    /* margin: -10px; */
+    margin-top: -9px;
+    margin-left: -5px;
     position: absolute;
 }
 .select-country-image {
@@ -354,4 +356,5 @@ input[type=number] {
     color: rgb(220, 53, 69);
     font-weight: 600;
     opacity: 1;
+    margin-left: 30px;
 }
