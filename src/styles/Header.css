@@ -1,0 +1,53 @@
+.header-nav {
+    padding-top: 40px;
+    padding-left: 80px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0px;
+    border-bottom: 1px solid #D5E2F4;
+  }
+  .logo{
+    margin-right: 350px;
+    margin-top: 10px;
+  }
+
+.info {
+  border-left: 1px solid #D5E2F4;
+  padding-left: 80px;
+}
+.nav-info{
+  margin-left: 0px;
+  font-weight:bold;
+}
+.create-btn{
+  margin-top: 5px;
+}
+.btn-outline-primary {
+  color: #003399;
+  border-color: #003399;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 26px;
+  text-align: center;
+}
+
+.second-nav .fancy-toggler.navbar-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='blue' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.second-nav .fancy-toggler.navbar-toggler {
+  border-color: #003399;
+}
+
+.fancy-toggler.navbar-toggler:focus {
+  outline-color: white;
+}
+
+.fancy-toggler.navbar-toggler:active {
+  outline-color: white;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+} 

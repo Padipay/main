@@ -1,0 +1,84 @@
+.main-content{
+padding: 20px;
+margin-left: 80px;
+margin-top: 40px;
+}
+
+@media (max-width: 978px) {
+    .main-content {
+      margin-left: 0px;
+    }
+}
+.send-form{
+    width: auto;
+    height: 20px;
+    background-color: #FFFF;
+    box-sizing: border-box;
+    box-shadow: 0px 23px 44px rgba(176, 183, 195, 0.14);
+    border-radius: 8px;
+    padding-top: 40px;
+}
+.input-border {
+    width: 400px;
+    height: 80px;
+    border: 1px solid #E2E4E8;
+    box-sizing: border-box;
+    border-radius: 12px;
+    margin: 0 auto;
+    margin-bottom: 30px; 
+}
+.input-border:focus-within {
+    border-color: #003399;
+    box-shadow: rgb(0 181 233 / 35%) 0px 0px 0px 2px;
+    border: 1px solid #003399;
+}
+.input-amount {
+    margin-left: 10px;
+    width: 280px;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    font-size: 1.5rem;
+    appearance: none;
+    
+}
+.label-send {
+    font-size: 13px;
+    color: #6C7384;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 300px;
+}
+.select-token{
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    position: absolute;
+    margin-top: 4px;
+}
+.select-destination {
+    width: 380px;
+    margin-left: 5px;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 4px;
+}
+.conversion {
+    background-color: #E7F8FD;
+    width: fit-content;
+    margin-left: 40px;
+    margin-top: -20px;
+    border-radius: 8px;  
+}
+.send-content .content{
+    width: 464px;
+    height: auto;
+    background-color: #FFFF;
+    box-sizing: border-box;
+    box-shadow: 0px 23px 44px rgba(176, 183, 195, 0.14);
+    border-radius: 8px;
+    padding-top: 0px;
+}

@@ -1,0 +1,81 @@
+.modal-content {
+    background-color: #000624; 
+    border: 1px solid rgba(0, 92, 255, 0.1);
+    box-sizing: border-box;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.04);
+    border-radius: 16px;
+    width: 400px;
+    height: 630px;
+    margin: 0 auto;
+}
+
+.modal-heading{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #65697B;
+    margin-top: 10px;
+}
+
+.modal-heading p {
+    color: white;
+}
+
+.modal-info p {
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
+    color: white;
+}
+.barcode{
+    padding-left: 80px;
+}
+.barcode img {
+    margin: 0 auto;
+    height: 200px;
+    width: 200px;
+}
+
+.amount-due p{
+    color: white;
+    margin-left: 15px;
+    font-weight: 700;
+    font-size: large;
+}
+
+.address p{
+    color: white;
+    margin-left: 30px;
+}
+.address-details{
+    display: flex;
+    justify-content: space-between;
+    width: 320px;
+    height: 48px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+.address-details p{
+    color: white;
+    padding: 10px;
+    font-weight: 700;
+    font-size: 14px;
+}
+.cancel p {
+    color: white;
+    text-align: center;
+    margin-top: 30px;
+    font-weight: 700;
+}
+.logo-bottom{
+    margin-top: 30px;
+    padding-left: 150px;
+}
+
+.timer{
+    color: rgb(0, 204, 255);
+    font-weight: 700;
+    font-size: larger;
+    margin-right: 20px;
+
+}

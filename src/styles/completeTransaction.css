@@ -1,0 +1,25 @@
+.steps-details {
+    margin-left: 20px;
+}
+
+.steps-details p {
+    width: 384px;
+    left: 0px;
+    top: calc(50% - 192px/2);
+    
+    font-style: normal;
+    font-weight:500;
+    font-size: 14px;
+    /* or 171%
+     */
+    
+    letter-spacing: -0.4px;
+    
+    /* Neutral/3 */
+    
+    color: #6C7384;
+}
+
+.details-content {
+    height: auto;
+}

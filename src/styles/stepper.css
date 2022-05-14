@@ -1,0 +1,42 @@
+.progress{
+    height: 270px;
+    width: 2px;
+    background-color: rgba(0, 51, 153, 0.3);
+    /* border-left: 2px solid rgba(0, 51, 153, 0.3); */
+}
+.progress .step {
+    height: 30%;
+    width: 2px;
+    background-color: #003399;
+}
+
+.item-list{
+    /* border-left: 2px solid rgba(0, 51, 153, 0.3); */
+    height: 50px;
+}
+.item-list-active {
+    /* border-left: 2px solid #003399; */
+    height: 50px;
+}
+.item-list-active p{
+    margin-left: 20px;
+    padding-top: 10px;
+    color: #000015;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.item-list p {
+    margin-left: 20px;
+    padding-top: 10px;
+    color: #000015;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+.link {
+    text-decoration: none;
+}

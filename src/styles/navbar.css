@@ -1,0 +1,34 @@
+.navbar {
+    border-bottom: none;
+    padding-top: 40px;
+    padding-left: 80px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0px;
+}
+@media (max-width: 768px) {
+    .navbar {
+      padding-left:0;
+    }
+}
+.fancy-toggler.navbar-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+  
+  .fancy-toggler.navbar-toggler {
+    border-color: white
+  }
+  
+  .fancy-toggler.navbar-toggler:focus {
+    outline-color: white;
+  }
+  
+  .fancy-toggler.navbar-toggler:active {
+    outline-color: white;
+  }
+  
+  .navbar-toggler:focus {
+      box-shadow: none;
+  } 
+  
+  
