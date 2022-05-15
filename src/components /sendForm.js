@@ -159,10 +159,10 @@ function SendForm({type, labelOne, labelTwo}) {
                 {type === 'transfer' ? 
                 <div className="input-border">
                     <label className="label-send">Destination</label>
-                    {country === 'ngn' && <img src={nig} alt="btc" className="select-country-image"/>}
                     <select name="destination" id="" className="select-destination" onChange={handleCountry}>
                         <option value="ngn">NGN</option>
                     </select>
+                    <img src={nig} alt="btc" className="select-country-image"/>
                 </div> : null }
                 <div className="col text-center homepage-send-btn mb-4">
                     <button type="submit" className="btn btn-primary btn-lg">Continue</button>
