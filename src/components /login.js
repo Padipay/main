@@ -30,7 +30,7 @@ function Login() {
                     </Link>
                 </div>
                 <div className="send-btn">
-                    <Link to="/send">
+                    <Link to="/dashboard">
                         <button type="submit" className="btn btn-primary btn-lg mb-5 mt-3">Sign in</button>
                     </Link>
                 </div>

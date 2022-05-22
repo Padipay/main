@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { MdSwapVert } from "react-icons/md";
 import '../styles/homepage.css';
 import btc from '../images/bitcoin-btc-logo.png';
@@ -6,10 +6,12 @@ import eth from '../images/ethereum-eth-logo.png';
 import usdt from '../images/tether-usdt-logo.png';
 import nig from '../images/nigeria.png';
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { TransferContext } from "../contextApi/TransferContext";
+import firebase from '../firebase/firebase';
+import NumberFormat from 'react-number-format';
 
 const schema  = yup.object({
     receive: yup.string("Enter an amount to receive")
@@ -24,76 +26,112 @@ const schema  = yup.object({
 }).required();
 
 function SendForm({type, labelOne, labelTwo}) {
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(schema)
-
+    const { control, register, handleSubmit, setValue, getValues, formState: { errors } } = useForm({
+        resolver: yupResolver(schema),
+        mode: "all",
+        // defaultValues: {
+        //     send: 0.0001,
+        //     receive: 500
+        // }
     });
-    const [token, setToken ] = useState('btc');
+    const [token, setToken ] = useState('BTC');
     const [country, setCountry ] = useState('ngn');
-    const [receive, setReceive ] = useState('');
-    const [send, setSend ] = useState('');
+    const [receiveAmount, setReceive ] = useState('');
+    const [sendAmount, setSend ] = useState('');
+    const [conversionRates, setConversionRates] = useState({
+        BTC: 0,
+        USDT: 0,
+        ETH: 0
+    })
 
     const navigate = useNavigate();
 
     const handleToken = (e) => {
         setToken(e.target.value);
-        setTokenValue(e.target.value);
     };
     const handleCountry = (e) => {
         setCountry(e.target.value);
     };
     
-    const handleReceive = (e) => {
-        const { value } = e.target;
+    const handleReceive = (value) => {
+        // const { value } = e.target;
         if(value) {
-            const formattedValue = (Number(value.replace(/\D/g, '')) || '').toLocaleString();
-            setReceive(formattedValue);
-            // setReceiveAmount(formattedValue);
-
-            setSend(String(receive).replace(/,/g, '') / 10000)
+            // const formattedValue = (Number(value.replace(/\D/g, '')) || '').toLocaleString();
+            // setReceive(value);
+            if (token === 'BTC') {
+                // setSend(value / conversionRates.BTC)
+                setValue("send", value / conversionRates.BTC)
+            }else if (token === 'USDT') {
+                // setSend(value / conversionRates.USDT)
+                setValue("send", value / conversionRates.USDT)
+            }else {
+                // setSend(value / conversionRates.ETH)
+                setValue("send", value / conversionRates.ETH)
+            }
             // setSendAmount(String(receive).replace(/,/g, '') / 10000);
         }else {
-            setReceive('')
-            setSend('')
+            // setReceive('')
+            // setSend('')
+            setValue("send", '')
+            setValue("receive", '')
         }
-        // setReceive(e.target.value)
     };
-
-    const handleSend = (e) => {
-        const { value } = e.target;
+    const handleSend = (value) => {
         if(value) {
-            const formattedValue = (Number(value.replace(/\D/g, '')) || '').toLocaleString();
-            setSend(formattedValue);
-            setReceive(String(send).replace(/,/g, '') * 10000)
+            // const formattedValue = (Number(value.replace(/\D/g, '')) || '').toLocaleString();
+            // setSend(value);
+            if (token === 'BTC') {
+                // const convert = value * conversionRates.BTC
+                // setReceive(convert.toLocaleString())
+                setValue("receive", value * conversionRates.BTC)
+            }else if (token === 'USDT') {
+                // const convert = value * conversionRates.USDT
+                // setReceive(convert.toLocaleString())
+                setValue("receive", value * conversionRates.USDT)
+            }else{
+                // const convert = value * conversionRates.ETH
+                // setReceive(convert.toLocaleString())
+                setValue("receive", value * conversionRates.ETH)
+            }
         }else {
-            setSend('')
-            setReceive('')
+            // setSend('')
+            // setReceive('')
+            setValue("send", '')
+            setValue("receive", '')
         }
-        
-        // setSend(e.target.value)
-        // // setReceive(send * 10000)
-        // setSendAmount(e.target.value);
-        // setSendAmount(e.target.value);
     };
-
     const handleSwitch = () => {
-        setReceive(send)
-        setSend(receive)
-    };
+
+        const getSendAmount =  getValues("send")
+        const getReceiveAmount =  getValues("receive")
     
+        setValue("send", getReceiveAmount)
+        setValue("receive", getSendAmount) 
+    };    
     const onSubmit = () => {
         console.log("data")
         navigate("/details")
-        const transferDetails = {
-            sendAmount: send, 
-            receiveAmount: receive,
-            tokenValue: token
-        }
-        sessionStorage.setItem("transferDetails", JSON.stringify(transferDetails))
+        // const transferDetails = {
+        //     sendAmount: send, 
+        //     receiveAmount: receive,
+        //     tokenValue: token
+        // }
+        // sessionStorage.setItem("transferDetails", JSON.stringify(transferDetails))
     };
-
+    useEffect(() => {
+        const rates = firebase.firestore().collection("conversion").doc("conversion-rates");
+        rates.get().then((doc) => {
+            if (doc.exists) {
+                setConversionRates(doc.data())
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
+    }, [])
     const {setSendAmount, setReceiveAmount, setTokenValue } = useContext(TransferContext);
-    // console.log(sendAmount)
     return ( 
         <form onSubmit={handleSubmit(onSubmit)}>
             <div 
@@ -108,13 +146,24 @@ function SendForm({type, labelOne, labelTwo}) {
             <div className="row homepage">
                 <div className="input-border">
                     <label className="label-send">{labelOne}</label>
-                    <input 
-                        type="text" 
-                        placeholder="0.0001"
-                        {...register("send")}
-                        className="input-amount" 
-                        value={send}
-                        onChange={handleSend}
+                    <Controller 
+                        name="send"
+                        control={control}
+                        render={({field, field: { onChange, onBlur, name, value } }) => (
+                            <NumberFormat
+                            thousandSeparator={true}
+                            className="input-amount"
+                            inputMode="numeric"
+                            // placeholder="0.0001"
+                            onValueChange={(values) => {
+                                const {formattedValue, value} = values;
+                                onChange(value)
+                                handleSend(value)
+                            }}
+                            value={value}
+                            {...field}
+                            />
+                        )}
                     />
                     <select 
                         {...register("token")}
@@ -122,24 +171,36 @@ function SendForm({type, labelOne, labelTwo}) {
                         name="token" id="tokens" 
                         className="select-token" onChange={handleToken}
                     >
-                        <option value="btc">BTC</option>
-                        <option value="usdt">USDT</option>
-                        <option value="eth">ETH</option>
+                        <option value="BTC">BTC</option>
+                        <option value="USDT">USDT</option>
+                        <option value="ETH">ETH</option>
                     </select>
-                    {token === 'btc' && <img src={btc} alt="btc" className="select-token-image"/>}
-                    {token === 'usdt' && <img src={usdt} alt="usdt" className="select-token-image"/>}
-                    {token === 'eth' && <img src={eth} alt="eth" className="select-token-image"/>}
+                    {token === 'BTC' && <img src={btc} alt="btc" className="select-token-image"/>}
+                    {token === 'USDT' && <img src={usdt} alt="usdt" className="select-token-image"/>}
+                    {token === 'ETH' && <img src={eth} alt="eth" className="select-token-image"/>}
                 </div>
                 { errors.send && <p className="errors mt-3">{errors.send?.message}</p>}
                 <div className="input-border">
                     <label className="label-send">{labelTwo}</label>
-                    <input 
-                        type="text" 
-                        placeholder="500"
-                        {...register("receive")}
-                        className="input-amount" 
-                        value={receive}
-                        onChange={handleReceive}
+                    <Controller 
+                        render={({field, field: { onChange, onBlur, name, value } }) => (
+                            <NumberFormat
+                            thousandSeparator={true}
+                            className="input-amount"
+                            inputMode="numeric"
+                            // placeholder="0.0001"
+                            // onValueChange={onChange}
+                            onValueChange={(values) => {
+                                const { formattedValue, value } = values;
+                                onChange(value)
+                                handleReceive(value)
+                            }}
+                            value={value}
+                            {...field}
+                            />
+                        )}
+                        name="receive"
+                        control={control}
                     />
                     <select 
                     {...register("fiat")}
@@ -153,7 +214,7 @@ function SendForm({type, labelOne, labelTwo}) {
                 </div>
                 {errors.receive && <p className="errors">{errors.receive?.message}</p>}
                 <div className="conversion">
-                    <p>1 BTC = 10,000 NGN</p>
+                    {token === 'BTC' ? <p>{` 1 ${token} = ${conversionRates.BTC.toLocaleString()}`}</p> : token === 'USDT' ? <p>{` 1 ${token} = ${conversionRates.USDT.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${conversionRates.ETH.toLocaleString()}`}</p>}
                 </div>
                 <div className="homepage-seperator"></div>
                 {type === 'transfer' ? 

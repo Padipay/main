@@ -28,7 +28,7 @@ function Homepage() {
                 <Navbar />
                 <div className="row mt-5 header-content">
                     <div className="col-lg-4 col-sm-3 header-info mb-4 mt-5">
-                        <h1>Instant money transfer with three easy steps</h1>
+                        <h1>Instant money transfer in three easy steps</h1>
                         <p>Send and receive money with friends and family, exchange your Crypto for local currency..</p>
                         <div className="demo">
                             <img src={playbutton} alt="" />

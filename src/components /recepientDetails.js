@@ -3,13 +3,11 @@ import '../index.css';
 import '../styles/recepientDetails.css';
 import Stepper from "./stepper";
 import Header from "./header";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {bankCodes} from '../data/data.js';
-import ClipLoader from "react-spinners/ClipLoader";
-import FormTitle from "./formTitle";
 import FormContainerLayout from "./formContainerLayout";
 import { TransferContext } from "../contextApi/TransferContext";
 
@@ -33,7 +31,7 @@ function RecepientDetails() {
     const [bankCode, setBankCode ] = useState('')
     const [accountName, setAccountName ] = useState(null)
 
-    const [loading, setLoading ] = useState(true);
+    const [loading, setLoading ] = useState(false);
     const [error, setError ] = useState(null);
     const [visible, setVisible ] = useState(false);
 
@@ -135,7 +133,9 @@ function RecepientDetails() {
                         </div> }
                         {accountName === null &&
                         <div className="send-btn">
-                            <button type="submit" className="btn btn-primary btn-lg mb-5">Next</button>
+                            <button type="submit" className="btn btn-primary btn-lg mb-5">Next
+                            {loading && <div className="loader"></div>}
+                            </button>
                         </div>}
                         {accountName != null &&
                         <div className="send-btn">
@@ -143,7 +143,6 @@ function RecepientDetails() {
                         </div>}
                     </form>
                 </FormContainerLayout>
-                {/* {loading && <div className="loader"></div>} */}
             </div>
         </>
     );

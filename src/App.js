@@ -10,6 +10,8 @@ import VerifyAccount from './components /verifyAccount';
 import Login from './components /login';
 import ResetPassword from './components /resetPassword';
 import NewPassword from './components /newPassword';
+import Dashboard from './components /Dashboard';
+
 function App() {
   return (
    <>
@@ -26,6 +28,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/reset" element={<ResetPassword />} />
           <Route path="/resetpassword" element={<NewPassword />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           {/* <Route path="/create" element={<PrivateRoute> <CreateArticle/> </PrivateRoute>}/>
           <Route path="/article/:id" element={<PrivateRoute> <ArticleDetails/> </PrivateRoute>}/>
           <Route path="/edit/:id" element={<PrivateRoute> <EditArticle/> </PrivateRoute>}/> */}
