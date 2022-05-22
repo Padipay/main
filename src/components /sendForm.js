@@ -130,7 +130,7 @@ function SendForm({type, labelOne, labelTwo}) {
         }).catch((error) => {
             console.log("Error getting document:", error);
         });
-    }, [])
+    }, [conversionRates])
     const {setSendAmount, setReceiveAmount, setTokenValue } = useContext(TransferContext);
     return ( 
         <form onSubmit={handleSubmit(onSubmit)}>
