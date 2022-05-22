@@ -6,6 +6,7 @@ import { MdArticle } from "react-icons/md";
 import DashboardOverview from "./dashboardOverview";
 import Transactions from "./Trasanctions";
 import Settings from "./settings";
+import { Link } from "react-router-dom";
 
 function DashboardSidebar() {
     const [dashboard, setDashboard ] = useState(true)
@@ -35,19 +36,19 @@ function DashboardSidebar() {
             <div className="col-lg-2 col-sm-12 col-md-12 sidebar">
                 <ul className="nav nav-pills nav-fill flex-column mt-5">
                     <li className="nav-item">
-                        <a className={dashboard === true ? "nav-link active" : "nav-link"} aria-current="page" onClick={() => handleDashboard()}>
+                        <Link to="" className={dashboard === true ? "nav-link active" : "nav-link"} aria-current="page" onClick={() => handleDashboard()}>
                             <MdDashboard  size={20} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>
-                            Dashboard</a>
+                            Dashboard</Link>
                     </li>
                     <li className="nav-item">
-                        <a className={transactions === true ? "nav-link active" : "nav-link"}  onClick={() => handleTransaction()}> 
+                        <Link to="" className={transactions === true ? "nav-link active" : "nav-link"}  onClick={() => handleTransaction()}> 
                         <MdArticle  size={20} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>
-                            Transactions</a>
+                            Transactions</Link>
                     </li> 
                     <li className="nav-item">
-                        <a className={settings === true ? "nav-link active" : "nav-link"}  onClick={() => handleSettings()} >
+                        <Link to="" className={settings === true ? "nav-link active" : "nav-link"}  onClick={() => handleSettings()} >
                         <MdSettings  size={20} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>
-                            Settings</a>
+                            Settings</Link>
                     </li> 
                 </ul>
             </div> 
