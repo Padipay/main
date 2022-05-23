@@ -10,15 +10,15 @@ function CreateAccount() {
             <FormContainerLayout image={Logo}>
                 <h4 className="create-header-title">Create Account</h4>
                 <div className="form-floating mb-3">
-                    <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
+                    <input type="email" className="form-control" id="floatingInput1" placeholder="name@example.com" />
                     <label htmlFor="floatingInput">Email address</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input type="text" className="form-control" id="floatingPassword" placeholder="Username" />
+                    <input type="text" className="form-control" id="floatingPassword2" placeholder="Username" />
                     <label htmlFor="floatingPassword">Username</label>
                 </div>
                 <div className="form-floating mb-3">
-                    <input type="password" className="form-control" id="floatingPassword" placeholder="Password" />
+                    <input type="password" className="form-control" id="floatingPassword3" placeholder="Password" />
                     <label htmlFor="floatingPassword">Password</label>
                 </div>
                 <div className="additional-info">

@@ -17,8 +17,11 @@ const schema  = yup.object({
     receive: yup.string("Enter an amount to receive")
     .required("Please enter an amount receive")
     .typeError("Please enter an amount receive")
-    .test("receive amount", "Minimum amount to send is 500 NGN", (val) => {
+    .test("receive amount", "Minimum amount to send is 500.00 NGN", (val) => {
         return String(val).replace(/,/g, '') >= 500
+    })
+    .test("receive amount", "Maximum amount to send is 2,000,000 NGN", (val) => {
+        return String(val).replace(/,/g, '') <= 2000000
     }),
     send: yup.string("Enter an amount to send")
     .required("Please enter an amount send")
@@ -35,9 +38,11 @@ function SendForm({type, labelOne, labelTwo}) {
         // }
     });
     const [token, setToken ] = useState('BTC');
-    const [country, setCountry ] = useState('ngn');
+    const [country, setCountry ] = useState('NGN');
     const [receiveAmount, setReceive ] = useState('');
     const [sendAmount, setSend ] = useState('');
+    const [switchInputs, setSwitchInputs ] = useState(false);
+
     const [conversionRates, setConversionRates] = useState({
         BTC: 0,
         USDT: 0,
@@ -102,12 +107,27 @@ function SendForm({type, labelOne, labelTwo}) {
     };
     const handleSwitch = () => {
 
-        const getSendAmount =  getValues("send")
-        const getReceiveAmount =  getValues("receive")
-    
+        setSwitchInputs(prevswitchInputs => !switchInputs)
+
+        let getSendAmount =  getValues("send")
+        let getReceiveAmount =  getValues("receive")
+
+
+        // let tempValue = getSendAmount
+        // getSendAmount = getReceiveAmount
+        // getReceiveAmount = tempValue
+
         // console.log(getReceiveAmount)
-        // setValue("send", getReceiveAmount)
-        // setValue("receive", getSendAmount) 
+        // let a = 10
+        // let b = 5
+
+        // let tempValue = a
+        // a = b
+        // b = tempValue
+        // console.log(b)
+
+        setValue("send", getReceiveAmount)
+        setValue("receive", getSendAmount) 
     };    
     const onSubmit = () => {
         console.log("data")
@@ -145,75 +165,160 @@ function SendForm({type, labelOne, labelTwo}) {
                 />
             </div>
             <div className="row homepage">
-                <div className="input-border">
-                    <label className="label-send">{labelOne}</label>
-                    <Controller 
-                        name="send"
-                        control={control}
-                        render={({field, field: { onChange, onBlur, name, value } }) => (
-                            <NumberFormat
-                            thousandSeparator={true}
-                            className="input-amount"
-                            inputMode="numeric"
-                            // placeholder="0.0001"
-                            onValueChange={(values) => {
-                                const {formattedValue, value} = values;
-                                onChange(value)
-                                handleSend(value)
-                            }}
-                            value={value}
-                            {...field}
-                            />
-                        )}
-                    />
-                    <select 
-                        {...register("token")}
-                        defaultValue="BTC"
-                        name="token" id="tokens" 
-                        className="select-token" onChange={handleToken}
-                    >
-                        <option value="BTC">BTC</option>
-                        <option value="USDT">USDT</option>
-                        <option value="ETH">ETH</option>
-                    </select>
-                    {token === 'BTC' && <img src={btc} alt="btc" className="select-token-image"/>}
-                    {token === 'USDT' && <img src={usdt} alt="usdt" className="select-token-image"/>}
-                    {token === 'ETH' && <img src={eth} alt="eth" className="select-token-image"/>}
+                {switchInputs != true ?
+                <div>
+                    <div className="input-border">
+                        <label className="label-send">{labelOne}</label>
+                        <Controller 
+                            name="send"
+                            control={control}
+                            render={({field, field: { onChange, onBlur, name, value } }) => (
+                                <NumberFormat
+                                thousandSeparator={true}
+                                className="input-amount"
+                                inputMode="numeric"
+                                placeholder="0.0001"
+                                onValueChange={(values) => {
+                                    const {formattedValue, value} = values;
+                                    onChange(value)
+                                    handleSend(value)
+                                }}
+                                value={value}
+                                {...field}
+                                />
+                            )}
+                        />
+                        <select 
+                            {...register("token")}
+                            defaultValue="BTC"
+                            name="token" id="tokens" 
+                            className="select-token" onChange={handleToken}
+                        >
+                            <option value="BTC">BTC</option>
+                            <option value="USDT">USDT</option>
+                            <option value="ETH">ETH</option>
+                        </select>
+                        {token === 'BTC' && <img src={btc} alt="btc" className="select-token-image"/>}
+                        {token === 'USDT' && <img src={usdt} alt="usdt" className="select-token-image"/>}
+                        {token === 'ETH' && <img src={eth} alt="eth" className="select-token-image"/>}
+                    </div>
+                    { errors.send && <p className="errors mt-4">{errors.send?.message}</p>}
+                </div> : 
+                <div>
+                    <div className="input-border">
+                        <label className="label-send">{labelTwo}</label>
+                        <Controller 
+                            render={({field, field: { onChange, onBlur, name, value } }) => (
+                                <NumberFormat
+                                thousandSeparator={true}
+                                className="input-amount"
+                                inputMode="numeric"
+                                placeholder="500"
+                                // onValueChange={onChange}
+                                onValueChange={(values) => {
+                                    const { formattedValue, value } = values;
+                                    onChange(value)
+                                    handleReceive(value)
+                                }}
+                                value={value}
+                                {...field}
+                                />
+                            )}
+                            name="receive"
+                            control={control}
+                        />
+                        <select 
+                        {...register("fiat")}
+                        defaultValue="NGN"
+                        name="token" id="fiat" 
+                        className="select-token" onChange={handleCountry}
+                        >
+                            <option value="ngn">NGN</option>
+                        </select>
+                        {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
+                    </div>
+                    {errors.receive && <p className="errors">{errors.receive?.message}</p>}
                 </div>
-                { errors.send && <p className="errors mt-3">{errors.send?.message}</p>}
-                <div className="input-border">
-                    <label className="label-send">{labelTwo}</label>
-                    <Controller 
-                        render={({field, field: { onChange, onBlur, name, value } }) => (
-                            <NumberFormat
-                            thousandSeparator={true}
-                            className="input-amount"
-                            inputMode="numeric"
-                            // placeholder="0.0001"
-                            // onValueChange={onChange}
-                            onValueChange={(values) => {
-                                const { formattedValue, value } = values;
-                                onChange(value)
-                                handleReceive(value)
-                            }}
-                            value={value}
-                            {...field}
-                            />
-                        )}
-                        name="receive"
-                        control={control}
-                    />
-                    <select 
-                    {...register("fiat")}
-                    defaultValue="NGN"
-                    name="token" id="fiat" 
-                    className="select-token" onChange={handleCountry}
-                    >
-                        <option value="ngn">NGN</option>
-                    </select>
-                    {country === 'ngn' && <img src={nig} alt="btc" className="select-token-image"/>}
+
+                }
+
+                {switchInputs != true ?
+                <div>
+                    <div className="input-border">
+                        <label className="label-send">{labelTwo}</label>
+                        <Controller 
+                            render={({field, field: { onChange, onBlur, name, value } }) => (
+                                <NumberFormat
+                                thousandSeparator={true}
+                                className="input-amount"
+                                inputMode="numeric"
+                                placeholder="500"
+                                // onValueChange={onChange}
+                                onValueChange={(values) => {
+                                    const { formattedValue, value } = values;
+                                    onChange(value)
+                                    handleReceive(value)
+                                }}
+                                value={value}
+                                {...field}
+                                />
+                            )}
+                            name="receive"
+                            control={control}
+                        />
+                        <select 
+                        {...register("fiat")}
+                        defaultValue="NGN"
+                        name="token" id="fiat" 
+                        className="select-token" onChange={handleCountry}
+                        >
+                            <option value="ngn">NGN</option>
+                        </select>
+                        {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
+                    </div>
+                    {errors.receive && <p className="errors">{errors.receive?.message}</p>}
                 </div>
-                {errors.receive && <p className="errors">{errors.receive?.message}</p>}
+                : 
+                
+                <div>
+                    <div className="input-border">
+                        <label className="label-send">{labelOne}</label>
+                        <Controller 
+                            name="send"
+                            control={control}
+                            render={({field, field: { onChange, onBlur, name, value } }) => (
+                                <NumberFormat
+                                thousandSeparator={true}
+                                className="input-amount"
+                                inputMode="numeric"
+                                placeholder="0.0001"
+                                onValueChange={(values) => {
+                                    const {formattedValue, value} = values;
+                                    onChange(value)
+                                    handleSend(value)
+                                }}
+                                value={value}
+                                {...field}
+                                />
+                            )}
+                        />
+                        <select 
+                            {...register("token")}
+                            defaultValue="BTC"
+                            name="token" id="tokens" 
+                            className="select-token" onChange={handleToken}
+                        >
+                            <option value="BTC">BTC</option>
+                            <option value="USDT">USDT</option>
+                            <option value="ETH">ETH</option>
+                        </select>
+                        {token === 'BTC' && <img src={btc} alt="btc" className="select-token-image"/>}
+                        {token === 'USDT' && <img src={usdt} alt="usdt" className="select-token-image"/>}
+                        {token === 'ETH' && <img src={eth} alt="eth" className="select-token-image"/>}
+                    </div>
+                    { errors.send && <p className="errors mt-3">{errors.send?.message}</p>}
+                </div>
+                }
                 <div className="conversion">
                     {token === 'BTC' ? <p>{` 1 ${token} = ${conversionRates.BTC.toLocaleString()}`}</p> : token === 'USDT' ? <p>{` 1 ${token} = ${conversionRates.USDT.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${conversionRates.ETH.toLocaleString()}`}</p>}
                 </div>
@@ -222,9 +327,9 @@ function SendForm({type, labelOne, labelTwo}) {
                 <div className="input-border">
                     <label className="label-send">Destination</label>
                     <select name="destination" id="" className="select-destination" onChange={handleCountry}>
-                        <option value="ngn">NGN</option>
+                        <option value="NGN">NGN</option>
                     </select>
-                    <img src={nig} alt="btc" className="select-country-image"/>
+                    <img src={nig} alt="ngn" className="select-country-image"/>
                 </div> : null }
                 <div className="col text-center homepage-send-btn mb-4">
                     <button type="submit" className="btn btn-primary btn-lg">Continue</button>

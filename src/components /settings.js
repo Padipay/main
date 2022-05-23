@@ -49,15 +49,15 @@ function Settings() {
                             </div>
                             <div className="col-lg-6 col-sm-12">
                                 <div className="form-floating mb-3">
-                                    <input type="password" className="form-control" id="floatingInput1" placeholder="@maria_xx" />
+                                    <input type="password" className="form-control" id="floatingInput4" placeholder="@maria_xx" />
                                     <label htmlFor="floatingInput">Old Password</label>
                                 </div>
                                 <div className="form-floating mb-3">
-                                    <input type="password" className="form-control" id="floatingInput2" placeholder="Enter legal full name" />
+                                    <input type="password" className="form-control" id="floatingInput5" placeholder="Enter legal full name" />
                                     <label htmlFor="floatingInput">New Password</label>
                                 </div>
                                 <div className="form-floating mb-3">
-                                    <input type="password" className="form-control" id="floatingInput3" placeholder="name@example.com" />
+                                    <input type="password" className="form-control" id="floatingInput6" placeholder="name@example.com" />
                                     <label htmlFor="floatingInput">Confirm Password</label>
                                 </div>
                                 <CustomButton
