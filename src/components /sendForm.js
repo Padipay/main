@@ -105,8 +105,9 @@ function SendForm({type, labelOne, labelTwo}) {
         const getSendAmount =  getValues("send")
         const getReceiveAmount =  getValues("receive")
     
-        setValue("send", getReceiveAmount)
-        setValue("receive", getSendAmount) 
+        // console.log(getReceiveAmount)
+        // setValue("send", getReceiveAmount)
+        // setValue("receive", getSendAmount) 
     };    
     const onSubmit = () => {
         console.log("data")
@@ -130,7 +131,7 @@ function SendForm({type, labelOne, labelTwo}) {
         }).catch((error) => {
             console.log("Error getting document:", error);
         });
-    }, [conversionRates])
+    }, [])
     const {setSendAmount, setReceiveAmount, setTokenValue } = useContext(TransferContext);
     return ( 
         <form onSubmit={handleSubmit(onSubmit)}>
