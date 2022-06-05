@@ -11,7 +11,8 @@ import Login from './components /login';
 import ResetPassword from './components /resetPassword';
 import NewPassword from './components /newPassword';
 import Dashboard from './components /Dashboard';
-
+import PrivateRoute from './components /PrivateRoute';
+import VerifyEmail from './components /verifyEmail';
 function App() {
   return (
    <>
@@ -25,10 +26,11 @@ function App() {
           <Route path="/complete" element={<CompleteTransaction />} />
           <Route path="/account" element={<CreateAccount />} />
           <Route path="/verify" element={<VerifyAccount />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/reset" element={<ResetPassword />} />
           <Route path="/resetpassword" element={<NewPassword />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<PrivateRoute> <Dashboard/> </PrivateRoute>} />
           {/* <Route path="/create" element={<PrivateRoute> <CreateArticle/> </PrivateRoute>}/>
           <Route path="/article/:id" element={<PrivateRoute> <ArticleDetails/> </PrivateRoute>}/>
           <Route path="/edit/:id" element={<PrivateRoute> <EditArticle/> </PrivateRoute>}/> */}

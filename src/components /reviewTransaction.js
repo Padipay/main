@@ -6,26 +6,46 @@ import FormTitle from "./formTitle";
 import FormContainerLayout from "./formContainerLayout";
 import { RiEdit2Fill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
-import { TransferContext } from "../contextApi/TransferContext";
+import firebase from '../firebase/firebase';
+import NumberFormat from 'react-number-format';
 
 function ReviewTransaction() {
     const [page, setPage ] = useState(2);
     const [transferDetails, setTransferDetails ] = useState({});
     const [recepientDetails, setRecepientDetails ] = useState({});
+    const [conversionRates, setConversionRates] = useState({
+        BTC: 0,
+        USDT: 0,
+        ETH: 0
+    })
     const navigate = useNavigate();
+    const [loading, setLoading ] = useState(true)
 
     useEffect(() => {
         const transferDetails = JSON.parse(sessionStorage.getItem("transferDetails"));
         const recepientDetails = JSON.parse(sessionStorage.getItem("recepientDetails"));
         setTransferDetails(transferDetails)
         setRecepientDetails(recepientDetails)
+        setLoading(false)
+
+        const rates = firebase.firestore().collection("conversion").doc("conversion-rates");
+        rates.get().then((doc) => {
+            if (doc.exists) {
+                setConversionRates(doc.data())
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
+
     }, []);
 
     const {sendAmount, receiveAmount, tokenValue} = transferDetails;
     const {accountNumber, accountName } = recepientDetails;
     
     // const {sendAmount, receiveAmount, tokenValue, recepientName, recepientAccNum } = useContext(TransferContext)
-    
     return ( 
         <>
             <Header />
@@ -33,7 +53,7 @@ function ReviewTransaction() {
                     <div className="col-lg-3 col-sm-2 d-none d-sm-block d-md-block">
                         <Stepper page_num={page}/>
                     </div>
-                    <FormContainerLayout title="Review transfer details" style={{ height: 260}}>
+                    <FormContainerLayout title="Review transfer details" style={{ height: 220}}>
                         <div className="review-heading">
                             <p className="main-heading">Transfer Details</p>
                             <Link className="link" to="/send">
@@ -46,19 +66,42 @@ function ReviewTransaction() {
                         <div className="seperator"></div>
                         <div className="transfer-details mt-3">
                             <p className="description">Send Amount</p>
-                            <p className="details">{`${sendAmount} ${tokenValue}`}</p>
+                            <p className="details">
+                                <NumberFormat
+                                    thousandsGroupStyle="thousand"
+                                    value={`${sendAmount}`}
+                                    suffix={` ${tokenValue}`}
+                                    decimalSeparator="."
+                                    displayType="text"
+                                    type="text"
+                                    thousandSeparator={true}
+                                    allowNegative={true} 
+                                />
+                            </p>
                         </div>
                         <div className="transfer-details">
                             <p className="description">Recepient Receives</p>
-                            <p className="details">{`${receiveAmount} NGN`}</p>
+                            <p className="details">
+                                <NumberFormat
+                                thousandsGroupStyle="thousand"
+                                value={receiveAmount}
+                                suffix={" NGN"}
+                                decimalSeparator="."
+                                displayType="text"
+                                type="text"
+                                thousandSeparator={true}
+                                allowNegative={true} 
+                                />
+                            </p>
                         </div>
-                        <div className="transfer-details">
+                        {/* <div className="transfer-details">
                             <p className="description">Amount in USD</p>
                             <p className="details">0.85 USD</p>
-                        </div>
+                        </div> */}
                         <div className="transfer-details">
                             <p className="description">{`1 ${tokenValue} ~ NGN Rate`}</p>
-                            <p className="details">10,000</p>
+                            <p className="details">{tokenValue === 'BTC' ? `${conversionRates.BTC} ${tokenValue}` : 
+                            tokenValue === 'USDT' ? `${conversionRates.USDT} ${tokenValue}`: `${conversionRates.ETH} ${tokenValue}`}</p>
                         </div>
                         
                         <div className="sub-content">

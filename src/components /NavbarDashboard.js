@@ -31,6 +31,11 @@ function NavbarDashboard() {
                             </div>
                             <div className="col-3 drop-down-icon">
                                 <IoIosArrowDown size={30}/>
+                                <div className="dropdown-content">
+                                    <Link className="links" to="/">
+                                        <p>Logout</p>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </div>

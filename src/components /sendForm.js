@@ -59,6 +59,7 @@ function SendForm({type, labelOne, labelTwo}) {
     };
     
     const handleReceive = (value) => {
+        setReceive(value)
         // const { value } = e.target;
         if(value) {
             // const formattedValue = (Number(value.replace(/\D/g, '')) || '').toLocaleString();
@@ -82,6 +83,7 @@ function SendForm({type, labelOne, labelTwo}) {
         }
     };
     const handleSend = (value) => {
+        setSend(value)
         if(value) {
             // const formattedValue = (Number(value.replace(/\D/g, '')) || '').toLocaleString();
             // setSend(value);
@@ -132,12 +134,12 @@ function SendForm({type, labelOne, labelTwo}) {
     const onSubmit = () => {
         console.log("data")
         navigate("/details")
-        // const transferDetails = {
-        //     sendAmount: send, 
-        //     receiveAmount: receive,
-        //     tokenValue: token
-        // }
-        // sessionStorage.setItem("transferDetails", JSON.stringify(transferDetails))
+        const transferDetails = {
+            sendAmount: sendAmount, 
+            receiveAmount: receiveAmount,
+            tokenValue: token
+        }
+        sessionStorage.setItem("transferDetails", JSON.stringify(transferDetails))
     };
     useEffect(() => {
         const rates = firebase.firestore().collection("conversion").doc("conversion-rates");
@@ -237,7 +239,7 @@ function SendForm({type, labelOne, labelTwo}) {
                         </select>
                         {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
                     </div>
-                    {errors.receive && <p className="errors">{errors.receive?.message}</p>}
+                    {errors.receive && <p className="errors mt-4">{errors.receive?.message}</p>}
                 </div>
 
                 }
@@ -276,7 +278,7 @@ function SendForm({type, labelOne, labelTwo}) {
                         </select>
                         {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
                     </div>
-                    {errors.receive && <p className="errors">{errors.receive?.message}</p>}
+                    {errors.receive && <p className="errors mt-4">{errors.receive?.message}</p>}
                 </div>
                 : 
                 

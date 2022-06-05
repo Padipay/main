@@ -17,11 +17,11 @@ function Settings() {
                 <div className="tab-content" id="nav-tabContent">
                     <div className="tab-pane fade show active mt-5" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div className="row">
-                            <div className="col-4">
+                            <div className="col-lg-4 col-sm-12">
                                 <h4>Personal Information</h4>
                                 <p>Update your Personal Profile Information</p>
                             </div>
-                            <div className="col-6">
+                            <div className="col-lg-6 col-sm-12">
                                 <div className="form-floating mb-3">
                                     <input type="text" className="form-control" id="floatingInput1" placeholder="@maria_xx" />
                                     <label htmlFor="floatingInput">Username</label>

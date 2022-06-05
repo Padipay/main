@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
-import Steps, { Step } from 'rc-steps';
 import '../styles/stepper.css';
 import { Link } from 'react-router-dom';
-import SendAmount from './sendAmount';
-import RecepientDetails from './recepientDetails';
-import ReviewTransaction from './reviewTransaction';
-import CompleteTransaction from './completeTransaction';
 
 function Stepper({page_num}) {
     const [page, setPage ] = useState(page_num);
