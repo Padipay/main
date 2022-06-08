@@ -5,16 +5,18 @@ import '../styles/createAccount.css';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
-import firebase from '../firebase/firebase'
+import firebase from '../firebase/firebase';
 import { sendVerificationEmail } from "../api/sendEmail";
-
+import Spinner from 'react-spinkit';
 
 function CreateAccount() {
     const { register, handleSubmit, formState: { errors } } = useForm({});
     const navigate = useNavigate();
     const [error, setError ] = useState('')
+    const [loading, setLoading ] = useState(false)
 
     const onSubmit = ({email, password, username}) => {
+        setLoading(true)
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((response) => {
                 const uid = response.user.uid
@@ -27,6 +29,7 @@ function CreateAccount() {
                     .doc(uid)
                     .set({email, username})
                     .then(() => {
+                        setLoading(false)
                         navigate('/verify', {state: {email: email}})
                     })
                     .catch((error) => {
@@ -36,6 +39,7 @@ function CreateAccount() {
         .catch((error) => {
             console.log(error.message)
             setError('This email is already in use by another account') 
+            setLoading(false)
         }); 
     }
 
@@ -87,7 +91,10 @@ function CreateAccount() {
                         </p>
                     </div>
                     <div className="send-btn">
-                        <button type="submit" className="btn btn-primary btn-lg mb-5 mt-3">Next</button>
+                        <button type="submit" className="btn btn-primary btn-lg mb-5 mt-3">
+                            Next
+                            <span className="loading-spinner">{loading && <Spinner name="three-bounce"/> }</span>
+                        </button>
                     </div>
                 </form>
             </FormContainerLayout>

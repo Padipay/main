@@ -13,6 +13,7 @@ import NewPassword from './components /newPassword';
 import Dashboard from './components /Dashboard';
 import PrivateRoute from './components /PrivateRoute';
 import VerifyEmail from './components /verifyEmail';
+import Action from './components /action';
 function App() {
   return (
    <>
@@ -29,6 +30,7 @@ function App() {
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/reset" element={<ResetPassword />} />
+          <Route path="/action" element={<Action />} />
           <Route path="/resetpassword" element={<NewPassword />} />
           <Route path="/dashboard" element={<PrivateRoute> <Dashboard/> </PrivateRoute>} />
           {/* <Route path="/create" element={<PrivateRoute> <CreateArticle/> </PrivateRoute>}/>

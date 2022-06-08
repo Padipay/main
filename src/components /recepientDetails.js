@@ -95,7 +95,7 @@ function RecepientDetails() {
                             className="input-field" 
                             placeholder="maria.yahaya@outlook.com"/> 
                         </div>
-                        {<p className="errors ms-5">{errors.email?.message}</p>}
+                        {<p className="errors">{errors.email?.message}</p>}
                         <div className="input-border">
                             <select 
                             {...register("bankName")}
@@ -123,8 +123,8 @@ function RecepientDetails() {
                             }}
                             /> 
                         </div>
-                        {<p className="errors ms-5">{errors.accountNum?.message}</p>}
-                        {error != null ? <p className="errors ms-5">{error}</p> : null}
+                        {<p className="errors ">{errors.accountNum?.message}</p>}
+                        {error != null ? <p className="errors ">{error}</p> : null}
                         <div className="recipient-seperator mb-4"></div>
                         {visible &&
                         <div className="border-account-name">

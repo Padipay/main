@@ -1,7 +1,7 @@
 import React from "react";
 import FormContainerLayout from "./formContainerLayout";
 import Logo from '../images/Logo.png';
-import '../styles/createAccount.css';
+import '../styles/resetPassword.css';
 import { Link } from "react-router-dom";
 
 function ResetPassword() {
@@ -10,7 +10,7 @@ function ResetPassword() {
             <FormContainerLayout image={Logo}>
                 <h4 className="create-header-title">Reset Password</h4>
                 <p className="reset-info">Please enter the email associated with your account to reset your password.</p>
-                <div className="form-floating mb-3">
+                <div className="form-floating mb-3 me-4 ms-4">
                     <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
                     <label htmlFor="floatingInput">Email address</label>
                 </div>

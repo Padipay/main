@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FormContainerLayout from "./formContainerLayout";
 import Logo from '../images/Logo.png';
 import verify from '../images/verify.png';
 import '../styles/verify.css';
 import { Link } from "react-router-dom";
+import firebase from '../firebase/firebase';
+import Spinner from 'react-spinkit';
 
 
-function VerifyEmail() {
+function VerifyEmail({actionCode}) {
+    const [error, setError ] = useState('');
+    const [validCode, setValidCode ] = useState(null);
+    const [verifiedCode, setVerifiedCode ] = useState(true);
+
+    useEffect(() => {
+        firebase.auth().applyActionCode(actionCode)
+        .then(() => {
+            setValidCode(true)
+            setVerifiedCode(true)
+        }).catch((err) => {
+            setError(err.message)
+            setValidCode(false)
+            setVerifiedCode(true)
+        });
+    }, [])
+
     return ( 
+        <>
+        { verifiedCode && validCode === 'true' ? 
         <div className="d-flex align-items-center justify-content-center vh-100 verify">
             <FormContainerLayout image={Logo}>
                 <img className="image-verify" src={verify} alt="image" />
@@ -20,7 +40,13 @@ function VerifyEmail() {
                     </Link>
                 </div>
             </FormContainerLayout>
+        </div> : 
+        <div className="errorClass">
+            <h1>Try verifying your email again</h1>
+            <p className="error">{error}</p>
         </div>
+        }
+    </>
     );
 }
 

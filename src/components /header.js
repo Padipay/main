@@ -7,16 +7,16 @@ function Header() {
         <>
             <div className="d-none d-sm-block">
                 <div className="row header-nav">
-                    <div className="col-2">
+                    <div className="col-lg-2 col-sm-4">
                         <Link to="/">
                             <img src={logo} alt="" className="logo" />
                         </Link>
                     </div>
-                    <div className="col-5 info">
+                    <div className="col-lg-5 col-sm-3 info">
                         <h4 className="nav-info">Funds Transfer</h4>
                         <p className="nav-info-2">This should take approximately 3 mins.</p>
                     </div>
-                    <div className="col-5 create-btn d-flex justify-content-around">
+                    <div className="col-lg-5 col-sm-4 create-btn d-flex justify-content-around">
                     <Link to="/account">
                                 <button type="button" className="btn btn-outline-primary">Create an Account</button>
                             </Link>

@@ -9,6 +9,11 @@
     text-align: center;
 }
 
+.verify h1 {
+    font-weight: 700;
+    text-align: center;
+}
+
 .verify p{
     text-align: center;
     margin-bottom: 0rem;

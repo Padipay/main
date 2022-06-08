@@ -1,7 +1,6 @@
 import React from "react";
 import '../styles/homepage.css';
 import playbutton from '../images/Play.png';
-import SendForm from "./sendForm";
 import wallet from '../images/wallet-icon.png';
 import bankDetails from '../images/bank-details.png';
 import sendCrypto from '../images/send-crypto.png';
@@ -10,7 +9,6 @@ import faster from '../images/faster.png';
 import cheaper from '../images/cheaper.png';
 import Questions from "./questions";
 import Footer from "./footer";
-import logo from '../images/Logo3.png'
 import HomeTab from "./Hometab";
 import Navbar from "./navbar";
 
