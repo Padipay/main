@@ -14,7 +14,15 @@ import Dashboard from './components /Dashboard';
 import PrivateRoute from './components /PrivateRoute';
 import VerifyEmail from './components /verifyEmail';
 import Action from './components /action';
+import { useEffect } from 'react';
+
+
 function App() {
+  useEffect(() => {
+    setTimeout(() => {
+      sessionStorage.clear()
+    }, 60000);
+  }, [])
   return (
    <>
    <TransferContextProvider>

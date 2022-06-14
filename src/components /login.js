@@ -19,19 +19,22 @@ function Login() {
             .then((response) => {
                 navigate('/dashboard')
                 const uid = response.user.uid
+                response.user.getIdToken().then(function(idToken) { 
+                    sessionStorage.setItem('Auth-Token', idToken)
+                 });
                 const usersRef = firebase.firestore().collection('users')
-                // usersRef
-                // .doc(uid)
-                // .get()
-                // .then(firestoreDocument => {
-                //     if(!firestoreDocument.exists) {
-                //         navigate('/login')
-                //     }
-                //     navigate('/dashboard')
-                // })
-                // .catch((error) => {
-                //     console.log(error.message)
-                // })
+                usersRef
+                .doc(uid)
+                .get()
+                .then(firestoreDocument => {
+                    if(!firestoreDocument.exists) {
+                        navigate('/login')
+                    }
+                    navigate('/dashboard')
+                })
+                .catch((error) => {
+                    console.log(error.message)
+                })
             })
             .catch((error) => {
                 console.log(error.message)
