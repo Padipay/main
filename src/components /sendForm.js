@@ -17,6 +17,23 @@ import * as yup from "yup";
 import { TransferContext } from "../contextApi/TransferContext";
 import firebase from '../firebase/firebase';
 import NumberFormat from 'react-number-format';
+import styled from "styled-components";
+
+const StyledSelect = styled.select `
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    position: absolute;
+    margin-top: -9px;
+    background-color: white;
+    margin-left: 25px;
+`
+
+const StyledSelectTwo = styled(StyledSelect)`
+    padding-right: 13px
+`
+
 
 const schema  = yup.object({
     receive: yup.string("Enter an amount to receive")
@@ -149,12 +166,12 @@ function SendForm({type, labelOne, labelTwo}) {
                                 />
                             )}
                         />
-                        <select 
+                        <StyledSelect
                             {...register("token")}
                             // defaultValue="BTC"
                             name="token" id="tokens" 
-                            className="select-token" onChange={handleToken}
-                        >
+                            onChange={handleToken}>
+
                             <option value="BUSD" >BUSD</option>
                             <option value="TRC20" >TRC20</option>
                             <option value="TRON" >TRON</option>
@@ -162,13 +179,14 @@ function SendForm({type, labelOne, labelTwo}) {
                             <option value="BTC" disabled>BTC</option>
                             <option value="USDT" disabled>USDT</option>
                             <option value="ETH" disabled>ETH</option>
-                        </select>
+                            </StyledSelect>
                         {token === 'BUSD' && <img src={busd} alt="btc" className="select-token-image"/>}
                         {token === 'TRC20' && <img src={trc20} alt="trc20" className="select-token-image"/>}
                         {token === 'TRON' && <img src={tron} alt="tron" className="select-token-image"/>}
                     </div>
                     { errors.send && <p className="errors mt-4">{errors.send?.message}</p>}
-                </div> : 
+                </div> 
+                : 
                 <div>
                     <div className="input-border">
                         <label className="label-send">{labelTwo}</label>
@@ -192,14 +210,13 @@ function SendForm({type, labelOne, labelTwo}) {
                             name="receive"
                             control={control}
                         />
-                        <select 
+                        <StyledSelectTwo
                         {...register("fiat")}
                         defaultValue="NGN"
                         name="token" id="fiat" 
-                        className="select-token" onChange={handleCountry}
-                        >
+                        onChange={handleCountry}>
                             <option value="ngn">NGN</option>
-                        </select>
+                        </StyledSelectTwo>
                         {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
                     </div>
                     {errors.receive && <p className="errors mt-4">{errors.receive?.message}</p>}
@@ -231,22 +248,19 @@ function SendForm({type, labelOne, labelTwo}) {
                             name="receive"
                             control={control}
                         />
-                        <select 
-                            {...register("fiat")}
-                            defaultValue="NGN"
-                            name="token" id="tokens" 
-                            className="select-token" onChange={handleToken}
-                            style={{paddingRight: 12}}
-                        >
-                            <option value="NGN" >NGN</option>
-                            <option value="USD" disabled>USD</option>
-                        </select>
+                        <StyledSelectTwo
+                        {...register("fiat")}
+                        defaultValue="NGN"
+                        name="token" id="fiat" 
+                        onChange={handleCountry}>
+                        
+                            <option value="ngn">NGN</option>
+                        </StyledSelectTwo>
                         {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
                     </div>
                     {errors.receive && <p className="errors mt-4">{errors.receive?.message}</p>}
                 </div>
                 : 
-                
                 <div>
                     <div className="input-border">
                         <label className="label-send">{labelOne}</label>
@@ -270,22 +284,26 @@ function SendForm({type, labelOne, labelTwo}) {
                                 />
                             )}
                         />
-                        <select 
+                        <StyledSelect
                             {...register("token")}
-                            defaultValue="BTC"
+                            // defaultValue="BTC"
                             name="token" id="tokens" 
-                            className="select-token" onChange={handleToken}
-                        >
-                            <option value="BTC">BTC</option>
-                            <option value="USDT">USDT</option>
-                            <option value="ETH">ETH</option>
-                        </select>
-                        {token === 'BTC' && <img src={btc} alt="btc" className="select-token-image"/>}
-                        {token === 'USDT' && <img src={usdt} alt="usdt" className="select-token-image"/>}
-                        {token === 'ETH' && <img src={eth} alt="eth" className="select-token-image"/>}
+                            onChange={handleToken}>
+
+                            <option value="BUSD" >BUSD</option>
+                            <option value="TRC20" >TRC20</option>
+                            <option value="TRON" >TRON</option>
+
+                            <option value="BTC" disabled>BTC</option>
+                            <option value="USDT" disabled>USDT</option>
+                            <option value="ETH" disabled>ETH</option>
+                        </StyledSelect>
+                        {token === 'BUSD' && <img src={busd} alt="btc" className="select-token-image"/>}
+                        {token === 'TRC20' && <img src={trc20} alt="trc20" className="select-token-image"/>}
+                        {token === 'TRON' && <img src={tron} alt="tron" className="select-token-image"/>}
                     </div>
-                    { errors.send && <p className="errors mt-3">{errors.send?.message}</p>}
-                </div>
+                    { errors.send && <p className="errors mt-4">{errors.send?.message}</p>}
+                </div> 
                 }
                 <div className="conversion">
                     {token === 'BTC' ? <p>{` 1 ${token} = ${conversionRates.BTC.toLocaleString()}`}</p> : token === 'USDT' ? <p>{` 1 ${token} = ${conversionRates.USDT.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${conversionRates.ETH.toLocaleString()}`}</p>}
