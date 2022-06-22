@@ -14,9 +14,9 @@ function TransactionList() {
 
     useEffect(() => {
         setUserId(sessionStorage.getItem("userId"))
-        const getUserTransactions = async() => {
+        const getUserTransactions = () => {
             const temp = []
-            await firebase.firestore()
+            firebase.firestore()
                 .collection('users')
                 .doc(userId)
                 .collection('transactions')
@@ -35,6 +35,8 @@ function TransactionList() {
         }
         
     }, [transactions, userId])
+
+    console.log(transactions)
     return ( 
         <>
         {transactions.length < 0 ? 
