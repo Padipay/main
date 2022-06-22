@@ -107,12 +107,21 @@
 }
 
 .total-transaction-card {
-    width: 318px;
+    width: 30%;
     height: 160px;
 
     background: #EAFFF2;
     border: 1px solid #ACFFCC;
     border-radius: 8px;
+}
+
+.total-transaction-card-2 {
+    width: fit-content;
+    height: 160px;
+    background: rgb(248, 226, 255);
+    border:none;
+    border-radius: 8px;
+    margin-left: 40px;
 }
 
 .total-transaction-card h3 {
@@ -152,4 +161,9 @@
 
 .drop-down-icon{
 
+}
+
+.card-view{
+    display: flex;
+    justify-content: flex-start;
 }

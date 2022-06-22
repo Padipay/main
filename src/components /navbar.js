@@ -4,6 +4,7 @@ import logo from '../images/Logo3.png';
 import { Link } from "react-router-dom";
 
 function Navbar() {
+    const userId = sessionStorage.getItem("userId")
     return (
         <nav className="navbar navbar-expand-lg">
             <div className="container-fluid">

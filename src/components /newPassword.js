@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function NewPassword() {
     return ( 
         <div className="d-flex align-items-center justify-content-center vh-100">
-            <FormContainerLayout image={Logo}>
+            <FormContainerLayout image={Logo} type="account">
                 <h4 className="create-header-title">Create new password</h4>
                 <div className="form-floating mb-3 me-4 ms-4">
                     <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />

@@ -3,12 +3,18 @@ import '../styles/Hometab.css'
 import TransferMoney from "./transferMoney";
 import '../styles/homepage.css';
 import SellCrypto from "./sellCrypto";
+import styled from "styled-components";
+import { StyledFormContainer } from "../styles/globalStyles";
+
+const SendFormContainer = styled(StyledFormContainer)`
+    padding-top : 20px
+`
 
 function HomeTab({className}) {
     const [state, setState] = useState('transfer')
     return ( 
         <div className={className}>
-            <div className="form-container">
+            <SendFormContainer>
                 <div className="home-tab">
                     <div className="tabs-container">
                         <div className="tabs">
@@ -22,7 +28,7 @@ function HomeTab({className}) {
                 </div>
                 {state === 'transfer' ? 
                 <TransferMoney /> : <SellCrypto /> }
-            </div>
+            </SendFormContainer>
         </div>
      );
 }

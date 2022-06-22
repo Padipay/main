@@ -64,10 +64,10 @@
 }
 
 .continue-btn .btn-primary{
-    width: 384px;
-    height: 56px;       
+    width: 90%;
+    height: 56px;
     background-color: #003399;
-    margin-left: 40px;
+    margin-left: 22px;
     border-radius: 8px;
     margin-top: 20px;
     margin-bottom: 40px;

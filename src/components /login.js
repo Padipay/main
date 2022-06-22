@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import firebase from '../firebase/firebase'
+import firebase from '../firebase/firebase';
 
 function Login() {
     const { control, register, handleSubmit, setValue, getValues, formState: { errors } } = useForm({});
@@ -30,6 +30,7 @@ function Login() {
                     if(!firestoreDocument.exists) {
                         navigate('/login')
                     }
+                    sessionStorage.setItem("userId", uid)
                     navigate('/dashboard')
                 })
                 .catch((error) => {
@@ -43,7 +44,7 @@ function Login() {
 
     return ( 
         <div className="d-flex align-items-center justify-content-center vh-100">
-            <FormContainerLayout image={Logo}>
+            <FormContainerLayout image={Logo} type="account">
                 <h4 className="create-header-title">Log in to Padipay </h4>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-floating mb-3 me-4 ms-4">

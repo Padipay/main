@@ -2,7 +2,9 @@ import React from "react";
 import '../styles/Header.css'
 import logo from '../images/Logo.png';
 import { Link } from "react-router-dom";
+
 function Header() {
+    const userId = sessionStorage.getItem("userId")
     return ( 
         <>
             <div className="d-none d-sm-block">
@@ -17,9 +19,9 @@ function Header() {
                         <p className="nav-info-2">This should take approximately 3 mins.</p>
                     </div>
                     <div className="col-lg-5 col-sm-4 create-btn d-flex justify-content-around">
-                    <Link to="/account">
-                                <button type="button" className="btn btn-outline-primary">Create an Account</button>
-                            </Link>
+                        <Link to={userId != null ? "/dashboard" : "/account"}>
+                            <button type="button" className="btn btn-outline-primary">{userId != null ? 'Go to Dasboard' : 'Create an Account'}</button>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -34,9 +36,9 @@ function Header() {
                         </button>
                         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div className="navbar-nav ms-auto mt-4">
-                                <Link to="/account">
-                                    <button type="button" className="btn btn-outline-primary">Create an Account</button>
-                                </Link>
+                            <Link to={userId != null ? "/dashboard" : "/account"}>
+                            <   button type="button" className="btn btn-outline-primary">{userId != null ? 'Go to Dasboard' : 'Create an Account'}</button>
+                            </Link>
                             </div>
                         </div>
                     </div>

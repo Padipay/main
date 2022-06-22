@@ -14,15 +14,21 @@ import Dashboard from './components /Dashboard';
 import PrivateRoute from './components /PrivateRoute';
 import VerifyEmail from './components /verifyEmail';
 import Action from './components /action';
+import Admin from './admin/admin';
 import { useEffect } from 'react';
 
-
 function App() {
-  useEffect(() => {
-    setTimeout(() => {
-      sessionStorage.clear()
-    }, 60000);
-  }, [])
+  // const onRefresh = () => {
+  //   sessionStorage.clear()
+  //   // navigate("/")
+  // }
+  
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", onRefresh());
+  //   return () => {
+  //     window.removeEventListener("beforeunload", onRefresh());
+  //   };
+  // }, [])
   return (
    <>
    <TransferContextProvider>
@@ -30,9 +36,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage/>}/>
           <Route path="/send" element={<SendAmount />} />
-          <Route path="/details" element={<RecepientDetails/>}/>
-          <Route path="/review" element={<ReviewTransaction/>}/>
-          <Route path="/complete" element={<CompleteTransaction />} />
+          <Route path="/details" element={<PrivateRoute> <RecepientDetails/> </PrivateRoute>}/>
+          <Route path="/review" element={<PrivateRoute>  <ReviewTransaction/> </PrivateRoute>}/>
+          <Route path="/complete" element={<PrivateRoute> <CompleteTransaction /> </PrivateRoute>}/>
           <Route path="/account" element={<CreateAccount />} />
           <Route path="/verify" element={<VerifyAccount />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
@@ -41,6 +47,7 @@ function App() {
           <Route path="/action" element={<Action />} />
           <Route path="/resetpassword" element={<NewPassword />} />
           <Route path="/dashboard" element={<PrivateRoute> <Dashboard/> </PrivateRoute>} />
+          <Route path="/admin/*" element={<Admin />} />
           {/* <Route path="/create" element={<PrivateRoute> <CreateArticle/> </PrivateRoute>}/>
           <Route path="/article/:id" element={<PrivateRoute> <ArticleDetails/> </PrivateRoute>}/>
           <Route path="/edit/:id" element={<PrivateRoute> <EditArticle/> </PrivateRoute>}/> */}

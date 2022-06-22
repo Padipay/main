@@ -6,6 +6,7 @@ import firebase from '../firebase/firebase';
 function PrivateRoute({ children:Component, ...otherProps}) {
     // const [isAuthenticated, setIsAuthenticated ] = useState(null);
     const isAuthenticated = sessionStorage.getItem('Auth-Token')
+    const activeTransaction = sessionStorage.getItem('transferDetails')
     // useEffect(() => {
     //     firebase.auth().onAuthStateChanged((user) => {
     //         if (user) {
@@ -18,7 +19,7 @@ function PrivateRoute({ children:Component, ...otherProps}) {
     //     })
     // }, [])
     return (  
-        isAuthenticated ? Component : <Navigate to="/"/>
+        isAuthenticated || activeTransaction ? Component : <Navigate to="/"/>
     );
 }
 

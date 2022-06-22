@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
 import '../styles/modal.css';
-import barcode from '../images/Group.png';
 import logo from '../images/Logo2.png'
+import { QRCode } from 'react-qrcode-logo';
+import Homepage from "./hompage";
 
 import { MdOutlineClose } from "react-icons/md";
 import { RiFileCopyLine } from "react-icons/ri";
@@ -13,19 +13,20 @@ import Countdown from 'react-countdown';
 import { Link, useNavigate } from "react-router-dom";
 
 function PaymentDetails({open}) {
+  const {tokenValue, sendAmount} = JSON.parse(sessionStorage.getItem("transferDetails"));
   const [show, setShow] = useState(false); 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [address, setAddress] = useState('0x9A18182dAef0d99DdE8cedD817515A8Fe8491C96')
+
   const navigate = useNavigate()
-
-  const Completionist = () => { navigate("/")};
-
+  
   // Renderer callback with condition
     const renderer = ({ hours, minutes, seconds, completed }) => {
         if (completed) {
         // Render a completed state
-        return <Completionist />;
+        return navigate("/"), sessionStorage.clear()
         } else {
         // Render a countdown
         return <span className="timer">{minutes}:{seconds}</span>;
@@ -55,16 +56,17 @@ function PaymentDetails({open}) {
                     <p>Complete your transaction by sending to the address below</p>
                 </div>
                 <div className="amount-due">
-                    <p>Amount Due 0.213212343234</p>
+                    <p>{`Amount Due ${sendAmount} ${tokenValue}`}</p>
                 </div>
                 <div className="barcode">
-                    <img src={barcode} alt="barcode" />
+                    <QRCode 
+                    value="0x9A18182dAef0d99DdE8cedD817515A8Fe8491C96"/>
                 </div>
                 <div className="address">
                     <p>Address</p>
                 </div>
                 <div className="address-details">
-                    <p>bsjdllsnewiu...ksluebsja12ha</p> 
+                    <p>{`${address.substring(0, 25)}...`}</p> 
                     <RiFileCopyLine size={25} style={{fill: 'white', marginTop: 10, marginRight:10}}/>
                 </div>
                 <Link className="link" to="/">

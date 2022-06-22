@@ -1,18 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import '../styles/formContainer.css';
-function FormContainerLayout({children, title, image, style}) {
+import { StyledMainContentContainer, StyledMainFormContainer } from "../styles/globalStyles";
+
+function FormContainerLayout({children, title, image, type}) {
     return ( 
         <>
-        <div className="col-lg-9 col-sm-10 main-content-container">
+        <StyledMainContentContainer account={type}>
             {title && <h4 className="send-info">{title}</h4>}
             <Link to="/">
                 {image && <img className="container-image" src={image} alt="Logo" />}
             </Link>
-            <div className="main-form-container" style={style}>
+            <StyledMainFormContainer account={type}>
                 {children}
-            </div>
-        </div>
+            </StyledMainFormContainer>
+        </StyledMainContentContainer>
         </>
      );
 }

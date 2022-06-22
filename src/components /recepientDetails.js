@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {bankCodes} from '../data/data.js';
 import FormContainerLayout from "./formContainerLayout";
-import { TransferContext } from "../contextApi/TransferContext";
+import { FormContainer } from "../styles/globalStyles";
 
 const schema  = yup.object({
     email: yup.string()
@@ -30,6 +30,7 @@ function RecepientDetails() {
     const [accountNumber, setAccountNumber] = useState('')
     const [bankCode, setBankCode ] = useState('')
     const [accountName, setAccountName ] = useState(null)
+    const [bankName, setBankName ] = useState(null)
 
     const [loading, setLoading ] = useState(false);
     const [error, setError ] = useState(null);
@@ -43,14 +44,14 @@ function RecepientDetails() {
     const bankVerification = async () => {
         setLoading(true)
         setError(null)
-        const options = {method: 'GET', headers: {Accept: 'application/json', 'Authorization': `Bearer ${process.env.REACT_APP_PAYSTACK_SECRET_KEY}`}};
+        const options = {method: 'GET', headers: {Accept: 'application/json', 'Authorization': `Bearer sk_test_0fcdfe09b39f447af1a951fe4dd87f85b9874ad6`}};
 
         await fetch(`https://api.paystack.co/bank/resolve?account_number=${accountNumber}&bank_code=${bankCode}`, options)
         .then(response => response.json())
         .then(response => {
             if (response.status === true) {
                 setAccountName(response.data.account_name)
-                setRecepientName(response.data.account_name)
+                setBankName(bankName)
 
                 setVisible(true)
                 setLoading(false)
@@ -61,18 +62,14 @@ function RecepientDetails() {
         }).catch(err => console.log(err));
     };
     
-    const {setRecepientName, setRecepientAccNum } = useContext(TransferContext);
-
-    const onSubmit = data => {
-        // console.log(accountName)
-        // console.log(error)
+    const onSubmit = () => {
         bankVerification()
     };
-
     const handleContinue = () => {
         const recepientDetails = {
             accountName: accountName,
-            accountNumber: accountNumber
+            accountNumber: accountNumber,
+            bankName: bankName
         };
         sessionStorage.setItem("recepientDetails", JSON.stringify(recepientDetails));
         navigate("/review")
@@ -86,6 +83,7 @@ function RecepientDetails() {
                     <Stepper page_num={page}/>
                 </div>
                 <FormContainerLayout title="Who are you sending to?">
+                    
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="input-border">
                             <label className="label-send">Recepient Email</label>
@@ -100,7 +98,10 @@ function RecepientDetails() {
                             <select 
                             {...register("bankName")}
                             className="select-bank mt-4 ms-2 mb-3"
-                            onChange={(e) => setBankCode(e.target.value)}
+                            onChange={
+                                (e) => {
+                                    setBankCode(e.target.value) 
+                                    setBankName(e.target.selectedOptions[0].text)}}
                             defaultValue={'Select bank name'} 
                             >
                                 <option value="Select bank name" disabled>
@@ -119,7 +120,6 @@ function RecepientDetails() {
                             className="input-field" placeholder="00232003020"
                             onChange={(e) => {
                                 setAccountNumber(e.target.value)
-                                setRecepientAccNum(e.target.value)
                             }}
                             /> 
                         </div>
@@ -139,9 +139,10 @@ function RecepientDetails() {
                         </div>}
                         {accountName != null &&
                         <div className="send-btn">
-                            <button type="button" className="btn btn-primary btn-lg mb-5" onClick={handleContinue}>Continue</button>
+                            <button type="submit" className="btn btn-primary btn-lg mb-5" onClick={handleContinue}>Continue</button>
                         </div>}
                     </form>
+                   
                 </FormContainerLayout>
             </div>
         </>

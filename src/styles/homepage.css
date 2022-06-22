@@ -83,17 +83,8 @@
     margin-right: 80px;
 }
 
-/* .form-container {
-    width: auto;
-    height: 550px;
-    background-color: #FFFF;
-    box-sizing: border-box;
-    box-shadow: 0px 23px 44px rgba(176, 183, 195, 0.14);
-    border-radius: 8px;
-} */
-
 .form-container {
-    max-width: 100%;
+    max-width: min-content;
     height: auto;
     background-color: #FFFF;
     box-sizing: border-box;
@@ -365,6 +356,7 @@ input[type=number] {
 .errors{
     color: rgb(220, 53, 69);
     font-weight: 600;
+    font-size: 13px;
     opacity: 1;
     text-align: center;
 }

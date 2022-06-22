@@ -34,4 +34,9 @@
 }
 .table-header td {
     padding-bottom: 1.5em;
+   
+}
+.table-header tr {
+    font-size: 17px;
+    font-weight: 600;
 }

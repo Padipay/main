@@ -5,8 +5,13 @@ import '../styles/dashboard.css';
 import notification from '../images/Notification.png';
 import { IoIosArrowDown } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
+import { logout } from "../api/api";
+import styled from "styled-components";
 
 function NavbarDashboard() {
+    const navigate = useNavigate();
+
     return ( 
         <div className="dashboard">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -20,23 +25,28 @@ function NavbarDashboard() {
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                     <div className="navbar-items ms-auto mt-4">
                         <div className="row">
-                            <div className="col-2">
+                            <div className="col">
+                                <Link to="/send">
+                                    <button className="btn btn-primary btn-lg">Send Money</button>
+                                </Link>
+                            </div>
+                            {/* <div className="col-2">
                                 <img src={notification} alt="" />
-                            </div>
-                            <div className="col-2 avatar">
+                            </div> */}
+                            {/* <div className="col-2 avatar">
                                 <img src={avatar} alt="" />
-                            </div>
-                            <div className="col-3">
+                            </div> */}
+                            {/* <div className="col-3">
                                 <span className="username">@maria_xx</span>
-                            </div>
-                            <div className="col-3 drop-down-icon">
+                            </div> */}
+                            {/* <div className="col-3 drop-down-icon">
                                 <IoIosArrowDown size={30}/>
                                 <div className="dropdown-content">
-                                    <Link className="links" to="/">
+                                    <Link className="links" onClick={handleLogout} to="/">
                                         <p>Logout</p>
                                     </Link>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     </div>

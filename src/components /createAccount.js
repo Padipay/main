@@ -46,7 +46,7 @@ function CreateAccount() {
     return (
 
         <div className="d-flex align-items-center justify-content-center vh-100">
-            <FormContainerLayout image={Logo}>
+            <FormContainerLayout image={Logo} type="account">
                 <h4 className="create-header-title">Create an Account</h4>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-floating mb-3 me-4 ms-4">

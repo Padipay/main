@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import '../styles/homepage.css';
 import playbutton from '../images/Play.png';
 import wallet from '../images/wallet-icon.png';
@@ -11,9 +11,14 @@ import Questions from "./questions";
 import Footer from "./footer";
 import HomeTab from "./Hometab";
 import Navbar from "./navbar";
-
+import firebase from '../firebase/firebase';
 
 function Homepage() {
+
+    // useEffect(() => {
+    //     const user = firebase.auth().currentUser;
+    //     console.log(user)
+    // }, [])
     return ( 
         <div className="home-page">
             <div className="container-fluid homepage-container">
