@@ -3,7 +3,7 @@ import '../styles/sendAmount.css'
 import Header from "./header";
 import Stepper from "./stepper";
 import FormContainerLayout from "./formContainerLayout";
-import HomeTab from "./Hometab";
+import SendFormTab from "./SendFormTab";
 import { useNavigate } from "react-router-dom";
 
 function SendAmount() {
@@ -16,7 +16,7 @@ function SendAmount() {
                     <Stepper page_num={page}/>
                 </div>
                 <FormContainerLayout title="How much are you sending?">
-                    <HomeTab />
+                    <SendFormTab />
                 </FormContainerLayout>
             </div>
         </>

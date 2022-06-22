@@ -9,7 +9,7 @@ function SendCrypto() {
             <SendForm 
             type='crypto'
             labelOne="You Sell"
-            labelTwo="Amount you get"/>
+            labelTwo="You get"/>
         </>
      );
 }

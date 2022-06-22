@@ -9,7 +9,7 @@ import faster from '../images/faster.png';
 import cheaper from '../images/cheaper.png';
 import Questions from "./questions";
 import Footer from "./footer";
-import HomeTab from "./Hometab";
+import SendFormTab from "./SendFormTab";
 import Navbar from "./navbar";
 import firebase from '../firebase/firebase';
 
@@ -38,7 +38,7 @@ function Homepage() {
                             <p>See how it works</p>
                         </div>
                     </div>
-                    <HomeTab className="col-lg-4 col-sm-6 mb-5 mt-3"/>
+                    <SendFormTab className="col-lg-4 col-sm-6 mb-5 mt-3"/>
                 </div>
             </div>
             <div className="container mt-5">

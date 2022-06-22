@@ -10,7 +10,7 @@ const SendFormContainer = styled(StyledFormContainer)`
     padding-top : 20px
 `
 
-function HomeTab({className}) {
+function SendFormTab({className}) {
     const [state, setState] = useState('transfer')
     return ( 
         <div className={className}>
@@ -19,7 +19,7 @@ function HomeTab({className}) {
                     <div className="tabs-container">
                         <div className="tabs">
                             <input type="radio" id="radio-1" name="tabs" defaultChecked onClick={() => setState('transfer')}/>
-                            <label className="tab" htmlFor="radio-1">Transfer Funds</label>
+                            <label className="tab" htmlFor="radio-1">Transfer Money</label>
                             <input type="radio" id="radio-2" name="tabs" onClick={() => setState('crypto')}/>
                             <label className="tab" htmlFor="radio-2">Sell Crypto</label>
                             <span className="glider"></span>
@@ -33,4 +33,4 @@ function HomeTab({className}) {
      );
 }
 
-export default HomeTab;
+export default SendFormTab;
