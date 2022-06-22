@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import Spinner from 'react-spinkit';
 
 export const StyledMainContentContainer = styled.div.attrs(() => ({
   className: 'col-lg-9 col-sm-10'
@@ -38,6 +38,23 @@ export const StyledTabContainer = styled.div `
   align-items: center;
   justify-content: center;
   padding-top: 40px;
+`
+
+export const StyledError = styled.p.attrs(() => ({
+  className: 'mt-3'
+}))`
+    color: rgb(220, 53, 69);
+    font-weight: 600;
+    font-size: 20px;
+    opacity: 1;
+    text-align: center;
+`
+
+export const LargeSpinner = styled(Spinner)`
+& > div {
+  width: 10px;
+  height: 10px;
+}
 `
 
 // export const StyledFormFloatingContainer = styled.div.attrs(() => {

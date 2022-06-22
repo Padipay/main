@@ -61,8 +61,3 @@
 .sk-three-bounce > div {
     background-color: white !important;
 }
-.loading-spinner {
-    position: absolute;
-    margin-left: inherit;
-    margin-top: 5px;
-}

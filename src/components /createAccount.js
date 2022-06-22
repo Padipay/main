@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import FormContainerLayout from "./formContainerLayout";
 import Logo from '../images/Logo.png';
 import '../styles/createAccount.css';
@@ -7,7 +7,14 @@ import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import firebase from '../firebase/firebase';
 import { sendVerificationEmail } from "../api/sendEmail";
-import Spinner from 'react-spinkit';
+import styled from "styled-components";
+import { StyledError, LargeSpinner } from "../styles/globalStyles";
+
+const StyledSpinnerSpan = styled.span`
+    position: absolute;
+    margin-left: inherit;
+    margin-top: 0px;
+`
 
 function CreateAccount() {
     const { register, handleSubmit, formState: { errors } } = useForm({});
@@ -59,7 +66,7 @@ function CreateAccount() {
                         />
                         <label htmlFor="floatingInput">Email address</label>
                     </div>
-                    { errors.email && <p className="errors mt-3">Please email is required</p>}
+                    { errors.email && <StyledError>Please email is required</StyledError>}
                     <div className="form-floating mb-3 me-4 ms-4">
                         <input 
                         type="text" 
@@ -70,7 +77,7 @@ function CreateAccount() {
                         />
                         <label htmlFor="floatingPassword">Username</label>
                     </div>
-                    { errors.username && <p className="errors mt-3">Please username is required</p>}
+                    { errors.username && <StyledError>Please username is required</StyledError>}
                     <div className="form-floating mb-3 me-4 ms-4">
                         <input 
                         type="password" 
@@ -81,7 +88,7 @@ function CreateAccount() {
                         />
                         <label htmlFor="floatingPassword">Password</label>
                     </div>
-                    { errors.password && <p className="errors mt-3">Enter a valid password</p>}
+                    { errors.password && <StyledError>Enter a valid password</StyledError>}
                     {error && <p className="errors mt-3">{error}</p>}
                     <div className="additional-info">
                         <p>Already have an account? 
@@ -93,7 +100,7 @@ function CreateAccount() {
                     <div className="send-btn">
                         <button type="submit" className="btn btn-primary btn-lg mb-5 mt-3">
                             Next
-                            <span className="loading-spinner">{loading && <Spinner name="three-bounce"/> }</span>
+                            <StyledSpinnerSpan>{loading && <LargeSpinner name="three-bounce" color="white" /> }</StyledSpinnerSpan>
                         </button>
                     </div>
                 </form>

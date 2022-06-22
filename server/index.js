@@ -52,7 +52,7 @@ app.post('/send-custom-verification-email', async (req, res) => {
       userEmail,
       randomNumber: Math.random()
     })
-    await sendVerificationEmail(userEmail, username, template, actionLink)
+    await sendVerificationEmail(userEmail, template, actionLink)
     res.status(200).json({message:'Email successfully sent'})
   }catch(error){
     const message = error.message
