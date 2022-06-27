@@ -15,9 +15,15 @@ const schema  = yup.object({
     email: yup.string()
     .email("Enter recepient email")
     .required("Please enter a valid email"),
+
+    phone_number: yup.number()
+    .required("Please enter a valid phone number")
+    .typeError("Enter a valid phone number"),
+
     accountNum: yup.number("Account Number cannot be empty")
     .required("Account Number cannot be empty")
     .typeError("Account Number cannot be empty"),
+
     bankName: yup.string()
     .required("Select a bank name")
 }).required();
@@ -28,6 +34,8 @@ function RecepientDetails() {
     });
     const [page, setPage ] = useState(1);
     const [accountNumber, setAccountNumber] = useState('')
+    const [recepientEmail, setRecepientEmail] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
     const [bankCode, setBankCode ] = useState('')
     const [accountName, setAccountName ] = useState(null)
     const [bankName, setBankName ] = useState(null)
@@ -69,7 +77,8 @@ function RecepientDetails() {
         const recepientDetails = {
             accountName: accountName,
             accountNumber: accountNumber,
-            bankName: bankName
+            bankName: bankName,
+            email: recepientEmail
         };
         sessionStorage.setItem("recepientDetails", JSON.stringify(recepientDetails));
         navigate("/review")
@@ -91,9 +100,20 @@ function RecepientDetails() {
                             {...register("email")}
                             type="email" 
                             className="input-field" 
-                            placeholder="maria.yahaya@outlook.com"/> 
+                            placeholder="maria.yahaya@outlook.com"
+                            onChange={(e) => setRecepientEmail(e.target.value)}/> 
                         </div>
                         {<p className="errors">{errors.email?.message}</p>}
+                        <div className="input-border">
+                            <label className="label-send">Phone Number</label>
+                            <input 
+                            {...register("phone_number")}
+                            type="number" 
+                            className="input-field" 
+                            placeholder="🇳🇬 +234043504305"
+                            onChange={(e) => setPhoneNumber(e.target.value)}/> 
+                        </div>
+                        {<p className="errors">{errors.phone_number?.message}</p>}
                         <div className="input-border">
                             <select 
                             {...register("bankName")}

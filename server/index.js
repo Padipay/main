@@ -10,6 +10,7 @@ const {getAuth} = require("firebase-admin/auth");
 
 const ejs = require('ejs');
 const sendVerificationEmail = require('./sendEmail');
+const sendSuccessfulTransactionEmail = require('./sendEmail');
 
 // initialize Firebase Admin SDK
 const adminApp = admin.initializeApp({
@@ -45,8 +46,6 @@ app.post('/send-custom-verification-email', async (req, res) => {
   }
   
   try{
-    const actionLink =  await getAuth()
-    .generateEmailVerificationLink(userEmail, actionCodeSettings)
     const template = await ejs.renderFile('views/verifyEmail.ejs', {
       actionLink,
       userEmail,
@@ -65,3 +64,23 @@ app.post('/send-custom-verification-email', async (req, res) => {
     res.status(500).json({message})
   }
 })
+
+app.post('/send-success-email', async (req, res) => {
+  const {userEmail, send, receive, token, date} = req.body
+  try{
+    const template = await ejs.renderFile('views/successEmail.ejs', {
+      userEmail,
+      send,
+      receive,
+      token,
+      date,
+      randomNumber: Math.random()
+    })
+    await sendSuccessfulTransactionEmail(userEmail, template, send, receive, token, date)
+    res.status(200).json({message:'Email successfully sent'})
+  }catch(error){
+    const message = error.message
+    res.status(500).json({message})
+  }
+})
+

@@ -30,7 +30,6 @@ function Login() {
                     if(!firestoreDocument.exists) {
                         navigate('/login')
                     }
-                    sessionStorage.setItem("userId", uid)
                     navigate('/dashboard')
                 })
                 .catch((error) => {

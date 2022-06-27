@@ -22,27 +22,20 @@ module.exports = function sendVerificationEmail(userEmail, template, actionLink)
     return sgMail.send(message)
 }
 
-// module.exports = function sendVerificationEmail (userEmail, username, template, actionLink)  {
-//     const request  = mailjet
-//         .post("send", {'version': 'v3.1'})
-//         .request({
-//             "Messages": [{
-//                 "From": {
-//                     "Email": "cocofemi@gmail.com",
-//                     "Name": "Padidpay"
-//                 },
-//                 "To": [{
-//                     "Email": userEmail,
-//                     "Name": username
-//                 }],
-//                 Subject: 'Verify your email address',
-//                 "TextPart": `Thanks for signing up with us. Follow the link below to verify your email address.
-//                 \n\n${actionLink} \n\nIf this email wasn't intended for you feel free to delete it.`,
-//                 "HTMLPart": template
-//             }]
-//         }).then((result) => {
-//             console.log(result.body)
-//         }).catch((err) => {
-//             console.log(err.message)
-//         })
-// }
+module.exports = function sendSuccessfulTransactionEmail(userEmail, template, send, receive, token, date){
+  const message = {
+    from: {
+      name: 'Successful Transaction',
+      email: VERIFIED_EMAIL
+    },
+    to: userEmail,
+    subject: 'Successful Transaction',
+    text: `Your transaction was successful. Below are details of the transaction
+    \n\n Send: ${send} ${token}.
+    \n\n Receive ${receive}.
+    \n\n Date: ${date}.`,
+    html: template
+  }
+
+  return sgMail.send(message)
+}

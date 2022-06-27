@@ -4,42 +4,50 @@ import firebase from '../firebase/firebase'
 import EmptyTransaction from "./emptyTransaction";
 import Spinner from 'react-spinkit';
 
-function TransactionList() {
-    const [transactions, setTransactions] = useState([]);
+function TransactionList({totalTransaction}) {
+    const [transactions, setTransactions] = useState(null);
     const [receiveTotal, setReceiveTotal] = useState(null);
     const [loading, setLoading] = useState(true);
     // const userId = sessionStorage.getItem("userId");
-    const [userId, setUserId] = useState(null)
+    // const [userId, setUserId] = useState(null)
 
 
     useEffect(() => {
-        setUserId(sessionStorage.getItem("userId"))
-        const getUserTransactions = () => {
-            const temp = []
-            firebase.firestore()
-                .collection('users')
-                .doc(userId)
-                .collection('transactions')
-                .get()
-                .then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        temp.push(doc.data())
-                        setTransactions(temp)
+        // setUserId(sessionStorage.getItem("userId"))
+        const getUserTransactions = async () => {
+            const userId = firebase.auth().currentUser.uid
+                if (userId) {
+                    setLoading(true)
+                    const temp = []
+                    await firebase.firestore()
+                        .collection('transactions')
+                        .where("userId", "==", userId)
+                        .get()
+                        .then((querySnapshot) => {
+                            if (querySnapshot.empty) {
+                                setLoading(false)
+                            }
+                            querySnapshot.forEach((doc) => {
+                                const data = {
+                                    data: doc.data()
+                                }
+                                temp.push(data)
+                                setTransactions(temp)
+                                totalTransaction(temp.length)
+                                setLoading(false)
+                            })
+                        }).catch((err) => {
+                            console.log(err.message)
                     })
-                }).catch((err) => {
-                    console.log(err.message)
-                }) 
-        }
-        if (userId != null) {
+                } 
+            }
             getUserTransactions()
-        }
-        
-    }, [transactions, userId])
 
-    console.log(transactions)
+        return () => getUserTransactions()
+    }, [transactions])
     return ( 
         <>
-        {transactions.length < 0 ? 
+        {transactions === null ? 
             <EmptyTransaction /> 
         :
         <div className="table-header table-responsive-sm mt-3">
@@ -60,13 +68,13 @@ function TransactionList() {
                     {transactions.map((item,index) => (
                         <tr key={index}>
                             <th>Transfer</th>
-                            <td>{`${item.id.substring(0, 8)}...`}</td>
-                            <td>{item.send}</td>
-                            <td>{item.receive}</td>
-                            <td>{item.token}</td>
-                            <td>{new Date(item.date.toDate()).toDateString()}</td>
-                            <td>{item.account_name}</td>
-                            <td className={item.status === 'Successful' ? "success" : "pending"}>{item.status}</td>
+                            <td>{`${item.data.id.substring(0, 8)}...`}</td>
+                            <td>{item.data.send}</td>
+                            <td>{item.data.receive}</td>
+                            <td>{item.data.token}</td>
+                            <td>{new Date(item.data.date.toDate()).toDateString()}</td>
+                            <td>{item.data.account_name}</td>
+                            <td className={item.data.status === 'Successful' ? "success" : "pending"}>{item.data.status}</td>
                         </tr>
                     ))}
                     

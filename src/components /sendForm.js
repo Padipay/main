@@ -51,7 +51,7 @@ const schema  = yup.object({
 }).required();
 
 function SendForm({type, labelOne, labelTwo}) {
-    const { control, register, handleSubmit, setValue, getValues, formState: { errors } } = useForm({
+    const { control, register, handleSubmit, setValue, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
         mode: "all",
     });
@@ -64,9 +64,10 @@ function SendForm({type, labelOne, labelTwo}) {
     const [conversionRates, setConversionRates] = useState({
         BTC: 0,
         USDT: 0,
-        ETH: 0
+        ETH: 0,
+        BUSD: 0,
+        TRX: 0
     })
-
     const navigate = useNavigate();
 
     const handleToken = (e) => {
@@ -78,39 +79,38 @@ function SendForm({type, labelOne, labelTwo}) {
     
     const handleReceive = (value) => {
         setReceive(value)
-        // if(value) {
-        //     if (token === 'BTC') {
-        //         setValue("send", value / conversionRates.BTC)
-        //     }else if (token === 'USDT') {
-        //         setValue("send", value / conversionRates.USDT)
-        //     }else {
-        //         setValue("send", value / conversionRates.ETH)
-        //     }
-        // }else {
-        //     setValue("send", '')
-        //     setValue("receive", '')
-        // }
+        if(value) {
+            if (token === 'BUSD') {
+                setValue("send", value / conversionRates.BUSD)
+            }else if (token === 'USDT') {
+                setValue("send", value / conversionRates.USDT)
+            }else {
+                setValue("send", value / conversionRates.TRX)
+            }
+        }else {
+            setValue("send", '')
+            setValue("receive", '')
+        }
     };
     const handleSend = (value) => {
         setSend(value)
-        // if(value) {
-        //     if (token === 'BTC') {
-        //         setValue("receive", value * conversionRates.BTC)
-        //     }else if (token === 'USDT') {
-        //         setValue("receive", value * conversionRates.USDT)
-        //     }else{
-        //         setValue("receive", value * conversionRates.ETH)
-        //     }
-        // }else {
-        //     setValue("send", '')
-        //     setValue("receive", '')
-        // }
+        if(value) {
+            if (token === 'BUSD') {
+                setValue("receive", value * conversionRates.BUSD)
+            }else if (token === 'USDT') {
+                setValue("receive", value * conversionRates.USDT)
+            }else{
+                setValue("receive", value * conversionRates.TRX)
+            }
+        }else {
+            setValue("send", '')
+            setValue("receive", '')
+        }
     };
     const handleSwitch = () => {
         setSwitchInputs(() => !switchInputs)
     };    
     const onSubmit = () => {
-        console.log("data")
         navigate("/details")
         const transferDetails = {
             sendAmount: sendAmount, 
@@ -132,7 +132,7 @@ function SendForm({type, labelOne, labelTwo}) {
             console.log("Error getting document:", error);
         });
     }, [])
-    const {setSendAmount, setReceiveAmount, setTokenValue } = useContext(TransferContext);
+    // const {setSendAmount, setReceiveAmount, setTokenValue } = useContext(TransferContext);
     return ( 
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="switch" onClick={handleSwitch}>
@@ -154,8 +154,8 @@ function SendForm({type, labelOne, labelTwo}) {
                                 thousandSeparator={true}
                                 className="input-amount"
                                 inputMode="numeric"
-                                placeholder="0.0001"
-                                decimalScale={7}
+                                placeholder="0.001"
+                                decimalScale={3}
                                 onValueChange={(values) => {
                                     const {value} = values;
                                     onChange(value)
@@ -188,16 +188,51 @@ function SendForm({type, labelOne, labelTwo}) {
                 </div> 
                 : 
                 <div>
-                    <div className="input-border">
+                    <div className="">
+                        <div className="input-border">
+                            <label className="label-send">{labelTwo}</label>
+                            <Controller 
+                                name="receivei"
+                                control={control}
+                                render={({field, field: { onChange, value } }) => (
+                                    <NumberFormat
+                                    thousandSeparator={true}
+                                    className="input-amount"
+                                    inputMode="numeric"
+                                    placeholder="500"
+                                    decimalScale={3}
+                                    onValueChange={(values) => {
+                                        const { value } = values;
+                                        onChange(value)
+                                        handleReceive(value)
+                                    }}
+                                    value={value}
+                                    {...field}
+                                    />
+                                )}
+                            />
+                            <StyledSelectTwo
+                        {...register("fiat")}
+                        defaultValue="NGN"
+                        name="token" id="fiat" 
+                        onChange={handleCountry}>
+                            <option value="ngn">NGN</option>
+                        </StyledSelectTwo>
+                        {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
+                        </div>
+                    </div>
+                    <div className="input-border d-none">
                         <label className="label-send">{labelTwo}</label>
                         <Controller 
+                            name="receive"
+                            control={control}
                             render={({field, field: { onChange, value } }) => (
                                 <NumberFormat
                                 thousandSeparator={true}
                                 className="input-amount"
                                 inputMode="numeric"
                                 placeholder="500"
-                                // decimalScale={7}
+                                decimalScale={3}
                                 onValueChange={(values) => {
                                     const { value } = values;
                                     onChange(value)
@@ -207,8 +242,6 @@ function SendForm({type, labelOne, labelTwo}) {
                                 {...field}
                                 />
                             )}
-                            name="receive"
-                            control={control}
                         />
                         <StyledSelectTwo
                         {...register("fiat")}
@@ -229,13 +262,15 @@ function SendForm({type, labelOne, labelTwo}) {
                     <div className="input-border">
                         <label className="label-send">{labelTwo}</label>
                         <Controller 
+                            name="receive"
+                            control={control}
                             render={({field, field: { onChange, value } }) => (
                                 <NumberFormat
                                 thousandSeparator={true}
                                 className="input-amount"
                                 inputMode="numeric"
                                 placeholder="500"
-                                // decimalScale={7}
+                                decimalScale={3}
                                 onValueChange={(values) => {
                                     const { value } = values;
                                     onChange(value)
@@ -245,8 +280,6 @@ function SendForm({type, labelOne, labelTwo}) {
                                 {...field}
                                 />
                             )}
-                            name="receive"
-                            control={control}
                         />
                         <StyledSelectTwo
                         {...register("fiat")}
@@ -259,6 +292,32 @@ function SendForm({type, labelOne, labelTwo}) {
                         {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
                     </div>
                     {errors.receive && <p className="errors mt-4">{errors.receive?.message}</p>}
+
+                    <div className="d-none">
+                        <div className="input-border">
+                            <label className="label-send">{labelTwo}</label>
+                            <Controller 
+                                name="receive"
+                                control={control}
+                                render={({field, field: { onChange, value } }) => (
+                                    <NumberFormat
+                                    thousandSeparator={true}
+                                    className="input-amount"
+                                    inputMode="numeric"
+                                    placeholder="500"
+                                    decimalScale={3}
+                                    onValueChange={(values) => {
+                                        const { value } = values;
+                                        onChange(value)
+                                        handleReceive(value)
+                                    }}
+                                    value={value}
+                                    {...field}
+                                    />
+                                )}
+                            />
+                        </div>
+                    </div>
                 </div>
                 : 
                 <div>
@@ -273,7 +332,7 @@ function SendForm({type, labelOne, labelTwo}) {
                                 className="input-amount"
                                 inputMode="numeric"
                                 placeholder="0.0001"
-                                decimalScale={7}
+                                decimalScale={3}
                                 onValueChange={(values) => {
                                     const {value} = values;
                                     onChange(value)
@@ -306,7 +365,7 @@ function SendForm({type, labelOne, labelTwo}) {
                 </div> 
                 }
                 <div className="conversion">
-                    {token === 'BTC' ? <p>{` 1 ${token} = ${conversionRates.BTC.toLocaleString()}`}</p> : token === 'USDT' ? <p>{` 1 ${token} = ${conversionRates.USDT.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${conversionRates.ETH.toLocaleString()}`}</p>}
+                    {token === 'BUSD' ? <p>{` 1 ${token} = ${conversionRates.BUSD.toLocaleString()}`}</p> : token === 'TRC20' ? <p>{` 1 ${token} = ${conversionRates.USDT.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${conversionRates.TRX.toLocaleString()}`}</p>}
                 </div>
                 <div className="homepage-seperator"></div>
                 {type === 'transfer' ? 

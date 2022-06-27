@@ -37,7 +37,7 @@ function Header() {
                         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div className="navbar-nav ms-auto mt-4">
                             <Link to={userId != null ? "/dashboard" : "/account"}>
-                            <   button type="button" className="btn btn-outline-primary">{userId != null ? 'Go to Dasboard' : 'Create an Account'}</button>
+                            <button type="button" className="btn btn-outline-primary">{userId != null ? 'Go to Dasboard' : 'Create an Account'}</button>
                             </Link>
                             </div>
                         </div>

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function ResetPassword() {
     return ( 
         <div className="d-flex align-items-center justify-content-center vh-100">
-            <FormContainerLayout image={Logo}>
+            <FormContainerLayout image={Logo} type="account">
                 <h4 className="create-header-title">Reset Password</h4>
                 <p className="reset-info">Please enter the email associated with your account to reset your password.</p>
                 <div className="form-floating mb-3 me-4 ms-4">

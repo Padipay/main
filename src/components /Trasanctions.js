@@ -1,7 +1,13 @@
-import React, {  } from "react";
+import React, {useState} from "react";
 import '../styles/transactions.css';
 import TransactionList from "./TransactionList";
+
 function Transactions() {
+    const [data, setData] = useState('');
+
+    const totalTransaction = (data) => {
+        setData(data)
+    } 
     return ( 
         <div className="content shadow">
 			<nav>
@@ -13,7 +19,7 @@ function Transactions() {
             </nav>
             <div className="tab-content" id="nav-tabContent">
                 <div className="tab-pane fade show active mt-5" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <TransactionList />
+                    <TransactionList totalTransaction={totalTransaction}/>
                 </div>
                 <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
                 <div className="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>

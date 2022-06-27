@@ -36,10 +36,11 @@ export const userTransaction = async () => {
     return temp
 }
 
-export const saveTransaction = (receive, send, token, bankName, account_name, account_number) => {
+export const saveTransaction = (userId="null", receive, send, token, bankName, account_name, account_number) => {
     const transaction = firebase.firestore().collection('transactions').doc()
         transaction
             .set({
+                userId,
                 id: transaction.id,
                 receive,
                 send,
@@ -52,6 +53,7 @@ export const saveTransaction = (receive, send, token, bankName, account_name, ac
             })
             .then(() => {
                 console.log('Transaction Saved')
+                sessionStorage.setItem("transactionId", transaction.id) 
                 if (firebase.auth().currentUser) {
                     firebase.firestore()
                             .collection('users')
@@ -65,7 +67,6 @@ export const saveTransaction = (receive, send, token, bankName, account_name, ac
                                 bankName,
                                 account_name,
                                 account_number,
-                                status: 'Pending',
                                 date: firebase.firestore.FieldValue.serverTimestamp()
                             }).then(() => {
                                 console.log("Document successfully written!");

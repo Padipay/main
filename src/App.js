@@ -13,6 +13,7 @@ import NewPassword from './components /newPassword';
 import Dashboard from './components /Dashboard';
 import PrivateRoute from './components /PrivateRoute';
 import VerifyEmail from './components /verifyEmail';
+import SuccessfulTransaction from './components /SuccessfulTransaction';
 import Action from './components /action';
 import Admin from './admin/admin';
 import { useEffect } from 'react';
@@ -29,6 +30,12 @@ function App() {
   //     window.removeEventListener("beforeunload", onRefresh());
   //   };
   // }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+      sessionStorage.clear()
+    }, 600000);
+  })
   return (
    <>
    <TransferContextProvider>
@@ -40,6 +47,7 @@ function App() {
           <Route path="/review" element={<PrivateRoute>  <ReviewTransaction/> </PrivateRoute>}/>
           <Route path="/complete" element={<PrivateRoute> <CompleteTransaction /> </PrivateRoute>}/>
           <Route path="/account" element={<CreateAccount />} />
+          <Route path="/success" element={<SuccessfulTransaction />} />
           <Route path="/verify" element={<VerifyAccount />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/login" element={<Login />} />
