@@ -59,7 +59,9 @@ function SendForm({type, labelOne, labelTwo}) {
     const [country, setCountry ] = useState('NGN');
     const [receiveAmount, setReceive ] = useState('');
     const [sendAmount, setSend ] = useState('');
+    const [rates, setRates] = useState(null);
     const [switchInputs, setSwitchInputs ] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const [conversionRates, setConversionRates] = useState({
         BTC: 0,
@@ -81,11 +83,11 @@ function SendForm({type, labelOne, labelTwo}) {
         setReceive(value)
         if(value) {
             if (token === 'BUSD') {
-                setValue("send", value / conversionRates.BUSD)
+                setValue("send", value / rates[1].rate)
             }else if (token === 'USDT') {
-                setValue("send", value / conversionRates.USDT)
+                setValue("send", value / rates[3].rate)
             }else {
-                setValue("send", value / conversionRates.TRX)
+                setValue("send", value / rates[2].rate)
             }
         }else {
             setValue("send", '')
@@ -96,11 +98,11 @@ function SendForm({type, labelOne, labelTwo}) {
         setSend(value)
         if(value) {
             if (token === 'BUSD') {
-                setValue("receive", value * conversionRates.BUSD)
+                setValue("receive", value * rates[1].rate)
             }else if (token === 'USDT') {
-                setValue("receive", value * conversionRates.USDT)
+                setValue("receive", value * rates[3].rate)
             }else{
-                setValue("receive", value * conversionRates.TRX)
+                setValue("receive", value * rates[2].rate)
             }
         }else {
             setValue("send", '')
@@ -120,20 +122,42 @@ function SendForm({type, labelOne, labelTwo}) {
         sessionStorage.setItem("transferDetails", JSON.stringify(transferDetails))
     };
     useEffect(() => {
-        const rates = firebase.firestore().collection("conversion").doc("conversion-rates");
-        rates.get().then((doc) => {
-            if (doc.exists) {
-                setConversionRates(doc.data())
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
+        setLoading(true)
+        const temp = []
+        const convRates = async () => {
+            await firebase.firestore().collection("rates")
+                .onSnapshot((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    if (doc.exists) {
+                        temp.push({
+                            token: doc.data().Token,
+                            rate:  doc.data().currentRate
+                        });
+                    }
+                    setRates(temp)
+                    setLoading(false)
+                });
+            })
+        }
+        convRates()
+        // convRates.get().then((doc) => {
+        //     if (doc.exists) {
+        //         setConversionRates(doc.data())
+        //     } else {
+        //         // doc.data() will be undefined in this case
+        //         console.log("No such document!");
+        //     }
+        // }).catch((error) => {
+        //     console.log("Error getting document:", error);
+        // });
+        // return () => convRates()
     }, [])
+    console.log(rates)
     // const {setSendAmount, setReceiveAmount, setTokenValue } = useContext(TransferContext);
     return ( 
+        <>
+        {loading && <p>Loading content</p>}
+        {!loading && 
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="switch" onClick={handleSwitch}>
                 <MdSwapVert 
@@ -365,7 +389,8 @@ function SendForm({type, labelOne, labelTwo}) {
                 </div> 
                 }
                 <div className="conversion">
-                    {token === 'BUSD' ? <p>{` 1 ${token} = ${conversionRates.BUSD.toLocaleString()}`}</p> : token === 'TRC20' ? <p>{` 1 ${token} = ${conversionRates.USDT.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${conversionRates.TRX.toLocaleString()}`}</p>}
+                    {/* <p>{rates}</p> */}
+                {/* {token === 'BUSD' ? <p>{` 1 ${token} = ${rates[1].rate.toLocaleString()}`}</p> : token === 'TRC20' ? <p>{` 1 ${token} = ${rates[3].rate.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${rates[2].rate.toLocaleString()}`}</p>} */}
                 </div>
                 <div className="homepage-seperator"></div>
                 {type === 'transfer' ? 
@@ -380,7 +405,8 @@ function SendForm({type, labelOne, labelTwo}) {
                     <button type="submit" className="btn btn-primary btn-lg">Continue</button>
                 </div>
             </div>
-        </form>
+        </form>}
+        </>
      );
 }
 
