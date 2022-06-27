@@ -18,6 +18,9 @@ import { TransferContext } from "../contextApi/TransferContext";
 import firebase from '../firebase/firebase';
 import NumberFormat from 'react-number-format';
 import styled from "styled-components";
+import Skeleton from 'react-loading-skeleton'
+import "react-loading-skeleton/dist/skeleton.css";
+
 
 const StyledSelect = styled.select `
     border: none;
@@ -62,14 +65,6 @@ function SendForm({type, labelOne, labelTwo}) {
     const [rates, setRates] = useState(null);
     const [switchInputs, setSwitchInputs ] = useState(false);
     const [loading, setLoading] = useState(true);
-
-    const [conversionRates, setConversionRates] = useState({
-        BTC: 0,
-        USDT: 0,
-        ETH: 0,
-        BUSD: 0,
-        TRX: 0
-    })
     const navigate = useNavigate();
 
     const handleToken = (e) => {
@@ -122,8 +117,8 @@ function SendForm({type, labelOne, labelTwo}) {
         sessionStorage.setItem("transferDetails", JSON.stringify(transferDetails))
     };
     useEffect(() => {
-        const temp = []
         const convRates = async () => {
+            const temp = []
             await firebase.firestore().collection("rates")
                 .onSnapshot((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
@@ -139,11 +134,10 @@ function SendForm({type, labelOne, labelTwo}) {
                 })
             }
         convRates()
+        return () => convRates()
     }, [])
     return ( 
         <>
-        {loading && <p>Loading content</p>}
-        {!loading && 
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="switch" onClick={handleSwitch}>
                 <MdSwapVert 
@@ -374,10 +368,10 @@ function SendForm({type, labelOne, labelTwo}) {
                     { errors.send && <p className="errors mt-4">{errors.send?.message}</p>}
                 </div> 
                 }
+                {!loading && 
                 <div className="conversion">
-                    {/* <p>{rates}</p> */}
-                {token === 'BUSD' ? <p>{` 1 ${token} = ${rates[1].rate.toLocaleString()}`}</p> : token === 'TRC20' ? <p>{` 1 ${token} = ${rates[3].rate.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${rates[2].rate.toLocaleString()}`}</p>}
-                </div>
+                    {token === 'BUSD' ? <p>{` 1 ${token} = ${rates[1].rate.toLocaleString()}`}</p> : token === 'TRC20' ? <p>{` 1 ${token} = ${rates[3].rate.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${rates[2].rate.toLocaleString()}`}</p>}
+                </div>}
                 <div className="homepage-seperator"></div>
                 {type === 'transfer' ? 
                 <div className="input-border">
@@ -391,7 +385,7 @@ function SendForm({type, labelOne, labelTwo}) {
                     <button type="submit" className="btn btn-primary btn-lg">Continue</button>
                 </div>
             </div>
-        </form>}
+        </form>
         </>
      );
 }

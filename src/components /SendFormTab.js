@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../styles/Hometab.css'
 import TransferMoney from "./transferMoney";
 import '../styles/homepage.css';
 import SellCrypto from "./sellCrypto";
 import styled from "styled-components";
 import { StyledFormContainer } from "../styles/globalStyles";
+import SkeletonCard from "./SkeletonCard";
 
 const SendFormContainer = styled(StyledFormContainer)`
     padding-top : 20px
@@ -12,8 +13,18 @@ const SendFormContainer = styled(StyledFormContainer)`
 
 function SendFormTab({className}) {
     const [state, setState] = useState('transfer')
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false)
+        }, 5000);
+        return () => clearTimeout(timer)
+    }, [])
     return ( 
         <div className={className}>
+            {loading && <SkeletonCard />}
+            {!loading && 
             <SendFormContainer>
                 <div className="home-tab">
                     <div className="tabs-container">
@@ -28,7 +39,7 @@ function SendFormTab({className}) {
                 </div>
                 {state === 'transfer' ? 
                 <TransferMoney /> : <SellCrypto /> }
-            </SendFormContainer>
+            </SendFormContainer>}
         </div>
      );
 }
