@@ -61,7 +61,7 @@ function SendForm({type, labelOne, labelTwo}) {
     const [sendAmount, setSend ] = useState('');
     const [rates, setRates] = useState(null);
     const [switchInputs, setSwitchInputs ] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const [conversionRates, setConversionRates] = useState({
         BTC: 0,
@@ -122,38 +122,24 @@ function SendForm({type, labelOne, labelTwo}) {
         sessionStorage.setItem("transferDetails", JSON.stringify(transferDetails))
     };
     useEffect(() => {
-        setLoading(true)
         const temp = []
         const convRates = async () => {
             await firebase.firestore().collection("rates")
                 .onSnapshot((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    if (doc.exists) {
-                        temp.push({
-                            token: doc.data().Token,
-                            rate:  doc.data().currentRate
-                        });
-                    }
-                    setRates(temp)
-                    setLoading(false)
-                });
-            })
-        }
+                    querySnapshot.forEach((doc) => {
+                        if (doc.exists) {
+                            temp.push({
+                                token: doc.data().Token,
+                                rate:  doc.data().currentRate
+                            });
+                        }
+                        setRates(temp)
+                        setLoading(false)
+                    });
+                })
+            }
         convRates()
-        // convRates.get().then((doc) => {
-        //     if (doc.exists) {
-        //         setConversionRates(doc.data())
-        //     } else {
-        //         // doc.data() will be undefined in this case
-        //         console.log("No such document!");
-        //     }
-        // }).catch((error) => {
-        //     console.log("Error getting document:", error);
-        // });
-        // return () => convRates()
     }, [])
-    console.log(rates)
-    // const {setSendAmount, setReceiveAmount, setTokenValue } = useContext(TransferContext);
     return ( 
         <>
         {loading && <p>Loading content</p>}
@@ -390,7 +376,7 @@ function SendForm({type, labelOne, labelTwo}) {
                 }
                 <div className="conversion">
                     {/* <p>{rates}</p> */}
-                {/* {token === 'BUSD' ? <p>{` 1 ${token} = ${rates[1].rate.toLocaleString()}`}</p> : token === 'TRC20' ? <p>{` 1 ${token} = ${rates[3].rate.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${rates[2].rate.toLocaleString()}`}</p>} */}
+                {token === 'BUSD' ? <p>{` 1 ${token} = ${rates[1].rate.toLocaleString()}`}</p> : token === 'TRC20' ? <p>{` 1 ${token} = ${rates[3].rate.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${rates[2].rate.toLocaleString()}`}</p>}
                 </div>
                 <div className="homepage-seperator"></div>
                 {type === 'transfer' ? 
