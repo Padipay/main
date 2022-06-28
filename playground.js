@@ -50,3 +50,21 @@
                     //     value={receive}
                     //     onChange={handleReceive}
                     // />
+
+                    //     .get()
+                    //     .then((querySnapshot) => {
+                    //         if (querySnapshot.empty) {
+                    //             setLoading(false)
+                    //         }
+                    //         querySnapshot.forEach((doc) => {
+                    //             const data = {
+                    //                 data: doc.data()
+                    //             }
+                    //             temp.push(data)
+                    //             setTransactions(temp)
+                    //             totalTransaction(temp.length)
+                    //             setLoading(false)
+                    //         })
+                    //     }).catch((err) => {
+                    //         console.log(err.message)
+                    // })

@@ -15,16 +15,14 @@ function SkeletonCard() {
               <li className="card" key={index}>
                 <Skeleton 
                 height={40} 
-                width={200} 
                 borderRadius={12} 
-                style={{marginLeft: 90, marginBottom: 20, marginTop: 20}}
+                style={{marginLeft: 90, marginBottom: 20, marginTop: 20, width: '55%'}}
                 />
                 <Skeleton 
                 height={70} 
                 count={4} 
                 borderRadius={12} 
-                width={340} 
-                style={{marginLeft: 20, marginBottom: 20}}/>
+                style={{marginLeft: 24, marginBottom: 20, width: '88%'}}/>
               </li>
             ))}
         </ul>

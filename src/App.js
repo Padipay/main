@@ -11,7 +11,8 @@ import Login from './components /login';
 import ResetPassword from './components /resetPassword';
 import NewPassword from './components /newPassword';
 import Dashboard from './components /Dashboard';
-import PrivateRoute from './components /PrivateRoute';
+import PrivateRoute from './components /Privates/PrivateRoute';
+import TransactionRoute from './components /Privates/TransactionRoute';
 import VerifyEmail from './components /verifyEmail';
 import SuccessfulTransaction from './components /SuccessfulTransaction';
 import Action from './components /action';
@@ -43,9 +44,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage/>}/>
           <Route path="/send" element={<SendAmount />} />
-          <Route path="/details" element={<PrivateRoute> <RecepientDetails/> </PrivateRoute>}/>
-          <Route path="/review" element={<PrivateRoute>  <ReviewTransaction/> </PrivateRoute>}/>
-          <Route path="/complete" element={<PrivateRoute> <CompleteTransaction /> </PrivateRoute>}/>
+          <Route path="/details" element={<TransactionRoute> <RecepientDetails/> </TransactionRoute>}/>
+          <Route path="/review" element={<TransactionRoute>  <ReviewTransaction/> </TransactionRoute>}/>
+          <Route path="/complete" element={<TransactionRoute> <CompleteTransaction /> </TransactionRoute>}/>
           <Route path="/account" element={<CreateAccount />} />
           <Route path="/success" element={<SuccessfulTransaction />} />
           <Route path="/verify" element={<VerifyAccount />} />
