@@ -3,7 +3,17 @@ import Skeleton from 'react-loading-skeleton'
 import "react-loading-skeleton/dist/skeleton.css";
 import styled from "styled-components";
 
-// const FirstSkeleton = 
+const StyledLi = styled.li`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 360px;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1pxsolidrgba(0,0,0,.125);
+    border-radius: 0.75rem;
+`
 
 function SkeletonCard() {
     return ( 
@@ -12,7 +22,7 @@ function SkeletonCard() {
           {Array(1)
             .fill()
             .map((item, index) => (
-              <li className="card" key={index}>
+              <StyledLi key={index}>
                 <Skeleton 
                 height={40} 
                 borderRadius={12} 
@@ -23,7 +33,7 @@ function SkeletonCard() {
                 count={4} 
                 borderRadius={12} 
                 style={{marginLeft: 24, marginBottom: 20, width: '88%'}}/>
-              </li>
+              </StyledLi>
             ))}
         </ul>
       </section>

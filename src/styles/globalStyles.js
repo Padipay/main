@@ -1,6 +1,28 @@
 import styled from "styled-components";
 import Spinner from 'react-spinkit';
 
+
+const size = {
+  mobileS: '320px',
+  mobileM: '375px',
+  mobileL: '425px',
+  tablet: '768px',
+  laptop: '1024px',
+  laptopL: '1440px',
+  desktop: '2560px'
+}
+
+export const device = {
+  mobileS: `(min-width: ${size.mobileS})`,
+  mobileM: `(min-width: ${size.mobileM})`,
+  mobileL: `(min-width: ${size.mobileL})`,
+  tablet: `(min-width: ${size.tablet})`,
+  laptop: `(min-width: ${size.laptop})`,
+  laptopL: `(min-width: ${size.laptopL})`,
+  desktop: `(min-width: ${size.desktop})`,
+  desktopL: `(min-width: ${size.desktop})`
+};
+
 export const StyledMainContentContainer = styled.div.attrs(() => ({
   className: 'col-lg-9 col-sm-10'
 }))`
@@ -20,13 +42,17 @@ export const StyledMainFormContainer = styled.div`
 `;
 
 export const StyledFormContainer = styled.div `
-  // width: auto;
-  // height: auto;
+  width: auto;
+  height: auto;
   background-color: #FFFF;
   box-sizing: border-box;
   box-shadow: 0px 23px 44px rgba(176, 183, 195, 0.14);
   border-radius: 8px;
   padding-top: 40px;
+
+  @media ${device.laptop} { 
+    width: min-content
+  }
 `
 
 export const StyledTabContainer = styled.div `
@@ -56,9 +82,3 @@ export const LargeSpinner = styled(Spinner)`
   height: 10px;
 }
 `
-
-// export const StyledFormFloatingContainer = styled.div.attrs(() => {
-//   className: 'form-floating mb-3 me-4 ms-4'
-// })`
-
-// `
