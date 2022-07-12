@@ -20,8 +20,8 @@ export const StyledMainFormContainer = styled.div`
 `;
 
 export const StyledFormContainer = styled.div `
-  width: min-content;
-  height: auto;
+  // width: auto;
+  // height: auto;
   background-color: #FFFF;
   box-sizing: border-box;
   box-shadow: 0px 23px 44px rgba(176, 183, 195, 0.14);
