@@ -13,6 +13,7 @@ const StyledLi = styled.li`
     background-clip: border-box;
     border: 1pxsolidrgba(0,0,0,.125);
     border-radius: 0.75rem;
+    width: auto;
 `
 
 function SkeletonCard() {
