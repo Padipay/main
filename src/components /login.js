@@ -79,7 +79,7 @@ function Login() {
                         <p className="errors mt-3">{`${verifyError}. Click to resend`}</p>
                     </Link>
                      }
-                    <div className="additional-info">
+                    <div className="additional-info ms-4">
                         <p>Already have an account? 
                             <Link to="/register">
                                 <span>Sign Up</span>

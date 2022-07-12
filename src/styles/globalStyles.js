@@ -24,21 +24,25 @@ export const device = {
 };
 
 export const StyledMainContentContainer = styled.div.attrs(() => ({
-  className: 'col-lg-9 col-sm-10'
+  className: ''
 }))`
-  max-width: 40%;
-  margin-left: 58px;
+  // max-width: 40%;
+  // margin-left: 58px;
   // display: flex;
   // justify-content: center
 `
 export const StyledMainFormContainer = styled.div`
-  width: ${props => props.account ? '464px' : 'fit-content'};
+  // width: ${props => props.account ? '464px' : 'fit-content'};
   height: auto;
   background-color: #FFFF;
   box-sizing: border-box;
   box-shadow: 0px 23px 44px rgb(176 183 195 / 14%);
   border-radius: 8px;
   padding-top: 20px;
+
+  @media ${device.laptop} { 
+    width: 500px
+  }
 `;
 
 export const StyledFormContainer = styled.div `

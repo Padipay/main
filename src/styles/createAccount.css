@@ -33,11 +33,11 @@
     font-size: 16px;
 }
 .additional-info{
-    margin-left: 30px;
+    /* margin-left: 30px; */
 }
 .additional-info p{
     font-weight: 700;
-    font-size: large;
+    font-size: initial;
 }
 .additional-info span {
     font-weight: 700;
@@ -54,7 +54,7 @@
 .forgot-password p {
     font-weight: 600;
     color: #003399;
-    margin-left: 5px;
+    margin-left: -3px;
     margin-top: 10px;
 }
 

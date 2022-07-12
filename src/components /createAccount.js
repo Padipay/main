@@ -85,7 +85,7 @@ function CreateAccount() {
                     </div> 
                     { errors.password && <StyledError>Enter a valid password</StyledError>}*/}
                     {/* {error && <p className="errors mt-3">{error}</p>} */}
-                    <div className="additional-info">
+                    <div className="additional-info text-center">
                         <p>Already have an account? 
                             <Link to="/login">
                                 <span>Login</span>

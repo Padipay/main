@@ -4,9 +4,8 @@
 }
 
 .container-image {
-    height: 25px;
-    margin-bottom: 40px;
-    margin-left: 160px;
+    display: flex;
+    justify-content: center;
 }
 
 @media (max-width: 576px) {

@@ -8,8 +8,8 @@ function FormContainerLayout({children, title, image, type}) {
         <>
         <StyledMainContentContainer account={type}>
             {title && <h4 className="send-info">{title}</h4>}
-            <Link to="/">
-                {image && <img className="container-image" src={image} alt="Logo" />}
+            <Link to="/" className="container-image mb-4">
+                {image && <img src={image} alt="Logo" />}
             </Link>
             <StyledMainFormContainer account={type}>
                 {children}
