@@ -177,16 +177,16 @@ function SendForm({type, labelOne, labelTwo}) {
                             onChange={handleToken}>
 
                             <option value="BUSD" >BUSD</option>
-                            <option value="TRC20" >TRC20</option>
-                            <option value="TRON" >TRON</option>
+                            <option value="USDT" >USDT</option>
+                            <option value="TRX" >TRON</option>
 
                             <option value="BTC" disabled>BTC</option>
                             <option value="USDT" disabled>USDT</option>
                             <option value="ETH" disabled>ETH</option>
                             </StyledSelect>
                         {token === 'BUSD' && <img src={busd} alt="btc" className="select-token-image"/>}
-                        {token === 'TRC20' && <img src={trc20} alt="trc20" className="select-token-image"/>}
-                        {token === 'TRON' && <img src={tron} alt="tron" className="select-token-image"/>}
+                        {token === 'USDT' && <img src={trc20} alt="trc20" className="select-token-image"/>}
+                        {token === 'TRX' && <img src={tron} alt="tron" className="select-token-image"/>}
                     </div>
                     { errors.send && <p className="errors mt-4">{errors.send?.message}</p>}
                 </div> 
@@ -354,23 +354,23 @@ function SendForm({type, labelOne, labelTwo}) {
                             onChange={handleToken}>
 
                             <option value="BUSD" >BUSD</option>
-                            <option value="TRC20" >TRC20</option>
-                            <option value="TRON" >TRON</option>
+                            <option value="USDT" >USDT</option>
+                            <option value="TRX" >TRON</option>
 
                             <option value="BTC" disabled>BTC</option>
                             <option value="USDT" disabled>USDT</option>
                             <option value="ETH" disabled>ETH</option>
                         </StyledSelect>
                         {token === 'BUSD' && <img src={busd} alt="btc" className="select-token-image"/>}
-                        {token === 'TRC20' && <img src={trc20} alt="trc20" className="select-token-image"/>}
-                        {token === 'TRON' && <img src={tron} alt="tron" className="select-token-image"/>}
+                        {token === 'USDT' && <img src={trc20} alt="trc20" className="select-token-image"/>}
+                        {token === 'TRX' && <img src={tron} alt="tron" className="select-token-image"/>}
                     </div>
                     { errors.send && <p className="errors mt-4">{errors.send?.message}</p>}
                 </div> 
                 }
                 {!loading && 
                 <div className="conversion">
-                    {token === 'BUSD' ? <p>{` 1 ${token} = ${rates[1].rate.toLocaleString()}`}</p> : token === 'TRC20' ? <p>{` 1 ${token} = ${rates[3].rate.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${rates[2].rate.toLocaleString()}`}</p>}
+                    {token === 'BUSD' ? <p>{` 1 ${token} = ${rates[1].rate.toLocaleString()}`}</p> : token === 'USDT' ? <p>{` 1 ${token} = ${rates[3].rate.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${rates[2].rate.toLocaleString()}`}</p>}
                 </div>}
                 <div className="homepage-seperator"></div>
                 {type === 'transfer' ? 

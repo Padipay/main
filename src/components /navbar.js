@@ -16,7 +16,7 @@ function Navbar() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav ms-auto mt-4">
-                        <Link to="/account">
+                        <Link to="/register">
                             <button className="btn btn-primary get-started">Get started</button>
                         </Link>
                     </div>

@@ -4,21 +4,23 @@ import '../styles/recepientDetails.css';
 import Stepper from "./stepper";
 import Header from "./header";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {bankCodes} from '../data/data.js';
 import FormContainerLayout from "./formContainerLayout";
 import { FormContainer } from "../styles/globalStyles";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/bootstrap.css';
 
 const schema  = yup.object({
     email: yup.string()
     .email("Enter recepient email")
     .required("Please enter a valid email"),
 
-    phone_number: yup.number()
+    phone_number: yup.string()
     .required("Please enter a valid phone number")
-    .typeError("Enter a valid phone number"),
+    .min(9, 'Enter a valid phone number'),
 
     accountNum: yup.number("Account Number cannot be empty")
     .required("Account Number cannot be empty")
@@ -29,7 +31,7 @@ const schema  = yup.object({
 }).required();
 
 function RecepientDetails() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    const { control, register, handleSubmit, watch, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
     const [page, setPage ] = useState(1);
@@ -78,12 +80,12 @@ function RecepientDetails() {
             accountName: accountName,
             accountNumber: accountNumber,
             bankName: bankName,
-            email: recepientEmail
+            email: recepientEmail,
+            phoneNumber: phoneNumber
         };
         sessionStorage.setItem("recepientDetails", JSON.stringify(recepientDetails));
         navigate("/review")
     }
-
     return (
         <>
             <Header />
@@ -104,15 +106,30 @@ function RecepientDetails() {
                             onChange={(e) => setRecepientEmail(e.target.value)}/> 
                         </div>
                         {<p className="errors">{errors.email?.message}</p>}
-                        <div className="input-border">
+                        {/* <div className="input-border">
                             <label className="label-send">Phone Number</label>
                             <input 
                             {...register("phone_number")}
-                            type="number" 
+                            type="text" 
                             className="input-field" 
                             placeholder="🇳🇬 +234043504305"
                             onChange={(e) => setPhoneNumber(e.target.value)}/> 
-                        </div>
+                        </div> */}
+                            <Controller 
+                            name="phone_number"
+                            control={control}
+                            render={({field, field: { onChange, value } }) => (
+                                <PhoneInput
+                                country={'ng'}
+                                inputStyle={{width:400, borderRadius: 12, height:67}}
+                                containerStyle={{marginLeft: 15}}
+                                onChange={(phone) => {
+                                    setPhoneNumber(phone)
+                                    onChange(phone)
+                                }}
+                                />
+                            )}
+                            />
                         {<p className="errors">{errors.phone_number?.message}</p>}
                         <div className="input-border">
                             <select 

@@ -20,7 +20,7 @@ export const StyledMainFormContainer = styled.div`
 `;
 
 export const StyledFormContainer = styled.div `
-  max-width: min-content;
+  width: min-content;
   height: auto;
   background-color: #FFFF;
   box-sizing: border-box;
@@ -45,7 +45,7 @@ export const StyledError = styled.p.attrs(() => ({
 }))`
     color: rgb(220, 53, 69);
     font-weight: 600;
-    font-size: 20px;
+    font-size: 15px;
     opacity: 1;
     text-align: center;
 `

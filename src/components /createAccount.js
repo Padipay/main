@@ -19,43 +19,38 @@ const StyledSpinnerSpan = styled.span`
 function CreateAccount() {
     const { register, handleSubmit, formState: { errors } } = useForm({});
     const navigate = useNavigate();
-    const [error, setError ] = useState('')
-    const [loading, setLoading ] = useState(false)
+    // const [error, setError ] = useState('')
+    // const [loading, setLoading ] = useState(false)
 
-    const onSubmit = ({email, password, username}) => {
-        setLoading(true)
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then((response) => {
-                const uid = response.user.uid
-                sendVerificationEmail(email, username)
-                response.user.getIdToken().then(function(idToken) { 
-                    sessionStorage.setItem('Auth-Token', idToken)
-                 });
-                const usersRef = firebase.firestore().collection('users')
-                usersRef
-                    .doc(uid)
-                    .set({email, username})
-                    .then(() => {
-                        setLoading(false)
-                        navigate('/verify', {state: {email: email}})
-                    })
-                    .catch((error) => {
-                        setError(error.message) 
-                    })
-            })
-        .catch((error) => {
-            console.log(error.message)
-            setError('This email is already in use by another account') 
-            setLoading(false)
-        }); 
+    const onSubmit = ({fname, lname, email}) => {
+        navigate('/password', {state: {email: email, firstname: fname, lastname:lname}})
     }
 
     return (
-
         <div className="d-flex align-items-center justify-content-center vh-100">
             <FormContainerLayout image={Logo} type="account">
                 <h4 className="create-header-title">Create an Account</h4>
                 <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="form-floating mb-3 me-4 ms-4">
+                        <input 
+                        type="text" 
+                        className="form-control" 
+                        id="floatingInputfname" 
+                        {...register("fname", {required: true})}
+                        />
+                        <label htmlFor="floatingInput">First Name</label>
+                    </div>
+                    { errors.email && <StyledError>First Name is required</StyledError>}
+                    <div className="form-floating mb-3 me-4 ms-4">
+                        <input 
+                        type="text" 
+                        className="form-control" 
+                        id="floatingInputlname" 
+                        {...register("lname", {required: true})}
+                        />
+                        <label htmlFor="floatingInput">Last Name</label>
+                    </div>
+                    { errors.lname && <StyledError>Last name is required</StyledError>}
                     <div className="form-floating mb-3 me-4 ms-4">
                         <input 
                         type="email" 
@@ -67,7 +62,7 @@ function CreateAccount() {
                         <label htmlFor="floatingInput">Email address</label>
                     </div>
                     { errors.email && <StyledError>Please email is required</StyledError>}
-                    <div className="form-floating mb-3 me-4 ms-4">
+                    {/* <div className="form-floating mb-3 me-4 ms-4">
                         <input 
                         type="text" 
                         className="form-control" 
@@ -76,9 +71,9 @@ function CreateAccount() {
                         {...register("username", {required: true})}
                         />
                         <label htmlFor="floatingPassword">Username</label>
-                    </div>
+                    </div> */}
                     { errors.username && <StyledError>Please username is required</StyledError>}
-                    <div className="form-floating mb-3 me-4 ms-4">
+                    {/* <div className="form-floating mb-3 me-4 ms-4">
                         <input 
                         type="password" 
                         className="form-control" 
@@ -87,9 +82,9 @@ function CreateAccount() {
                         {...register("password", {required: true})}
                         />
                         <label htmlFor="floatingPassword">Password</label>
-                    </div>
-                    { errors.password && <StyledError>Enter a valid password</StyledError>}
-                    {error && <p className="errors mt-3">{error}</p>}
+                    </div> 
+                    { errors.password && <StyledError>Enter a valid password</StyledError>}*/}
+                    {/* {error && <p className="errors mt-3">{error}</p>} */}
                     <div className="additional-info">
                         <p>Already have an account? 
                             <Link to="/login">
@@ -100,7 +95,7 @@ function CreateAccount() {
                     <div className="send-btn">
                         <button type="submit" className="btn btn-primary btn-lg mb-5 mt-3">
                             Next
-                            <StyledSpinnerSpan>{loading && <LargeSpinner name="three-bounce" color="white" /> }</StyledSpinnerSpan>
+                            {/* <StyledSpinnerSpan>{loading && <LargeSpinner name="three-bounce" color="white" /> }</StyledSpinnerSpan> */}
                         </button>
                     </div>
                 </form>

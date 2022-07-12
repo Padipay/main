@@ -1,8 +1,9 @@
-export const transactSuccessEmail = async (userEmail, send, receive, token, date) => {
+export const transactSuccessEmail = async (userEmail, send, receive, token, date, id) => {
     await fetch('http://localhost:5000/send-success-email', {
         method: 'POST',
         body: JSON.stringify({
           userEmail,
+          id,
           send,
           receive,
           token,

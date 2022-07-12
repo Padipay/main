@@ -5,11 +5,12 @@ import EmptyTransaction from "./emptyTransaction";
 import Spinner from 'react-spinkit';
 
 function TransactionList({totalTransaction}) {
-    const [transactions, setTransactions] = useState(null);
+    const [transactions, setTransactions] = useState([]);
     const [receiveTotal, setReceiveTotal] = useState(null);
     const [loading, setLoading] = useState(true);
     // const userId = sessionStorage.getItem("userId");
     // const [userId, setUserId] = useState(null)
+    // {`${item.id.substring(0, 8)}...`}
 
 
     useEffect(() => {
@@ -37,9 +38,7 @@ function TransactionList({totalTransaction}) {
     }, [])
     return ( 
         <>
-        {transactions === null ? <EmptyTransaction/> : null}
-        {/* {loading && <EmptyTransaction/>} */}
-        {!loading &&
+        {transactions.length === 0 ? <EmptyTransaction/> : !loading &&
         <div className="table-header table-responsive-sm mt-3">
             <table className="table">
                 <thead className="table-secondary">
@@ -58,7 +57,7 @@ function TransactionList({totalTransaction}) {
                     {transactions.map((item,index) => (
                         <tr key={index}>
                             <th>Transfer</th>
-                            <td>{`${item.id.substring(0, 8)}...`}</td>
+                            <td>{item.id}</td>
                             <td>{item.send}</td>
                             <td>{item.receive}</td>
                             <td>{item.token}</td>

@@ -13,7 +13,7 @@ function VerifyAccount() {
     return ( 
         <div className="d-flex align-items-center justify-content-center vh-100 verify">
             <FormContainerLayout image={Logo} type="account">
-                <img className="image-verify" src={verify} alt="image" />
+                <img className="image-verify" src={verify} alt="logo" />
                 <h4>Verify your account</h4>
                 <p>We’ve sent an email to</p>
                 <p className="text-decoration-underline fw-bold">{location.state.email}</p>

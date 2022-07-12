@@ -1,12 +1,13 @@
 import React from "react";
-import { Filter, TextInput } from 'react-admin';
+import { Filter, TextInput, SearchInput} from 'react-admin';
 import QuickFilter from "./quickFilter";
 
 
 function TransactionFilter(props) {
     return ( 
         <Filter {...props}>
-            <TextInput label="Search" source="status" alwaysOn />
+            <SearchInput source="id" alwaysOn/>
+            <TextInput label="Search" source="status" />
             <QuickFilter source="status" label="status" defaultValue={true} />
         </Filter>
      );

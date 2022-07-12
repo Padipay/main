@@ -13,31 +13,36 @@ function Login() {
     const { control, register, handleSubmit, setValue, getValues, formState: { errors } } = useForm({});
     const navigate = useNavigate();
     const [ error, setError ] = useState('')
+    const [ verifyError, setVerifyError ] = useState('')
 
     const onSubmit = ({email, password}) => {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((response) => {
-                navigate('/dashboard')
-                const uid = response.user.uid
-                response.user.getIdToken().then(function(idToken) { 
-                    sessionStorage.setItem('Auth-Token', idToken)
-                 });
-                const usersRef = firebase.firestore().collection('users')
-                usersRef
-                .doc(uid)
-                .get()
-                .then(firestoreDocument => {
-                    if(!firestoreDocument.exists) {
-                        navigate('/login')
-                    }
+                if (response.user.emailVerified === true) {
                     navigate('/dashboard')
-                })
-                .catch((error) => {
-                    console.log(error.message)
-                })
+                    const uid = response.user.uid
+                    response.user.getIdToken().then(function(idToken) { 
+                        sessionStorage.setItem('Auth-Token', idToken)
+                    });
+                    const usersRef = firebase.firestore().collection('users')
+                    usersRef
+                    .doc(uid)
+                    .get()
+                    .then(firestoreDocument => {
+                        if(!firestoreDocument.exists) {
+                            navigate('/login')
+                        }
+                        navigate('/dashboard')
+                    })
+                    .catch((error) => {
+                        setError('User does not exist, try again')
+                    })
+                }else{
+                    setVerifyError('Please verify your email address')
+                }
             })
             .catch((error) => {
-                console.log(error.message)
+                setError('Email address or password was wrong')
         })
     }
 
@@ -68,9 +73,15 @@ function Login() {
                         <label htmlFor="floatingPassword">Password</label>
                     </div>
                     { errors.password && <p className="errors mt-3">Password is required</p>}
+                    {error && <p className="errors mt-3">{error}</p>}
+                    {verifyError &&                     
+                    <Link to="/resend-email">
+                        <p className="errors mt-3">{`${verifyError}. Click to resend`}</p>
+                    </Link>
+                     }
                     <div className="additional-info">
                         <p>Already have an account? 
-                            <Link to="/account">
+                            <Link to="/register">
                                 <span>Sign Up</span>
                             </Link>
                         </p>

@@ -4,10 +4,11 @@ import {
     FirebaseAuthProvider,
     FirebaseDataProvider,
   } from 'react-admin-firebase';
-import TransactionList from "../components /transactions/transactionList";
-import EditTransaction from "../components /transactions/editTransactions";
-import ConversionList from "../components /ConversionRates/conversionList";
-import EditConversion from "../components /ConversionRates/editConversion";
+import TransactionList from './components/transactionList';
+import EditTransaction from "./components/editTransactions";
+import ConversionList from './components/conversionList'
+import EditConversion from "./components/editConversion";
+import UserList from "./components/userList";
 
 const config = {
     apiKey: process.env.REACT_APP_apiKey,
@@ -19,7 +20,7 @@ const config = {
 };
 
 const options = {
-    watch: ['transactions']
+    watch: ['transactions', 'rates']
 }
 
 const dataProvider = FirebaseDataProvider(config, options);
@@ -31,6 +32,7 @@ function AdminDashboard() {
         <Admin dataProvider={dataProvider} authProvider={authProvider} basename="/admin">
             <Resource name="transactions" list={TransactionList} edit={EditTransaction}/>
             <Resource name="rates" list={ConversionList} edit={EditConversion}/>
+            <Resource name="users" list={UserList} />
         </Admin>
         </>
      );

@@ -9,7 +9,7 @@ sgMail.setApiKey(SENDGRID_KEY)
 module.exports = function sendVerificationEmail(userEmail, template, actionLink){
     const message = {
       from: {
-        name: 'Custom verify',
+        name: 'Verify Email',
         email: VERIFIED_EMAIL
       },
       to: userEmail,
@@ -22,20 +22,21 @@ module.exports = function sendVerificationEmail(userEmail, template, actionLink)
     return sgMail.send(message)
 }
 
-module.exports = function sendSuccessfulTransactionEmail(userEmail, template, send, receive, token, date){
-  const message = {
-    from: {
-      name: 'Successful Transaction',
-      email: VERIFIED_EMAIL
-    },
-    to: userEmail,
-    subject: 'Successful Transaction',
-    text: `Your transaction was successful. Below are details of the transaction
-    \n\n Send: ${send} ${token}.
-    \n\n Receive ${receive}.
-    \n\n Date: ${date}.`,
-    html: template
-  }
+// module.exports = function sendSuccessfulTransactionEmail(userEmail, template, send, receive, token, date, id){
+//   const message = {
+//     from: {
+//       name: 'Successful Transaction',
+//       email: VERIFIED_EMAIL
+//     },
+//     to: userEmail,
+//     subject: 'Padipay Successful Transaction',
+//     text: `Your transaction was successful. Below are details of the transaction
+//     \n\n Trandaction ID: ${id}.
+//     \n\n Send: ${send} ${token}.
+//     \n\n Receive ${receive}.
+//     \n\n Date: ${date}.`,
+//     html: template
+//   }
 
-  return sgMail.send(message)
-}
+//   return sgMail.send(message)
+// }

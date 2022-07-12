@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Stepper from "./stepper";
 import '../styles/completeTransaction.css';
 import PaymentDetails from "./paymentDetails";
@@ -23,20 +23,23 @@ function CompleteTransaction() {
 
     const {tokenValue, sendAmount, receiveAmount} = JSON.parse(sessionStorage.getItem("transferDetails"));
     const {accountNumber, accountName, bankName} = JSON.parse(sessionStorage.getItem("recepientDetails"));
+    const[userId, setuserId] = useState('');
     
     const [open, setOpen] = useState('');
+
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged((user) =>{
+            if (user) {
+                setuserId(user.uid)
+            }
+        })
+    }, [])
     const onSubmit = () => {
-        const userId = firebase.auth().currentUser.uid
-        if (userId) {
+        if (userId != '') {
             saveTransaction(userId,receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber)
         }else {
             saveTransaction(receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber)
         }
-        // send: sendAmount,
-        // token: tokenValue,
-        // bankName: bankName,
-        // account_name: accountName,
-        // account_number:accountNumber,
        setOpen(true)
       
     }

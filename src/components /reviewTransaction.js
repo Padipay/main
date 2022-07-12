@@ -13,11 +13,7 @@ function ReviewTransaction() {
     const [page, setPage ] = useState(2);
     const [transferDetails, setTransferDetails ] = useState({});
     const [recepientDetails, setRecepientDetails ] = useState({});
-    const [conversionRates, setConversionRates] = useState({
-        BTC: 0,
-        USDT: 0,
-        ETH: 0
-    })
+    const [rates, setRates] = useState(null);
     const navigate = useNavigate();
     const [loading, setLoading ] = useState(true)
 
@@ -26,25 +22,30 @@ function ReviewTransaction() {
         const recepientDetails = JSON.parse(sessionStorage.getItem("recepientDetails"));
         setTransferDetails(transferDetails)
         setRecepientDetails(recepientDetails)
-        setLoading(false)
-
-        const rates = firebase.firestore().collection("conversion").doc("conversion-rates");
-        rates.get().then((doc) => {
-            if (doc.exists) {
-                setConversionRates(doc.data())
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
+        const convRates = async () => {
+            const temp = []
+            await firebase.firestore().collection("rates")
+                .onSnapshot((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        if (doc.exists) {
+                            temp.push({
+                                token: doc.data().Token,
+                                rate:  doc.data().currentRate
+                            });
+                        }
+                        setRates(temp)
+                        setLoading(false)
+                    });
+                })
             }
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
+        convRates()
+        return () => convRates()
 
     }, []);
-
     const {sendAmount, receiveAmount, tokenValue} = transferDetails;
     const {accountNumber, accountName } = recepientDetails;
-    
+ 
+   
     // const {sendAmount, receiveAmount, tokenValue, recepientName, recepientAccNum } = useContext(TransferContext)
     return ( 
         <>
@@ -94,14 +95,12 @@ function ReviewTransaction() {
                                 />
                             </p>
                         </div>
-                        {/* <div className="transfer-details">
-                            <p className="description">Amount in USD</p>
-                            <p className="details">0.85 USD</p>
-                        </div> */}
                         <div className="transfer-details">
                             <p className="description">{`1 ${tokenValue} ~ NGN Rate`}</p>
-                            <p className="details">{tokenValue === 'BTC' ? `${conversionRates.BTC} ${tokenValue}` : 
-                            tokenValue === 'USDT' ? `${conversionRates.USDT} ${tokenValue}`: `${conversionRates.ETH} ${tokenValue}`}</p>
+                            {!loading && 
+                            <p className="details">{tokenValue === 'BTC' ? `${rates[0].rate.toLocaleString()} ${tokenValue}` : 
+                            tokenValue === 'BUSD' ? `${rates[1].rate.toLocaleString()} ${tokenValue}`: tokenValue === 'TRX' ? `${rates[2].rate.toLocaleString()} ${tokenValue}` :
+                            `${rates[3].rate.toLocaleString()} ${tokenValue}`}</p> }
                         </div>
                         
                         <div className="sub-content">

@@ -1,7 +1,7 @@
 import React from "react";
 import { Edit, 
     TextInput, 
-    DateField, 
+    BooleanField, 
     SimpleForm} from 'react-admin';
 function EditTransaction() {
     return (  
@@ -15,7 +15,7 @@ function EditTransaction() {
                     <TextInput disabled source='account_name'/>
                     <TextInput disabled source='account_number'/>
                     <TextInput disabled source='bank_name'/> */}
-                    <TextInput source='status'/>
+                    <BooleanField source='status'/>
                     {/* <DateField disabled source='date'/> */}
                 </SimpleForm>
             </Edit>

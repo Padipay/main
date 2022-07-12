@@ -7,30 +7,39 @@ import { Link } from "react-router-dom";
 import firebase from '../firebase/firebase';
 import Spinner from 'react-spinkit';
 
-
 function VerifyEmail({actionCode}) {
     const [error, setError ] = useState('');
     const [validCode, setValidCode ] = useState(null);
-    const [verifiedCode, setVerifiedCode ] = useState(true);
+    const [verifiedCode, setVerifiedCode ] = useState(false);
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        firebase.auth().applyActionCode(actionCode)
-        .then(() => {
-            setValidCode(true)
-            setVerifiedCode(true)
-        }).catch((err) => {
-            setError(err.message)
-            setValidCode(false)
-            setVerifiedCode(true)
-        });
+        const checkCode = async () => {
+            setLoading(true)
+            await firebase.auth().applyActionCode(actionCode)
+            .then(() => {
+                setLoading(false)
+                setValidCode(true)
+                setVerifiedCode(true)
+            }).catch((err) => {
+                setLoading(false)
+                setError("The link you clicked might have been expired or broken try verifying again or request a new link below")
+                // setValidCode(false)
+                // setVerifiedCode(false)
+                console.log(err.message)
+            });
+        }
+
+        checkCode()
     }, [])
 
     return ( 
         <>
-        { verifiedCode && validCode === 'true' ? 
         <div className="d-flex align-items-center justify-content-center vh-100 verify">
-            <FormContainerLayout image={Logo}>
-                <img className="image-verify" src={verify} alt="image" />
+        {loading === true ? <Spinner name="line-scale-pulse-out" color="blue"/> 
+        : verifiedCode && validCode === true ?
+            <FormContainerLayout image={Logo} type="account">
+                <img className="image-verify" src={verify} alt="logo" />
                 <h4>Verified</h4>
                 <p>Thank you for verifying your email address.</p>
                 <p>Click the continue button below to login to your account.</p>
@@ -39,13 +48,22 @@ function VerifyEmail({actionCode}) {
                         <button type="submit" className="btn btn-primary btn-lg mb-5 mt-3">Continue</button>
                     </Link>
                 </div>
+            </FormContainerLayout> :
+            <FormContainerLayout image={Logo} type="account">
+                <img className="image-verify" src={verify} alt="logo" />
+                <h1>Oops there was a problem</h1>
+                <p className="pb-4">{error}</p>
             </FormContainerLayout>
-        </div> : 
-        <div className="errorClass">
-            <h1>Try verifying your email again</h1>
-            <p className="error">{error}</p>
-        </div>
-        }
+            }
+        </div> 
+        {/* <div className="d-flex align-items-center justify-content-center vh-100 verify">
+            <FormContainerLayout image={Logo} type="account">
+                <img className="image-verify" src={verify} alt="logo" />
+                <h1>Oops there was a problem</h1>
+                <p className="pb-4">{error}</p>
+                
+            </FormContainerLayout>
+        </div> */}
     </>
     );
 }

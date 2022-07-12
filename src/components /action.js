@@ -1,37 +1,39 @@
 import React from 'react';
 import RecoverEmail from './RecoverEmail';
-import ResetPassword from './resetPassword';
+import NewPassword from './newPassword';
 import VerifyEmail from './verifyEmail';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
+
 import NotFound from './NotFound';
 
 
 const Action = (props) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  searchParams.getAll()
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // searchParams.getAll("mode")
 
-  console.log(searchParams)
-  
+
+  // console.log(searchParams)
   // // Get the action to complete.
-  // const mode = props.location.query.mode;
+  const getParams = new URLSearchParams(window.location.search);
+  const mode = getParams.get('mode')
 
   // // Get the one-time code from the query parameter.
-  // const actionCode = props.location.query.oobCode;
+  const actionCode = getParams.get('oobCode')
 
   // // (Optional) Get the API key from the query parameter.
   // // const apiKey = props.location.query.apiKey;
 
   // Handle the user management action.
-  switch (searchParams.mode) {
+  switch (mode) {
     case 'recoverEmail':
       // Display reset password handler and UI.
-      return <RecoverEmail actionCode={searchParams.actionCode} />;
+      return <RecoverEmail actionCode={actionCode} />;
     case 'resetPassword':
       // Display email recovery handler and UI.
-      return <ResetPassword actionCode={searchParams.actionCode} />;
+      return <NewPassword actionCode={actionCode} />;
     case 'verifyEmail':
       // Display email verification handler and UI.
-      return <VerifyEmail actionCode={searchParams.actionCode} />;
+      return <VerifyEmail actionCode={actionCode} />;
     default:
       // Error: invalid mode.
       return (

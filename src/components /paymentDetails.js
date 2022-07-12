@@ -8,98 +8,54 @@ import { MdOutlineClose } from "react-icons/md";
 import { RiFileCopyLine } from "react-icons/ri";
 import { BiStopwatch } from "react-icons/bi";
 
-import Countdown from 'react-countdown';
 import { Link, useNavigate } from "react-router-dom";
 
 import firebase from '../firebase/firebase';
 import { transactSuccessEmail } from "../api/transactionSuccessEmail";
+import { sendSms } from "../api/sendSms";
+import CountdownTimer from './countdownTimer'
 
 function PaymentDetails({open}) {
   const {tokenValue, sendAmount, receiveAmount} = JSON.parse(sessionStorage.getItem("transferDetails"));
-  const {email} = JSON.parse(sessionStorage.getItem("recepientDetails"));
+  const {phoneNumber, email} = JSON.parse(sessionStorage.getItem("recepientDetails"));
   const [show, setShow] = useState(false); 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [transactions, setTransactions] = useState(null);
   const [status, setStatus] = useState(null);
+  const [success, setSuccess] = useState(false)
 
   const [address, setAddress] = useState('0x9A18182dAef0d99DdE8cedD817515A8Fe8491C96')
 
   const navigate = useNavigate()
   
-  // Renderer callback with condition
-    const renderer = ({ hours, minutes, seconds, completed }) => {
-        if (completed) {
-        // Render a completed state
-        return navigate("/"), sessionStorage.clear()
-        } else {
-        // Render a countdown
-        return <span className="timer">{minutes}:{seconds}</span>;
-        }
-    };
-
     useEffect(() => {
-        const getStatus = async () => {
+        const getStatus = setInterval( async () => {
             const transactionid = sessionStorage.getItem("transactionId")
             const temp = []
             if (transactionid) {
-                firebase
+                await firebase
                     .firestore().collection('transactions')
                     .doc(transactionid)
                     .onSnapshot((doc) => {
                         temp.push(doc.data())
                         setTransactions(temp)
-                        if (transactions && transactions[0].status === 'Successful') {
+                        if (transactions && transactions[0].status === true) {
                             const date = new Date(transactions[0].date.toDate()).toDateString()
-                            transactSuccessEmail(email, sendAmount, receiveAmount, tokenValue, date)
-                            navigate('/dashboard')
+                            const body = `Your transaction with ID number: ${transactionid} on padipay was successful.`
+                            const phone_number = `+${phoneNumber}`
+                            sendSms(phone_number, body)
+                            transactSuccessEmail(email, sendAmount, receiveAmount, tokenValue, date, transactionid)
+                            console.log("status has changed")
+                            setSuccess(true)
+                            sessionStorage.setItem("success", true)
+                            navigate('/success-transact')
                         }
                     })         
                 }
-        }
-        getStatus()
-    }, [transactions])
-
-    // useEffect(() => {
-    //     const transactionid = sessionStorage.getItem("transactionId")
-    //     const temp = []
-    //     const getStatus = async () => firebase
-    //                     .firestore().collection('transactions')
-    //                         .where("id", "==", transactionid)
-    //                         .get()
-    //                         .then((querySnapshot) => {
-    //                         if (querySnapshot.empty) {
-    //                             setStatus(false)
-    //                         }
-    //                         querySnapshot.forEach((doc) => {
-    //                             const data = {
-    //                                 data: doc.data()
-    //                             }
-    //                             temp.push(data)
-    //                             setTransactions(temp)
-    //                             // console.log(transactions[0].data.status)
-                                
-    //                             if (transactions[0].data.status === 'Successful') {
-    //                                 const date = new Date(transactions[0].data.date.toDate()).toDateString()
-    //                                 setStatus(true)
-    //                                 navigate('/dashboard')
-    //                                 transactSuccessEmail(email, sendAmount, receiveAmount, tokenValue, date)
-    //                             }
-    //                         })
-    //                     }).catch((err) => {
-    //                         console.log(err.message)
-    //                     })
-    //         const refresh = () => {
-    //             setTimeout(() => {
-    //                 getStatus()
-    //             }, 6000);
-    //         }            
-    //         refresh()
-    //         return () => clearTimeout(refresh())
-    // }, [transactions])
-
-    // console.log(transactions)
-    
+        }, 5000);
+        return () => clearInterval(getStatus)
+    }, [transactions])  
     return (  
         <>
       <Modal
@@ -117,7 +73,7 @@ function PaymentDetails({open}) {
             <>
                 <div className="modal-heading">
                     <p> <BiStopwatch size={20} style={{fill: 'white'}}/> Time remaining for your payment</p>
-                    <Countdown date={Date.now() + 600000}  renderer={renderer}/>
+                    <CountdownTimer />
                 </div>
                 <div className="modal-info">
                     <p>Complete your transaction by sending to the address below</p>

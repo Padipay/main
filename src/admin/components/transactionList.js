@@ -4,6 +4,7 @@ import { List,
     TextField, 
     DateField, 
     EditButton, 
+    BooleanField,
     DeleteButton,
     ShowButton } from 'react-admin';
 import TransactionFilter from "./transactionFilter";
@@ -19,7 +20,7 @@ function TransactionList(props) {
                 <TextField source='account_name'/>
                 <TextField source='account_number'/>
                 <TextField source='bankName'/>
-                <TextField source='status'/>
+                <BooleanField source='status'/>
                 <DateField source='date'/>
                 <EditButton />
             </Datagrid>
