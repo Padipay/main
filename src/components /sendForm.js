@@ -30,7 +30,7 @@ const StyledSelect = styled.select `
     position: absolute;
     margin-top: -9px;
     background-color: white;
-    margin-left: 25px;
+    margin-left: 9px;
 `
 
 const StyledSelectTwo = styled(StyledSelect)`
