@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FormContainerLayout from "./formContainerLayout";
+import FormContainerLayoutTwo from "./formContainerLayoutTwo";
 import Logo from '../images/Logo.png';
 import '../styles/resetPassword.css';
 import { useNavigate } from "react-router-dom";
@@ -35,7 +35,7 @@ function ResetPassword() {
     }
     return ( 
         <div className="d-flex align-items-center justify-content-center vh-100">
-            <FormContainerLayout image={Logo} type="account">
+            <FormContainerLayoutTwo image={Logo} type="account">
                 <form onSubmit={handleSubmit(onSubmit)}>    
                     <h4 className="create-header-title">Reset Password</h4>
                     <p className="reset-info">Please enter the email associated with your account to reset your password.</p>
@@ -56,7 +56,7 @@ function ResetPassword() {
                     </div>
                 </form>
                 <ToastContainer />
-            </FormContainerLayout>
+            </FormContainerLayoutTwo>
         </div>
      );
 }

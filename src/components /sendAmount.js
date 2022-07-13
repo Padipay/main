@@ -10,7 +10,8 @@ import { StyledFormContainer } from "../styles/globalStyles";
 import styled from "styled-components";
 
 const SendAmountContainer = styled(StyledFormContainer)`
-    padding-top : 0px
+    padding-top : 20px;
+    width: 464px;
 `
 
 function SendAmount() {
@@ -23,8 +24,9 @@ function SendAmount() {
                 <div className="col-lg-3 col-sm-2 d-none d-sm-block d-md-block">
                     <Stepper page_num={page}/>
                 </div>
-                <FormContainerLayout title="How much are you sending?">
-                    <SendAmountContainer>
+                    <div className="col-lg-9 col-sm-10">
+                        <h4 className="send-info">How much are you sending?</h4>
+                        <SendAmountContainer>
                         <div className="home-tab">
                             <div className="tabs-container">
                                 <div className="tabs">
@@ -38,7 +40,7 @@ function SendAmount() {
                         </div>
                         {state === 'transfer' ?<TransferMoney /> : <SellCrypto /> }
                     </SendAmountContainer>
-                </FormContainerLayout>
+                    </div>
             </div>
         </>
      );

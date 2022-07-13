@@ -9,9 +9,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {bankCodes} from '../data/data.js';
 import FormContainerLayout from "./formContainerLayout";
-import { FormContainer } from "../styles/globalStyles";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/bootstrap.css';
+import styled from "styled-components";
+
+const StyledFormContainerLayout = styled(FormContainerLayout).attrs(() => ({
+    className: 'col-lg-9 col-sm-10'
+  }))`
+
+`
 
 const schema  = yup.object({
     email: yup.string()
@@ -93,8 +99,7 @@ function RecepientDetails() {
                 <div className="col-lg-3 col-sm-2 d-none d-sm-block d-md-block">
                     <Stepper page_num={page}/>
                 </div>
-                <FormContainerLayout title="Who are you sending to?">
-                    
+                <StyledFormContainerLayout title="Who are you sending to?">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="input-border">
                             <label className="label-send">Recepient Email</label>
@@ -122,7 +127,7 @@ function RecepientDetails() {
                                 <PhoneInput
                                 country={'ng'}
                                 inputStyle={{width:400, borderRadius: 12, height:67}}
-                                containerStyle={{marginLeft: 15}}
+                                containerStyle={{marginLeft: 32}}
                                 onChange={(phone) => {
                                     setPhoneNumber(phone)
                                     onChange(phone)
@@ -180,7 +185,7 @@ function RecepientDetails() {
                         </div>}
                     </form>
                    
-                </FormContainerLayout>
+                </StyledFormContainerLayout>
             </div>
         </>
     );

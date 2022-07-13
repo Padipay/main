@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FormContainerLayout from "./formContainerLayout";
+import FormContainerLayoutTwo from "./formContainerLayoutTwo";
 import Logo from '../images/Logo.png';
 import '../styles/createAccount.css';
 import { Link } from "react-router-dom";
@@ -48,7 +48,7 @@ function Login() {
 
     return ( 
         <div className="d-flex align-items-center justify-content-center vh-100">
-            <FormContainerLayout image={Logo} type="account">
+            <FormContainerLayoutTwo image={Logo} type="account">
                 <h4 className="create-header-title">Log in to Padipay </h4>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-floating mb-3 me-4 ms-4">
@@ -95,7 +95,7 @@ function Login() {
                         <button type="submit" className="btn btn-primary btn-lg mb-5 mt-3">Sign in</button>
                     </div>
                 </form>
-            </FormContainerLayout>
+            </FormContainerLayoutTwo>
         </div>
      );
 }

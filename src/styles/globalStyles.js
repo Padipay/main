@@ -24,7 +24,7 @@ export const device = {
 };
 
 export const StyledMainContentContainer = styled.div.attrs(() => ({
-  className: ''
+  className: 'col-lg-9 col-sm-10'
 }))`
   // max-width: 40%;
   // margin-left: 58px;
@@ -54,7 +54,7 @@ export const StyledFormContainer = styled.div `
   border-radius: 8px;
   padding-top: 40px;
 
-  @media ${device.laptop} { 
+  @media ${device.tablet} { 
     width: min-content
   }
 `

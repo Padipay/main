@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FormContainerLayout from "./formContainerLayout";
+import FormContainerLayoutTwo from "./formContainerLayoutTwo";
 import Logo from '../images/Logo.png';
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
@@ -75,7 +75,7 @@ function CreatePassword() {
 
     return ( 
         <div className="d-flex align-items-center justify-content-center vh-100">
-            <FormContainerLayout image={Logo} type="account">
+            <FormContainerLayoutTwo image={Logo} type="account">
             <h4 className="create-header-title">Enter Password</h4>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-floating mb-3 me-4 ms-4">
@@ -108,7 +108,7 @@ function CreatePassword() {
                     </div>
                 </form>
                 
-            </FormContainerLayout>
+            </FormContainerLayoutTwo>
         </div>
      );
 }

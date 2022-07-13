@@ -2,6 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import '../styles/formContainer.css';
 import { StyledMainContentContainer, StyledMainFormContainer } from "../styles/globalStyles";
+import styled from "styled-components";
+
+const FormContainer = styled(StyledMainFormContainer)`
+    width: 464px
+`
 
 function FormContainerLayout({children, title, image, type}) {
     return ( 
@@ -11,9 +16,9 @@ function FormContainerLayout({children, title, image, type}) {
             <Link to="/" className="container-image mb-4">
                 {image && <img src={image} alt="Logo" />}
             </Link>
-            <StyledMainFormContainer account={type}>
+            <FormContainer account={type}>
                 {children}
-            </StyledMainFormContainer>
+            </FormContainer>
         </StyledMainContentContainer>
         </>
      );
