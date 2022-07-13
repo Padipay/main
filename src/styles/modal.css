@@ -41,6 +41,10 @@
     font-weight: 700;
     font-size: large;
 }
+.modal-backdrop {
+    width: 120vw;
+    height: 120vh;
+}
 
 .address p{
     color: white;

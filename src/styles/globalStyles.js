@@ -32,13 +32,14 @@ export const StyledMainContentContainer = styled.div.attrs(() => ({
   // justify-content: center
 `
 export const StyledMainFormContainer = styled.div`
-  // width: ${props => props.account ? '464px' : 'fit-content'};
+  width: 400px;
   height: auto;
   background-color: #FFFF;
   box-sizing: border-box;
   box-shadow: 0px 23px 44px rgb(176 183 195 / 14%);
   border-radius: 8px;
   padding-top: 20px;
+  // margin: 0 auto;
 
   @media ${device.laptop} { 
     width: 500px

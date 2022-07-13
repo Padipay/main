@@ -181,7 +181,7 @@ function RecepientDetails() {
                         </div>}
                         {accountName != null &&
                         <div className="send-btn">
-                            <button type="submit" className="btn btn-primary btn-lg mb-5" onClick={handleContinue}>Continue</button>
+                            <button type="button" className="btn btn-primary btn-lg mb-5" onClick={handleContinue}>Continue</button>
                         </div>}
                     </form>
                    
