@@ -95,13 +95,14 @@ function RecepientDetails() {
     return (
         <>
             <Header />
+            <div className="container-fluid">
             <div className="row main-content">
                 <div className="col-lg-3 col-sm-2 d-none d-sm-block d-md-block">
                     <Stepper page_num={page}/>
                 </div>
                 <StyledFormContainerLayout title="Who are you sending to?">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="input-border">
+                        <div className="input-border-recipient">
                             <label className="label-send">Recepient Email</label>
                             <input 
                             {...register("email")}
@@ -126,8 +127,9 @@ function RecepientDetails() {
                             render={({field, field: { onChange, value } }) => (
                                 <PhoneInput
                                 country={'ng'}
-                                inputStyle={{width:400, borderRadius: 12, height:67}}
-                                containerStyle={{marginLeft: 32}}
+                                inputStyle={{borderRadius: 12, width:'92%', height:67}}
+                                inputClass={"input-phone"}
+                                containerClass= "phone-container"
                                 onChange={(phone) => {
                                     setPhoneNumber(phone)
                                     onChange(phone)
@@ -136,7 +138,7 @@ function RecepientDetails() {
                             )}
                             />
                         {<p className="errors">{errors.phone_number?.message}</p>}
-                        <div className="input-border">
+                        <div className="input-border-recipient">
                             <select 
                             {...register("bankName")}
                             className="select-bank mt-4 ms-2 mb-3"
@@ -154,7 +156,7 @@ function RecepientDetails() {
                             {/* <input type="text" className="input-field" placeholder="maria.yahaya@outlook.com"/>  */}
                             {<p className="errors ms-3 mt-3">{errors.bankName?.message}</p>}
                         </div>
-                        <div className="input-border mt-4">
+                        <div className="input-border-recipient mt-4">
                             <label className="label-send">Account Number</label>
                             <input 
                             {...register("accountNum")}
@@ -186,6 +188,7 @@ function RecepientDetails() {
                     </form>
                    
                 </StyledFormContainerLayout>
+            </div>
             </div>
         </>
     );

@@ -5,7 +5,10 @@ import { StyledMainContentContainer, StyledMainFormContainer } from "../styles/g
 import styled from "styled-components";
 
 const FormContainer = styled(StyledMainFormContainer)`
-    width: 464px
+    width: 100%;
+    @media (min-width: 1024px) { 
+        width: 464px
+      }
 `
 
 function FormContainerLayout({children, title, image, type}) {
@@ -13,9 +16,11 @@ function FormContainerLayout({children, title, image, type}) {
         <>
         <StyledMainContentContainer account={type}>
             {title && <h4 className="send-info">{title}</h4>}
+            {image && 
             <Link to="/" className="container-image mb-4">
                 {image && <img src={image} alt="Logo" />}
             </Link>
+            }
             <FormContainer account={type}>
                 {children}
             </FormContainer>

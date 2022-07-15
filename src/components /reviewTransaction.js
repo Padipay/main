@@ -116,7 +116,7 @@ function ReviewTransaction() {
                             <div className="seperator"></div>
                             <div className="transfer-details mt-3">
                                 <p className="description">Recepient Name</p>
-                                <p className="details">{accountName}</p>
+                                {!loading && <p className="details">{`${accountName.substring(0, 15)}...`}</p>}
                             </div>
                             <div className="transfer-details">
                                 <p className="description">Account Number</p>

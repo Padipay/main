@@ -30,6 +30,7 @@ export const StyledMainContentContainer = styled.div.attrs(() => ({
   // margin-left: 58px;
   // display: flex;
   // justify-content: center
+
 `
 export const StyledMainFormContainer = styled.div`
   width: 400px;

@@ -3,7 +3,7 @@
 }
 
 .steps-details p {
-    width: 384px;
+    width: auto;
     left: 0px;
     top: calc(50% - 192px/2);
     

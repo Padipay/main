@@ -28,11 +28,13 @@ margin-top: 40px;
     margin: 0 auto;
     margin-bottom: 30px; 
 }
+
 .input-border:focus-within {
     border-color: #003399;
     box-shadow: rgb(0 181 233 / 35%) 0px 0px 0px 2px;
     border: 1px solid #003399;
 }
+
 .input-amount {
     margin-left: 10px;
     width: 280px;

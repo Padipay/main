@@ -100,7 +100,7 @@
 
 .homepage .input-border {
     max-width: 89%;
-    height: 70px;
+    height: auto;
     border: 1px solid #E2E4E8;
     box-sizing: border-box;
     border-radius: 12px;

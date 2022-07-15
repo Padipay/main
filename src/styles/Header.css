@@ -32,7 +32,7 @@
   text-align: center;
 }
 .second-nav {
-  width: 490px;
+  /* width: 490px; */
 }
 
 .second-nav .fancy-toggler.navbar-toggler .navbar-toggler-icon {
