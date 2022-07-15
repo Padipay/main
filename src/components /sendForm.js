@@ -36,8 +36,6 @@ const StyledSelect = styled.select `
 const StyledSelectTwo = styled(StyledSelect)`
     padding-left: 6px;
 `
-
-
 const schema  = yup.object({
     receive: yup.string("Enter an amount to receive")
     .required("Please enter an amount receive")

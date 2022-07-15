@@ -14,6 +14,7 @@ const StyledLi = styled.li`
     border: 1pxsolidrgba(0,0,0,.125);
     border-radius: 0.75rem;
     width: auto;
+    right: 27px;
 `
 
 function SkeletonCard() {
