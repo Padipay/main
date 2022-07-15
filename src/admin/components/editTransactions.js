@@ -15,7 +15,7 @@ function EditTransaction() {
                     <TextInput disabled source='account_name'/>
                     <TextInput disabled source='account_number'/>
                     <TextInput disabled source='bank_name'/> */}
-                    <BooleanField source='status'/>
+                    <TextInput source='status'/>
                     {/* <DateField disabled source='date'/> */}
                 </SimpleForm>
             </Edit>

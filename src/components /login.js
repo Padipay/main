@@ -42,7 +42,7 @@ function Login() {
                 }
             })
             .catch((error) => {
-                setError('Email address or password was wrong')
+                setError('Email address or password is wrong')
         })
     }
 

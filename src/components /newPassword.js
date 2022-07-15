@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import FormContainerLayout from "./formContainerLayout";
+import FormContainerLayoutTwo from "./formContainerLayoutTwo";
 import Logo from '../images/Logo.png';
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -62,8 +62,8 @@ function NewPassword({actionCode}) {
         await firebase.auth().confirmPasswordReset(actionCode, confirmPassword)
         .then(() => {
             toast.success("Your password has been successfully reset!", {
-                position: toast.POSITION.TOP_LEFT,
-                onClose: navigate('/login')
+                position: toast.POSITION.TOP_RIGHT,
+                onClose: () => navigate('/login')
                 });
         }).catch((err) => {
             setError(err.message)
@@ -73,7 +73,7 @@ function NewPassword({actionCode}) {
     return ( 
         <div className="d-flex align-items-center justify-content-center vh-100">
             {loading === true ? <Spinner name="line-scale-pulse-out" color="blue"/> :
-            <FormContainerLayout image={Logo} type="account">
+            <FormContainerLayoutTwo image={Logo} type="account">
                 <h4 className="create-header-title">Create new password</h4>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-floating mb-3 me-4 ms-4">
@@ -114,7 +114,7 @@ function NewPassword({actionCode}) {
                     </div>
                 </form>
                 <ToastContainer />
-            </FormContainerLayout>}
+            </FormContainerLayoutTwo>}
         </div>
      );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import FormContainerLayout from "./formContainerLayout";
+import FormContainerLayoutTwo from "./formContainerLayoutTwo";
 import Logo from '../images/Logo.png';
 import verify from '../images/verify.png';
 import '../styles/verify.css';
@@ -38,7 +38,7 @@ function VerifyEmail({actionCode}) {
         <div className="d-flex align-items-center justify-content-center vh-100 verify">
         {loading === true ? <Spinner name="line-scale-pulse-out" color="blue"/> 
         : verifiedCode && validCode === true ?
-            <FormContainerLayout image={Logo} type="account">
+            <FormContainerLayoutTwo image={Logo} type="account">
                 <img className="image-verify" src={verify} alt="logo" />
                 <h4>Verified</h4>
                 <p>Thank you for verifying your email address.</p>
@@ -48,12 +48,12 @@ function VerifyEmail({actionCode}) {
                         <button type="submit" className="btn btn-primary btn-lg mb-5 mt-3">Continue</button>
                     </Link>
                 </div>
-            </FormContainerLayout> :
-            <FormContainerLayout image={Logo} type="account">
+            </FormContainerLayoutTwo> :
+            <FormContainerLayoutTwo image={Logo} type="account">
                 <img className="image-verify" src={verify} alt="logo" />
                 <h1>Oops there was a problem</h1>
                 <p className="pb-4">{error}</p>
-            </FormContainerLayout>
+            </FormContainerLayoutTwo>
             }
         </div> 
         {/* <div className="d-flex align-items-center justify-content-center vh-100 verify">

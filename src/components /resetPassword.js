@@ -4,7 +4,7 @@ import Logo from '../images/Logo.png';
 import '../styles/resetPassword.css';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { sendPasswordResetEmail } from "../api/sendEmail";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -27,7 +27,7 @@ function ResetPassword() {
     const navigate = useNavigate();
 
     const onSubmit = async() => {
-        // await sendPasswordResetEmail(email)
+        await sendPasswordResetEmail(email)
         toast.success("A reset email has been sent to the associated account!", {
             position: toast.POSITION.TOP_RIGHT,
             onClose: () => navigate('/login')

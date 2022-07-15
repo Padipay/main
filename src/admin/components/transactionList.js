@@ -20,7 +20,7 @@ function TransactionList(props) {
                 <TextField source='account_name'/>
                 <TextField source='account_number'/>
                 <TextField source='bankName'/>
-                <BooleanField source='status'/>
+                <TextField source='status'/>
                 <DateField source='date'/>
                 <EditButton />
             </Datagrid>

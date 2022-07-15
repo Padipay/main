@@ -11,6 +11,7 @@ import Questions from "./questions";
 import Footer from "./footer";
 import SendFormTab from "./SendFormTab";
 import Navbar from "./navbar";
+import logo from '../images/Logo3.png';
 import firebase from '../firebase/firebase';
 
 function Homepage() {
@@ -28,7 +29,7 @@ function Homepage() {
                         <button className="btn btn-primary get-started">Get started</button>
                     </div> */}
                 </div>
-                <Navbar />
+                <Navbar image={logo}/>
                 <div className="row mt-5 header-content">
                     <div className="col-lg-4 col-sm-3 header-info mb-4 mt-5">
                         <h1>Instant money transfer in three easy steps</h1>

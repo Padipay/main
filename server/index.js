@@ -57,7 +57,7 @@ app.post('/send-custom-verification-email', async (req, res) => {
   try{
     const actionLink =  await getAuth()
     .generateEmailVerificationLink(userEmail, actionCodeSettings)
-    const template = await ejs.renderFile('views/verifyEmail.ejs', {
+    const template = await ejs.renderFile('views/emailVerify.ejs', {
       actionLink,
       userEmail,
       randomNumber: Math.random()
@@ -93,7 +93,12 @@ app.post('/send-reset-password-email', async (req, res) => {
   try{
     const actionLink =  await getAuth()
     .generatePasswordResetLink(userEmail, actionCodeSettings)
-    await sendResetPasswordEmail(userEmail, actionLink)
+    const template = await ejs.renderFile('views/emailReset.ejs', {
+      actionLink,
+      userEmail,
+      randomNumber: Math.random()
+    })
+    await sendResetPasswordEmail(userEmail,template, actionLink)
     res.status(200).json({message:'Email successfully sent'})
   }catch(error){
     const message = error.message
@@ -110,7 +115,7 @@ app.post('/send-reset-password-email', async (req, res) => {
 app.post('/send-success-email', async (req, res) => {
   const {userEmail, send, receive, token, date, id} = req.body
   try{
-    const template = await ejs.renderFile('views/successEmail.ejs', {
+    const template = await ejs.renderFile('views/emailSuccess.ejs', {
       userEmail,
       id,
       send,

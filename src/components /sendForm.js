@@ -34,7 +34,7 @@ const StyledSelect = styled.select `
 `
 
 const StyledSelectTwo = styled(StyledSelect)`
-    padding-right: 13px
+    padding-left: 6px;
 `
 
 

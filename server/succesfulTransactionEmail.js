@@ -19,7 +19,7 @@ module.exports = function sendSuccessfulTransactionEmail(userEmail, template, se
     \n\n Send: ${send} ${token}.
     \n\n Receive ${receive}.
     \n\n Date: ${date}.`,
-    // html: template
+    html: template
   }
 
   return sgMail.send(message)

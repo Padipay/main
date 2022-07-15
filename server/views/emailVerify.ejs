@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;600&display=swap');
+
+        body{
+            font-family: "Montserrat";
+        }
+        .logo{
+            width: 20%;
+            height: 20%;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        .container {
+            border: 1px solid #EEEEEE;
+            border-radius: 16px;
+            width: 683px;
+            height: 710px; 
+            padding-left: 60px;
+        }
+        .activate-btn{
+            /* display: flex;
+            margin-top: 30px;
+            width: 200px;
+            height: 48px;
+            border-radius: 8px;
+            color: #FFF;
+            background-color: #003399;
+            text-decoration: none; */
+            background-color: #003399;
+            color: white;
+            padding: 14px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 8px;
+            margin-top: 25px;
+            
+        }
+        .apps {
+            display: flex;
+            margin-left: 180px;
+            margin-top: 40px;
+        }
+        .last-item{
+            border-bottom: 1px solid #EEEEEE;
+            margin-top: 30px;
+        }
+        .img-row{
+            display: flex;
+            margin-left: 280px;
+            margin-top: 30px;
+        }
+        .img-row img{
+            width: 30px;
+            height: 30px;
+            padding-right: 10px;
+        }
+        .address{
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row main-row">
+            <img src="http://drive.google.com/uc?export=view&id=104yJg2mEaPWtnda3M4DoHdZaXJsYQwQl" alt="logo" class="logo">
+            <p class="mb-5">Hello <%= userEmail %>,</p>
+            <p>Kindly click on the button or link below to verify your Padipay account</p>
+            <a href="<%= actionLink %>"><%= actionLink %></a>
+            <div>
+                <a class="activate-btn" href="<%= actionLink %>">Activate account</a>
+            </div>
+            <p class="mt-4">Kindly disregard if this mail verification didn’t come from you</p>
+            <p class="fst-italic fw-light">The Padipay team 💙</p>
+            <span class="last-item"></span>
+        </div>
+        <div class="row apps">
+            <div class="col-3 me-3">
+                <img src="http://drive.google.com/uc?export=view&id=1eHrPpgCDvqPyCa7Rgr99f1LKMkm9KAog" alt="appstore">
+            </div>
+            <div class="col-3">
+                <img src="http://drive.google.com/uc?export=view&id=1eHrPpgCDvqPyCa7Rgr99f1LKMkm9KAog" alt="playstore">
+            </div>
+        </div>
+        <div class="row img-row">
+            <div class="col-1">
+                <img src="http://drive.google.com/uc?export=view&id=12VirUqvUTR1_sVICyjUtBMW5vWAa-oUN" alt="">
+            </div>
+            <div class="col-1">
+                <img src="http://drive.google.com/uc?export=view&id=1Sfkj6cWFC9s71pVLeFKVUZVPOLNKkeNu" alt="">
+            </div>
+            <div class="col-1">
+                <img src="http://drive.google.com/uc?export=view&id=1eix-aNnceOPfitwZ7dMgCWgwV4UZ0cpA" alt="">
+            </div>
+        </div>
+        <p class="address">365, Milton Avenue, NW4. London, United Kingdom</p>
+    </div>
+    <span style="color: #f1f1f1; display: none;"><%= randomNumber %></span>
+</body>
+</html>

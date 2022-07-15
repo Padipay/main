@@ -67,7 +67,7 @@ function App() {
           <Route path="/dashboard" element={<PrivateRoute> <Dashboard/> </PrivateRoute>} />
           <Route path="/admin-register" element={<AdminRegister />} />
           <Route path="/admin/*" element={<Admin />} />
-          <Route path="/404" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
           {/* <Route path="/create" element={<PrivateRoute> <CreateArticle/> </PrivateRoute>}/>
           <Route path="/article/:id" element={<PrivateRoute> <ArticleDetails/> </PrivateRoute>}/>
           <Route path="/edit/:id" element={<PrivateRoute> <EditArticle/> </PrivateRoute>}/> */}

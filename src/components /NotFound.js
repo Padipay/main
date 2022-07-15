@@ -1,18 +1,29 @@
 import React from "react";
 import verify from '../images/verify.png';
-import FormContainerLayout from "./formContainerLayout";
+import { Link } from "react-router-dom";
+import logo from '../images/Logo.png';
+import notfound from '../images/10.png';
+import FormContainerLayoutTwo from "./formContainerLayoutTwo";
 import Logo from '../images/Logo.png';
+import Navbar from "./navbar";
 
 function NotFound() {
     return ( 
-        <div className="d-flex align-items-center justify-content-center vh-100 verify">
-            <FormContainerLayout image={Logo} type="account">
-                {/* <img className="image-verify" src={verify} alt="image" /> */}
-                <h1 style={{color: '#003399'}}>404 Error</h1>
-                <p>Not Found</p>
-                <p>The page you requested was not found.</p>
-            </FormContainerLayout>
+        <>
+        <Navbar image={logo}/>
+        <div className="d-flex align-items-center justify-content-center mt-5 verify">
+            <div className="row">
+                <div className="col-12 d-flex align-items-center justify-content-center">
+                    <img className="" src={notfound} alt="image" />
+                </div>
+                <div className="col-12">
+                <h1>Oops, Page not found!</h1>
+                <p>Nobody is here! Are you looking for me?</p>
+                <p className="mt-4">Go to <Link to="/" style={{textDecoration: 'none'}}><span>Home Page</span></Link></p>
+                </div>
+            </div>
         </div>
+        </>
      );
 }
 

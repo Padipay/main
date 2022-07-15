@@ -1,5 +1,5 @@
 import React from "react";
-import FormContainerLayout from "./formContainerLayout";
+import FormContainerLayoutTwo from "./formContainerLayoutTwo";
 import Logo from '../images/Logo.png';
 import verify from '../images/verify.png';
 import '../styles/verify.css';
@@ -12,7 +12,7 @@ function VerifyAccount() {
 
     return ( 
         <div className="d-flex align-items-center justify-content-center vh-100 verify">
-            <FormContainerLayout image={Logo} type="account">
+            <FormContainerLayoutTwo image={Logo} type="account">
                 <img className="image-verify" src={verify} alt="logo" />
                 <h4>Verify your account</h4>
                 <p>We’ve sent an email to</p>
@@ -23,7 +23,7 @@ function VerifyAccount() {
                         <button type="submit" className="btn btn-primary btn-lg mb-5 mt-3">Next</button>
                     </Link>
                 </div>
-            </FormContainerLayout>
+            </FormContainerLayoutTwo>
         </div>
     );
 }
