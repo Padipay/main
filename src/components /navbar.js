@@ -2,6 +2,7 @@ import React from "react";
 import '../styles/navbar.css';
 import logo from '../images/10.png';
 import { Link } from "react-router-dom";
+import HamburgerMenu from "./hamburgerMenu";
 
 function Navbar({image}) {
     const userId = sessionStorage.getItem("userId")
@@ -12,7 +13,7 @@ function Navbar({image}) {
                     <img src={image} alt="logo" />
                 </Link>
                 <button className="fancy-toggler navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
+                    <HamburgerMenu />
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav ms-auto mt-4">

@@ -5,7 +5,7 @@ import { StyledMainContentContainer, StyledMainFormContainer } from "../styles/g
 import styled from "styled-components";
 
 const FormContainer = styled(StyledMainFormContainer)`
-    width: 100%;
+    width: 97%;
     @media (min-width: 1024px) { 
         width: 464px
       }

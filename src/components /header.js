@@ -32,7 +32,15 @@ function Header() {
                             <img src={logo} alt="logo" />
                         </Link>
                         <button className="fancy-toggler navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
+                        <div class="demo">
+                            <div class="menu">
+                                <input class="menu-icon__cheeckbox" type="checkbox" />
+                                <div>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div className="navbar-nav ms-auto mt-4">
