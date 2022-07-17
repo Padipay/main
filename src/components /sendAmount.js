@@ -24,23 +24,22 @@ function SendAmount() {
                 <div className="col-lg-3 col-sm-2 d-none d-sm-block d-md-block">
                     <Stepper page_num={page}/>
                 </div>
-                    <div className="col-lg-9 col-sm-10">
-                        <h4 className="send-info">How much are you sending?</h4>
+                    <FormContainerLayout title="How much are you sending?">
                         <SendAmountContainer>
-                        <div className="home-tab">
-                            <div className="tabs-container">
-                                <div className="tabs">
-                                    <input type="radio" id="radio-1" name="tabs" defaultChecked onClick={() => setState('transfer')}/>
-                                    <label className="tab" htmlFor="radio-1">Transfer Money</label>
-                                    {/* <input type="radio" id="radio-2" name="tabs" onClick={() => setState('crypto')}/> */}
-                                    {/* <label className="tab" htmlFor="radio-2">Sell Crypto</label> */}
-                                    <span className="glider"></span>
+                            <div className="home-tab">
+                                <div className="tabs-container">
+                                    <div className="tabs">
+                                        <input type="radio" id="radio-1" name="tabs" defaultChecked onClick={() => setState('transfer')}/>
+                                        <label className="tab" htmlFor="radio-1">Transfer Money</label>
+                                        {/* <input type="radio" id="radio-2" name="tabs" onClick={() => setState('crypto')}/> */}
+                                        {/* <label className="tab" htmlFor="radio-2">Sell Crypto</label> */}
+                                        <span className="glider"></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        {state === 'transfer' ?<TransferMoney /> : <SellCrypto /> }
-                    </SendAmountContainer>
-                    </div>
+                            {state === 'transfer' ?<TransferMoney /> : <SellCrypto /> }
+                        </SendAmountContainer>
+                    </FormContainerLayout>
             </div>
         </>
      );
