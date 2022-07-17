@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FormContainerLayoutTwo from '../components /formContainerLayoutTwo'
 import Logo from '../images/Logo.png';
 import '../styles/resetPassword.css';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import firebase from '../firebase/firebase';
 import { useNavigate } from "react-router";
 
 const ResetInfo = styled.p `
@@ -16,11 +17,24 @@ const ResetInfo = styled.p `
 `
 
 function SuccessfulTransaction() {
+    // const[userId, setuserId] = useState(null);
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate('/')
-        sessionStorage.clear()
+    // useEffect(() => {
+    //     firebase.auth().onAuthStateChanged((user) =>{
+    //         setuserId(user)
+    //     })
+    //     console.log(userId)
+    // }, [])
+
+    const handleClick = async () => {
+        const isAuthenticated = await sessionStorage.getItem('Auth-Token')
+        if (isAuthenticated) {
+            navigate('/dashboard')
+           }else{
+            navigate('/')
+            sessionStorage.clear()
+           }
     }
     return ( 
         <div className="d-flex align-items-center justify-content-center vh-100">

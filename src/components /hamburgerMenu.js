@@ -3,9 +3,9 @@ import '../styles/navbar.css';
 
 function HamburgerMenu() {
     return ( 
-        <div class="demo">
-	<div class="menu-icon">
-		<input class="menu-icon__cheeckbox" type="checkbox" />
+        <div className="demo">
+	<div className="menu-icon">
+		<input className="menu-icon__cheeckbox" type="checkbox" />
 		<div>
 			<span></span>
 			<span></span>

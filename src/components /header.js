@@ -32,9 +32,9 @@ function Header() {
                             <img src={logo} alt="logo" />
                         </Link>
                         <button className="fancy-toggler navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <div class="demo">
-                            <div class="menu">
-                                <input class="menu-icon__cheeckbox" type="checkbox" />
+                        <div className="demo">
+                            <div className="menu">
+                                <input className="menu-icon__cheeckbox" type="checkbox" />
                                 <div>
                                     <span></span>
                                     <span></span>

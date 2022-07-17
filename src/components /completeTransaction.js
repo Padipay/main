@@ -35,12 +35,7 @@ function CompleteTransaction() {
         })
     }, [])
     const onSubmit = () => {
-        saveTransaction(receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber)
-        // if (userId != '') {
-        //     saveTransaction(userId,receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber)
-        // }else {
-        //     saveTransaction(receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber)
-        // }
+        saveTransaction(userId, receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber)
        setOpen(true)
       
     }

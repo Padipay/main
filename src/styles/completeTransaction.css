@@ -20,6 +20,12 @@
     color: #000;
 }
 
+@media (max-width: 978px) {
+   .steps-details p{
+        font-size: 13px;
+   }
+}
+
 .details-content {
     height: auto;
 }
