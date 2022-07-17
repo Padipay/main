@@ -98,9 +98,7 @@
     padding-right: 55px;
 }
 
-
-
-@media (max-width: 978px) {
+@media (max-width: 768px) {
     .select-bank {
         font-size: 15px;
         padding-right: 0px;

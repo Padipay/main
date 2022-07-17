@@ -25,7 +25,7 @@ function Navbar({image}) {
         }
     }
     return (
-        <nav className="navbar navbar-expand-lg">
+        <nav className="navbar navbar-expand-lg home-nav">
             <div className="container-fluid">
                 <Link to="/">
                     <img src={image} alt="logo" />

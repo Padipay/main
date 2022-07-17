@@ -7,7 +7,7 @@ function Header() {
     const token = sessionStorage.getItem("Auth-Token")
     return ( 
         <>
-            <div className="d-none d-sm-block">
+            <div className="main-header">
                 <div className="row header-nav">
                     <div className="col-lg-2 col-sm-4">
                         <Link to="/">
@@ -25,7 +25,7 @@ function Header() {
                     </div>
                 </div>
             </div>
-            <div className="d-lg-none d-md-none d-sm-none second-nav">
+            <div className="second-nav">
                 <nav className="navbar navbar-expand-lg">
                     <div className="container-fluid">
                         <Link to="/">

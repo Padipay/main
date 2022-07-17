@@ -1,3 +1,14 @@
+@media (max-width: 978px) {
+  .main-header{
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .second-nav{
+    display: none;
+  }
+}
 .header-nav {
     padding-top: 40px;
     padding-left: 80px;
@@ -5,10 +16,10 @@
     align-items: center;
     margin-bottom: 0px;
     border-bottom: 1px solid #D5E2F4;
-  }
-.logo{
-  
-  
+}
+
+.second-nav .navbar{
+  padding-left: 0px;
 }
 
 .info {

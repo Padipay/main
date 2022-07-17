@@ -16,7 +16,6 @@ import styled from "styled-components";
 const StyledFormContainerLayout = styled(FormContainerLayout).attrs(() => ({
     className: 'col-lg-9 col-sm-10'
   }))`
-
 `
 
 const schema  = yup.object({

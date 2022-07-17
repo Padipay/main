@@ -26,11 +26,9 @@ export const device = {
 export const StyledMainContentContainer = styled.div.attrs(() => ({
   className: 'col-lg-9 col-sm-10'
 }))`
-  // max-width: 40%;
-  // margin-left: 58px;
-  // display: flex;
-  // justify-content: center
-
+@media ${device.tablet} { 
+  padding-left: 100px
+}
 `
 export const StyledMainFormContainer = styled.div`
   width: 400px;

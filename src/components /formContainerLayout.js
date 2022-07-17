@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const FormContainer = styled(StyledMainFormContainer)`
     width: 97%;
-    @media (min-width: 1024px) { 
+    @media (min-width: 768px) { 
         width: 464px
       }
 `
