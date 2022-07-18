@@ -32,7 +32,7 @@ const corsOption = {
 }
 
 app.use(Cors(corsOption))
-app.use(express.json())
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, "./client/build")))
