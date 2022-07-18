@@ -26,6 +26,7 @@ const adminApp = admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 })
 
+
 const corsOption = {
   origin: '*',
   optionsSuccessStatus: 200
