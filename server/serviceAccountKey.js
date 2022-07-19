@@ -1,8 +1,11 @@
 const dotenv = require('./dotenvConfig')()
 
+const firebase_private_key_b64 = Buffer.from(process.env.PRIVATE_KEY, 'base64');
+const firebase_private_key = firebase_private_key_b64.toString('utf8');
+
 module.exports = {
   "project_id": process.env.PROJECT_ID,
-  "private_key": process.env.PRIVATE_KEY,
+  "private_key": firebase_private_key,
   "client_email": process.env.CLIENT_EMAIL,
 }
 
