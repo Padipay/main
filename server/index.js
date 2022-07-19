@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 const admin = require("firebase-admin");
-// const serviceAccount = require('./serviceAccountKey');
+const serviceAccount = require('./serviceAccountKey');
 const {getAuth} = require("firebase-admin/auth");
 
 const ejs = require('ejs');
@@ -21,7 +21,7 @@ const client = require('twilio')(
 
 
 require("dotenv").config();
-const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+// const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
 
 // initialize Firebase Admin SDK
 const adminApp = admin.initializeApp({
