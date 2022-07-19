@@ -19,7 +19,7 @@ const client = require('twilio')(
   process.env.TWILIO_AUTH_TOKEN
 );
 
-
+// require("dotenv").config();
 // const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
 
 // initialize Firebase Admin SDK
