@@ -4,6 +4,7 @@ var bodyParser = require('body-parser')
 const dotenv = require('./dotenvConfig')()
 const app = express();
 const port = process.env.PORT || 5000;
+const path = require('path');
 
 const admin = require("firebase-admin");
 const serviceAccount = require('./serviceAccountKey');
