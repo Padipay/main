@@ -1,5 +1,6 @@
 const dotenv = require('./dotenvConfig')()
 
+require("dotenv").config();
 module.exports = {
   "project_id": process.env.PROJECT_ID,
   "private_key": process.env.FIREBASE_PRIVATE_KEY,
