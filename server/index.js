@@ -38,7 +38,7 @@ app.use(Cors(corsOption))
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(path.resolve(__dirname, "./client/build")))
+app.use(express.static(path.resolve(__dirname, "../client/build")))
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
