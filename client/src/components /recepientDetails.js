@@ -60,7 +60,7 @@ function RecepientDetails() {
     const bankVerification = async () => {
         setLoading(true)
         setError(null)
-        const options = {method: 'GET', headers: {Accept: 'application/json', 'Authorization': `Bearer sk_test_0fcdfe09b39f447af1a951fe4dd87f85b9874ad6`}};
+        const options = {method: 'GET', headers: {Accept: 'application/json', 'Authorization': `Bearer ${process.env.REACT_APP_PAYSTACK_SECRET_KEY}`}};
 
         await fetch(`https://api.paystack.co/bank/resolve?account_number=${accountNumber}&bank_code=${bankCode}`, options)
         .then(response => response.json())
@@ -92,6 +92,7 @@ function RecepientDetails() {
         sessionStorage.setItem("recepientDetails", JSON.stringify(recepientDetails));
         navigate("/review")
     }
+    
     return (
         <>
             <Header />
