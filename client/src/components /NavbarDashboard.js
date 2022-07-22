@@ -6,15 +6,18 @@ import notification from '../images/Notification.png';
 import { IoIosArrowDown } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
-import { logout } from "../api/api";
 import styled from "styled-components";
+import { MdDashboard } from "react-icons/md";
+import { MdSettings } from "react-icons/md";
+import { MdArticle } from "react-icons/md";
+import { BiLogInCircle } from "react-icons/bi";
 
-function NavbarDashboard() {
+function NavbarDashboard({handleDashboard, handleSettings, handleTransaction, logOut}) {
     const navigate = useNavigate();
 
     return ( 
         <div className="dashboard">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav className="navbar navbar-expand-lg navbar-light">
                 <div className="container-fluid">
                     <Link to="/">
                         <img src={logo} alt="" />
@@ -25,7 +28,29 @@ function NavbarDashboard() {
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                     <div className="navbar-items ms-auto mt-4">
                         <div className="row">
-                            <div className="col">
+                            <ul className="navigation-items mt-4">
+                                <li>
+                                    <Link to="" className="link" onClick={handleDashboard}>
+                                        <MdDashboard  size={20} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>Dashboard
+                                    </Link>
+                                </li>
+                                <li className="mt-4">
+                                    <Link to="" className="link" onClick={handleTransaction}> 
+                                        <MdArticle  size={20} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>Transactions
+                                    </Link>
+                                </li>
+                                <li className="mt-4">
+                                    <Link to="" className="link" onClick={handleSettings}>
+                                        <MdSettings  size={20} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>Settings
+                                    </Link>
+                                </li>
+                                <li className="mt-4">
+                                    <Link to="/login" className="link" onClick={logOut}>
+                                        <BiLogInCircle  size={20} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>Sign out
+                                    </Link>
+                                </li>
+                            </ul>
+                            <div className="send-btn">
                                 <Link to="/send">
                                     <button className="btn btn-primary btn-lg">Send Money</button>
                                 </Link>

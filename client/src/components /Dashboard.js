@@ -6,7 +6,7 @@ import DashboardSidebar from "./dashboardSidebar";
 function Dashboard() {
     return (
         <div className="home-page">
-            <NavbarDashboard />
+            {/* <NavbarDashboard /> */}
             <div className="container-fluid dashboard-container">
                 <div className="row">
                     <DashboardSidebar />

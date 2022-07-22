@@ -8,18 +8,27 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import firebase from '../firebase/firebase';
+import { StyledError, LargeSpinner } from "../styles/globalStyles";
+import styled from "styled-components";
+
+const StyledSpinnerSpan = styled.span`
+    position: absolute;
+    margin-left: inherit;
+    margin-top: 0px;
+`
 
 function Login() {
     const { control, register, handleSubmit, setValue, getValues, formState: { errors } } = useForm({});
     const navigate = useNavigate();
     const [ error, setError ] = useState('')
     const [ verifyError, setVerifyError ] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const onSubmit = ({email, password}) => {
+        setLoading(true)
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((response) => {
                 if (response.user.emailVerified === true) {
-                    navigate('/dashboard')
                     const uid = response.user.uid
                     response.user.getIdToken().then(function(idToken) { 
                         sessionStorage.setItem('Auth-Token', idToken)
@@ -32,6 +41,7 @@ function Login() {
                         if(!firestoreDocument.exists) {
                             navigate('/login')
                         }
+                        setLoading(false)
                         navigate('/dashboard')
                     })
                     .catch((error) => {
@@ -92,7 +102,9 @@ function Login() {
                         </Link>
                     </div>
                     <div className="send-btn">
-                        <button type="submit" className="btn btn-primary btn-lg mb-5 mt-3">Sign in</button>
+                        <button type="submit" className="btn btn-primary btn-lg mb-5 mt-3">Sign in
+                            <StyledSpinnerSpan>{loading && <LargeSpinner name="three-bounce" color="white" /> }</StyledSpinnerSpan>
+                        </button>
                     </div>
                 </form>
             </FormContainerLayoutTwo>
