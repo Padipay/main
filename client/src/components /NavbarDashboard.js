@@ -2,6 +2,7 @@ import React from "react";
 import logo from '../images/Logo.png';
 import avatar from '../images/avatar.png';
 import '../styles/dashboard.css';
+import '../styles/Header.css'
 import notification from '../images/Notification.png';
 import { IoIosArrowDown } from "react-icons/io";
 import { Link } from "react-router-dom";
@@ -17,13 +18,24 @@ function NavbarDashboard({handleDashboard, handleSettings, handleTransaction, lo
 
     return ( 
         <div className="dashboard">
-            <nav className="navbar navbar-expand-lg navbar-light">
+            <nav className="navbar navbar-expand-lg">
                 <div className="container-fluid">
                     <Link to="/">
                         <img src={logo} alt="" />
                     </Link>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                    {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
+                    </button> */}
+                    <button className="fancy-toggler navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                    <div className="demo">
+                            <div className="menu">
+                                <input className="menu-icon__cheeckbox" type="checkbox" />
+                                <div>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                     <div className="navbar-items ms-auto mt-4">

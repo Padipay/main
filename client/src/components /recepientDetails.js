@@ -28,6 +28,9 @@ const schema  = yup.object({
     .required("Please enter a valid phone number")
     .min(9, 'Enter a valid phone number'),
 
+    purpose: yup.string()
+    .required("Purpose field is required"),
+
     accountNum: yup.number("Account Number cannot be empty")
     .required("Account Number cannot be empty")
     .typeError("Account Number cannot be empty"),
@@ -43,6 +46,7 @@ function RecepientDetails() {
     const [page, setPage ] = useState(1);
     const [accountNumber, setAccountNumber] = useState('')
     const [recepientEmail, setRecepientEmail] = useState('')
+    const [purpose, setPurpose] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [bankCode, setBankCode ] = useState('')
     const [accountName, setAccountName ] = useState(null)
@@ -87,7 +91,8 @@ function RecepientDetails() {
             accountNumber: accountNumber,
             bankName: bankName,
             email: recepientEmail,
-            phoneNumber: phoneNumber
+            phoneNumber: phoneNumber,
+            purpose: purpose
         };
         sessionStorage.setItem("recepientDetails", JSON.stringify(recepientDetails));
         navigate("/review")
@@ -139,6 +144,16 @@ function RecepientDetails() {
                             )}
                             />
                         {<p className="errors">{errors.phone_number?.message}</p>}
+                        <div className="input-border-recipient">
+                            <label className="label-send">Purpose of transfer</label>
+                            <input 
+                            {...register("purpose")}
+                            type="text" 
+                            className="input-field" 
+                            placeholder="School fees"
+                            onChange={(e) => setRecepientEmail(e.target.value)}/> 
+                        </div>
+                        {<p className="errors">{errors.purpose?.message}</p>}
                         <div className="input-border-recipient">
                             <select 
                             {...register("bankName")}
