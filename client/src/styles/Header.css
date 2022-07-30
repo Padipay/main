@@ -1,14 +1,19 @@
-@media (max-width: 978px) {
+/* @media (max-width: 978px) {
   .main-header{
     display: none;
   }
-}
+} */
 
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
   .second-nav{
     display: none;
   }
+} */
+
+.image-link{
+  margin-right: 40px;
 }
+
 .header-nav {
     padding-top: 40px;
     padding-left: 80px;
@@ -26,6 +31,13 @@
   border-left: 1px solid #D5E2F4;
   padding-left: 80px;
 }
+
+@media (max-width: 978px) {
+  .info{
+    display: none;
+  }
+}
+
 .nav-info{
   margin-left: 0px;
   font-weight:bold;

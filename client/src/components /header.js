@@ -7,7 +7,7 @@ function Header() {
     const token = sessionStorage.getItem("Auth-Token")
     return ( 
         <>
-            <div className="main-header">
+            {/* <div className="main-header">
                 <div className="row header-nav">
                     <div className="col-lg-2 col-sm-4">
                         <Link to="/">
@@ -24,13 +24,17 @@ function Header() {
                         </Link>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className="second-nav">
                 <nav className="navbar navbar-expand-lg">
-                    <div className="container-fluid">
-                        <Link to="/">
+                    <div className="container">
+                        <Link to="/" className="image-link">
                             <img src={logo} alt="logo" />
                         </Link>
+                        <div className="col-lg-5 col-sm-3 info">
+                            <h4 className="nav-info">Funds Transfer</h4>
+                            <p className="nav-info-2">This should take approximately 3 mins.</p>
+                        </div>
                         <button className="fancy-toggler navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <div className="demo">
                             <div className="menu">

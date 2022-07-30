@@ -90,3 +90,13 @@ export const signOut = () => {
         console.log(err.message)
     })
 }
+
+// export const getBusdPrice = async () => {
+//    await fetch(`https://api.coinbase.com/v2/prices/BTC-NGN/spot`)
+//    .then((res) => res.json())
+//    .then((data) => {
+//        return data
+//    }).catch((err) => {
+//     console.log(err.message)
+// }) 
+// }

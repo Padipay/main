@@ -50,7 +50,6 @@ export const StyledFormContainer = styled.div `
   height: auto;
   background-color: #FFFF;
   box-sizing: border-box;
-  box-shadow: 0px 23px 44px rgba(176, 183, 195, 0.14);
   border-radius: 8px;
   padding-top: 40px;
 

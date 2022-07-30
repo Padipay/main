@@ -8,7 +8,8 @@ import { StyledFormContainer } from "../styles/globalStyles";
 import SkeletonCard from "./SkeletonCard";
 
 const SendFormContainer = styled(StyledFormContainer)`
-    padding-top : 20px
+    padding-top : 20px;
+    box-shadow: 8px 7px #888888;
 `
 
 function SendFormTab({className}) {

@@ -21,6 +21,7 @@ import styled from "styled-components";
 import Skeleton from 'react-loading-skeleton'
 import "react-loading-skeleton/dist/skeleton.css";
 
+// import { getBusdPrice } from "../api/api";
 
 const StyledSelect = styled.select `
     border: none;
@@ -60,6 +61,9 @@ function SendForm({type, labelOne, labelTwo}) {
     const [country, setCountry ] = useState('NGN');
     const [receiveAmount, setReceive ] = useState('');
     const [sendAmount, setSend ] = useState('');
+
+    const [busdPrice, setBusdPrice] = useState(null);
+    const [usdtPrice, setUsdtPrice] = useState(null);
     const [rates, setRates] = useState(null);
     const [switchInputs, setSwitchInputs ] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -76,9 +80,9 @@ function SendForm({type, labelOne, labelTwo}) {
         setReceive(value)
         if(value) {
             if (token === 'BUSD') {
-                setValue("send", value / rates[1].rate)
+                setValue("send", value / busdPrice)
             }else if (token === 'USDT') {
-                setValue("send", value / rates[3].rate)
+                setValue("send", value / usdtPrice)
             }else {
                 setValue("send", value / rates[2].rate)
             }
@@ -91,9 +95,9 @@ function SendForm({type, labelOne, labelTwo}) {
         setSend(value)
         if(value) {
             if (token === 'BUSD') {
-                setValue("receive", value * rates[1].rate)
+                setValue("receive", value * busdPrice)
             }else if (token === 'USDT') {
-                setValue("receive", value * rates[3].rate)
+                setValue("receive", value * usdtPrice)
             }else{
                 setValue("receive", value * rates[2].rate)
             }
@@ -114,26 +118,56 @@ function SendForm({type, labelOne, labelTwo}) {
         }
         sessionStorage.setItem("transferDetails", JSON.stringify(transferDetails))
     };
+    const convRates = async () => {
+        const temp = []
+        await firebase.firestore().collection("rates")
+            .onSnapshot((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    if (doc.exists) {
+                        temp.push({
+                            token: doc.data().Token,
+                            rate:  doc.data().currentRate
+                        });
+                    }
+                    setRates(temp)
+                    setLoading(false)
+                });
+            })
+        }
+
+    const getBusdPrice = async () => {
+        await fetch(`https://api.coinbase.com/v2/prices/BTC-NGN/spot`)
+        .then((res) => res.json())
+        .then((data) => {
+            const price = data.data.amount
+            setBusdPrice(price)
+        }).catch((err) => {
+            console.log(err.message)
+        }) 
+    }
+
+    const getUSDTPrice = async () => {
+        await fetch(`https://api.coinbase.com/v2/prices/USDT-NGN/spot`)
+        .then((res) => res.json())
+        .then((data) => {
+            const price = data.data.amount
+            setUsdtPrice(price)
+        }).catch((err) => {
+            console.log(err.message)
+        }) 
+    }
+
     useEffect(() => {
-        const convRates = async () => {
-            const temp = []
-            await firebase.firestore().collection("rates")
-                .onSnapshot((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        if (doc.exists) {
-                            temp.push({
-                                token: doc.data().Token,
-                                rate:  doc.data().currentRate
-                            });
-                        }
-                        setRates(temp)
-                        setLoading(false)
-                    });
-                })
-            }
+
+        const interval = setInterval(() => {
+            getUSDTPrice()
+        getBusdPrice()
+        }, 7000);
         convRates()
-        return () => convRates()
+
+        return () => clearInterval(interval)
     }, [])
+
     return ( 
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -368,7 +402,33 @@ function SendForm({type, labelOne, labelTwo}) {
                 }
                 {!loading && 
                 <div className="conversion">
-                    {token === 'BUSD' ? <p>{` 1 ${token} = ${rates[1].rate.toLocaleString()}`}</p> : token === 'USDT' ? <p>{` 1 ${token} = ${rates[3].rate.toLocaleString()}`}</p> : <p>{` 1 ${token} = ${rates[2].rate.toLocaleString()}`}</p>}
+                    {token === 'BUSD' ? 
+                        <NumberFormat
+                        thousandsGroupStyle="thousand"
+                        value={busdPrice}
+                        decimalScale={3}
+                        prefix={`1 ${token} = `}
+                        decimalSeparator="."
+                        displayType="text"
+                        type="text"
+                        thousandSeparator={true}
+                        allowNegative={true} 
+                        className="conversion-number"
+                        />
+                    : token === 'USDT' ? 
+                        <NumberFormat
+                        thousandsGroupStyle="thousand"
+                        value={usdtPrice}
+                        decimalScale={3}
+                        prefix={`1 ${token} = `}
+                        decimalSeparator="."
+                        displayType="text"
+                        type="text"
+                        thousandSeparator={true}
+                        allowNegative={true} 
+                        className="conversion-number"
+                        /> : 
+                    <p>{` 1 ${token} = ${rates[2].rate.toLocaleString()}`}</p>}
                 </div>}
                 <div className="homepage-seperator"></div>
                 {type === 'transfer' ? 
