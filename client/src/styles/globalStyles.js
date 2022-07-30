@@ -50,7 +50,7 @@ export const StyledFormContainer = styled.div `
   height: auto;
   background-color: #FFFF;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 19px;
   padding-top: 40px;
 
   @media ${device.tablet} { 
