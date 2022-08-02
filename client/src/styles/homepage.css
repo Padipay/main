@@ -367,3 +367,12 @@ input[type=number] {
     opacity: 1;
     text-align: center;
 }
+
+.input-flex{
+    display: flex;
+    flex-flow: column-reverse;
+}
+
+.input-flex .receive-input {
+    order: 1;
+}

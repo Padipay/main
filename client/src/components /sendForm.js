@@ -178,8 +178,7 @@ function SendForm({type, labelOne, labelTwo}) {
                 />
             </div>
             <div className="row homepage">
-                {switchInputs !== true ?
-                <div>
+                <div className={switchInputs && "input-flex"}>
                     <div className="input-border">
                         <label className="label-send">{labelOne}</label>
                         <Controller 
@@ -215,20 +214,18 @@ function SendForm({type, labelOne, labelTwo}) {
                             <option value="BTC" disabled>BTC</option>
                             <option value="USDT" disabled>USDT</option>
                             <option value="ETH" disabled>ETH</option>
-                            </StyledSelect>
+                        </StyledSelect>
                         {token === 'BUSD' && <img src={busd} alt="btc" className="select-token-image"/>}
                         {token === 'USDT' && <img src={trc20} alt="trc20" className="select-token-image"/>}
                         {token === 'TRX' && <img src={tron} alt="tron" className="select-token-image"/>}
                     </div>
                     { errors.send && <p className="errors mt-4">{errors.send?.message}</p>}
-                </div> 
-                : 
-                <div>
-                    <div className="">
+                    
+                    <div className="receive-input">
                         <div className="input-border">
                             <label className="label-send">{labelTwo}</label>
                             <Controller 
-                                name="receivei"
+                                name="receive"
                                 control={control}
                                 render={({field, field: { onChange, value } }) => (
                                     <NumberFormat
@@ -248,13 +245,13 @@ function SendForm({type, labelOne, labelTwo}) {
                                 )}
                             />
                             <StyledSelectTwo
-                        {...register("fiat")}
-                        defaultValue="NGN"
-                        name="token" id="fiat" 
-                        onChange={handleCountry}>
-                            <option value="ngn">NGN</option>
-                        </StyledSelectTwo>
-                        {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
+                                {...register("fiat")}
+                                defaultValue="NGN"
+                                name="token" id="fiat" 
+                                onChange={handleCountry}>
+                                    <option value="ngn">NGN</option>
+                            </StyledSelectTwo>
+                            {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
                         </div>
                     </div>
                     <div className="input-border d-none">
@@ -289,117 +286,7 @@ function SendForm({type, labelOne, labelTwo}) {
                         {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
                     </div>
                     {errors.receive && <p className="errors mt-4">{errors.receive?.message}</p>}
-                </div>
-
-                }
-
-                {switchInputs !== true ?
-                <div>
-                    <div className="input-border">
-                        <label className="label-send">{labelTwo}</label>
-                        <Controller 
-                            name="receive"
-                            control={control}
-                            render={({field, field: { onChange, value } }) => (
-                                <NumberFormat
-                                thousandSeparator={true}
-                                className="input-amount"
-                                inputMode="numeric"
-                                placeholder="500"
-                                decimalScale={3}
-                                onValueChange={(values) => {
-                                    const { value } = values;
-                                    onChange(value)
-                                    handleReceive(value)
-                                }}
-                                value={value}
-                                {...field}
-                                />
-                            )}
-                        />
-                        <StyledSelectTwo
-                        {...register("fiat")}
-                        defaultValue="NGN"
-                        name="token" id="fiat" 
-                        onChange={handleCountry}>
-                        
-                            <option value="ngn">NGN</option>
-                        </StyledSelectTwo>
-                        {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
-                    </div>
-                    {errors.receive && <p className="errors mt-4">{errors.receive?.message}</p>}
-
-                    <div className="d-none">
-                        <div className="input-border">
-                            <label className="label-send">{labelTwo}</label>
-                            <Controller 
-                                name="receive"
-                                control={control}
-                                render={({field, field: { onChange, value } }) => (
-                                    <NumberFormat
-                                    thousandSeparator={true}
-                                    className="input-amount"
-                                    inputMode="numeric"
-                                    placeholder="500"
-                                    decimalScale={3}
-                                    onValueChange={(values) => {
-                                        const { value } = values;
-                                        onChange(value)
-                                        handleReceive(value)
-                                    }}
-                                    value={value}
-                                    {...field}
-                                    />
-                                )}
-                            />
-                        </div>
-                    </div>
-                </div>
-                : 
-                <div>
-                    <div className="input-border">
-                        <label className="label-send">{labelOne}</label>
-                        <Controller 
-                            name="send"
-                            control={control}
-                            render={({field, field: { onChange, value } }) => (
-                                <NumberFormat
-                                thousandSeparator={true}
-                                className="input-amount"
-                                inputMode="numeric"
-                                placeholder="0.0001"
-                                decimalScale={3}
-                                onValueChange={(values) => {
-                                    const {value} = values;
-                                    onChange(value)
-                                    handleSend(value)
-                                }}
-                                value={value}
-                                {...field}
-                                />
-                            )}
-                        />
-                        <StyledSelect
-                            {...register("token")}
-                            // defaultValue="BTC"
-                            name="token" id="tokens" 
-                            onChange={handleToken}>
-
-                            <option value="BUSD" >BUSD</option>
-                            <option value="USDT" >USDT</option>
-                            <option value="TRX" >TRON</option>
-
-                            <option value="BTC" disabled>BTC</option>
-                            <option value="USDT" disabled>USDT</option>
-                            <option value="ETH" disabled>ETH</option>
-                        </StyledSelect>
-                        {token === 'BUSD' && <img src={busd} alt="btc" className="select-token-image"/>}
-                        {token === 'USDT' && <img src={trc20} alt="trc20" className="select-token-image"/>}
-                        {token === 'TRX' && <img src={tron} alt="tron" className="select-token-image"/>}
-                    </div>
-                    { errors.send && <p className="errors mt-4">{errors.send?.message}</p>}
                 </div> 
-                }
                 {!loading && 
                 <div className="conversion">
                     {token === 'BUSD' ? 
