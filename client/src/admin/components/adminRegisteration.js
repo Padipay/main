@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import FormContainerLayout from "../../components /formContainerLayout";
+import FormContainerLayoutTwo from "../../components /formContainerLayoutTwo";
 import Logo from '../../images/Logo.png';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
@@ -24,7 +25,7 @@ function AdminRegister() {
 
     return ( 
         <div className="d-flex align-items-center justify-content-center vh-100">
-            <FormContainerLayout image={Logo} type="account">
+            <FormContainerLayoutTwo image={Logo} type="account">
                 <h4 className="create-header-title">Register Admin Account</h4>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-floating mb-3 me-4 ms-4">
@@ -50,7 +51,7 @@ function AdminRegister() {
                     </div> 
                     { errors.password && <StyledError>Enter a valid password</StyledError>}
                     {/* {error && <p className="errors mt-3">{error}</p>} */}
-                    <div className="additional-info">
+                    <div className="additional-info ms-4">
                         <p>Already have an account? 
                             <Link to="/login">
                                 <span>Login</span>
@@ -64,7 +65,7 @@ function AdminRegister() {
                         </button>
                     </div>
                 </form>
-            </FormContainerLayout>
+            </FormContainerLayoutTwo>
         </div>
      );
 }
