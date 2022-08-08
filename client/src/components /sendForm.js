@@ -136,11 +136,12 @@ function SendForm({type, labelOne, labelTwo}) {
         }
 
     const getBusdPrice = async () => {
-        await fetch(`https://api.coinbase.com/v2/prices/BTC-NGN/spot`)
+        await fetch(`https://api.coinbase.com/v2/prices/BUSD-NGN/spot`)
         .then((res) => res.json())
         .then((data) => {
             const price = data.data.amount
             setBusdPrice(price)
+            
         }).catch((err) => {
             console.log(err.message)
         }) 
@@ -178,7 +179,7 @@ function SendForm({type, labelOne, labelTwo}) {
                 />
             </div>
             <div className="row homepage">
-                <div className={switchInputs && "input-flex"}>
+                <div className={switchInputs === true ? "input-flex" : ""}>
                     <div className="input-border">
                         <label className="label-send">{labelOne}</label>
                         <Controller 
@@ -295,6 +296,7 @@ function SendForm({type, labelOne, labelTwo}) {
                         value={busdPrice}
                         decimalScale={3}
                         prefix={`1 ${token} = `}
+                        suffix={` NGN`}
                         decimalSeparator="."
                         displayType="text"
                         type="text"
@@ -308,6 +310,7 @@ function SendForm({type, labelOne, labelTwo}) {
                         value={usdtPrice}
                         decimalScale={3}
                         prefix={`1 ${token} = `}
+                        suffix={` NGN`}
                         decimalSeparator="."
                         displayType="text"
                         type="text"
