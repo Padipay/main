@@ -40,7 +40,7 @@ function CreateAccount() {
                         />
                         <label htmlFor="floatingInput">First Name</label>
                     </div>
-                    { errors.email && <StyledError>First Name is required</StyledError>}
+                    { errors.fname && <StyledError>First Name is required</StyledError>}
                     <div className="form-floating mb-3 me-4 ms-4">
                         <input 
                         type="text" 

@@ -19,7 +19,7 @@ function DashboardSidebar() {
     const [transactions, setTransactions ] = useState('')
     const [settings, setSettings ] = useState('')
     const [loading, setLoading] = useState(false)
-    const [data, setData] = useState('')
+    const [data, setData] = useState(null)
     const navigate = useNavigate
     
     const handleTransaction = () => {
@@ -62,15 +62,9 @@ function DashboardSidebar() {
             }
             getUser()
         return () => getUser()
-    }, [])
+    }, [data])
     
     return (  
-        <>
-        {loading === true ? 
-        
-        <div className="d-flex align-items-center justify-content-center vh-100">
-                <Spinner name="line-scale-pulse-out" color="blue"/>
-            </div>: 
         <>
             <NavbarDashboard 
             handleTransaction={handleTransaction}
@@ -105,7 +99,7 @@ function DashboardSidebar() {
             <div className="col-lg-9 col-sm-12 col-md-12 ms-lg-5">
                 <div className="row">
                     <div className="col-6">
-                        <h3 className="mt-5 link fw-bold">{`Welcome, ${data.FirstName} 👋🏼`}</h3>
+                        {data != null ? <h3 className="mt-5 link fw-bold">{`Welcome, ${data.FirstName} 👋🏼`}</h3> : <h3 className="mt-5 link fw-bold">Welcome</h3>}
                     </div>
                 </div>
                 <p>Let’s get you started with padipay</p>
@@ -113,7 +107,6 @@ function DashboardSidebar() {
                 {transactions && <Transactions/>}
                 {settings && <Settings />}
             </div>
-        </> }
         </> 
     );
 }
