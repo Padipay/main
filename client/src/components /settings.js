@@ -1,9 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import '../styles/dashboard.css';
 import CustomButton from "./button";
 import DashboardContentLayout from "./dashboardContentLayout";
+import firebase from '../firebase/firebase';
 
 function Settings() {
+    const[data, setData] = useState('')
+    const[loading, setLoading] = useState(false)
+    useEffect(() => {
+        const getUser = async () => {
+            setLoading(true)
+            firebase.auth().onAuthStateChanged((user) => {
+                if (user) {
+                    firebase.firestore().collection('users')
+                    .doc(user.uid)
+                    .get()
+                    .then((doc) => {
+                        setData(doc.data())
+                        setLoading(false)
+                    })
+                }
+            })
+            }
+            getUser()
+        return () => getUser()
+    }, [])
     return ( 
         <>
         <DashboardContentLayout>
@@ -23,15 +44,15 @@ function Settings() {
                             </div>
                             <div className="col-lg-6 col-sm-12">
                                 <div className="form-floating mb-3">
-                                    <input type="text" className="form-control" id="floatingInput1" placeholder="@maria_xx" />
-                                    <label htmlFor="floatingInput">Username</label>
+                                    <input type="text" className="form-control" id="floatingInput1" placeholder="@maria_xx" value={data.FirstName}/>
+                                    <label htmlFor="floatingInput">First Name</label>
                                 </div>
                                 <div className="form-floating mb-3">
                                     <input type="email" className="form-control" id="floatingInput2" placeholder="Enter legal full name" />
-                                    <label htmlFor="floatingInput">Enter legal full name</label>
+                                    <label htmlFor="floatingInput">Last Name</label>
                                 </div>
                                 <div className="form-floating mb-3">
-                                    <input type="email" className="form-control" id="floatingInput3" placeholder="name@example.com" />
+                                    <input type="email" className="form-control" id="floatingInput3" placeholder="name@example.com" readOnly/>
                                     <label htmlFor="floatingInput">Email address</label>
                                 </div>
                                 <CustomButton
@@ -44,10 +65,10 @@ function Settings() {
                     <div className="tab-pane fade mt-5" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                         <div className="row">
                             <div className="col-lg-4 col-sm-12">
-                                <h4>Change Password</h4>
-                                <p>Update your account password below</p>
+                                <h4>Enable 2FA authentication</h4>
+                                {/* <p>Update your account password below</p> */}
                             </div>
-                            <div className="col-lg-6 col-sm-12">
+                            {/* <div className="col-lg-6 col-sm-12">
                                 <div className="form-floating mb-3">
                                     <input type="password" className="form-control" id="floatingInput4" placeholder="@maria_xx" />
                                     <label htmlFor="floatingInput">Old Password</label>
@@ -62,10 +83,8 @@ function Settings() {
                                 </div>
                                 <CustomButton
                                 title="Save Changes"
-                                />
-                                {/* <button type="submit" className="btn btn-primary btn-lg mt-3">Save Changes</button> */}
-                                
-                            </div>
+                                />        
+                            </div> */}
                         </div>
                     </div>
                 </div>

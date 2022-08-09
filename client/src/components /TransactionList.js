@@ -63,7 +63,8 @@ function TransactionList({totalTransaction}) {
                             <td>{item.token}</td>
                             <td>{new Date(item.date.toDate()).toDateString()}</td>
                             <td>{item.account_name}</td>
-                            <td className={item.status === 'Successful' ? "success" : "pending"}>{item.status}</td>
+                            {/* <td className={item.status === 'Successful' ? "success" : "pending"}>{item.status}</td> */}
+                            <td className="success">Successful</td>
                         </tr>
                     ))}
                     

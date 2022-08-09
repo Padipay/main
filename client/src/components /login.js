@@ -48,10 +48,12 @@ function Login() {
                         setError('User does not exist, try again')
                     })
                 }else{
+                    setLoading(false)
                     setVerifyError('Please verify your email address')
                 }
             })
             .catch((error) => {
+                setLoading(false)
                 setError('Email address or password is wrong')
         })
     }

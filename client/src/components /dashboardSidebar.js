@@ -46,7 +46,7 @@ function DashboardSidebar() {
     }
 
     useEffect(() => {
-        const getUserTransactions = async () => {
+        const getUser = async () => {
             setLoading(true)
             firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
@@ -60,8 +60,8 @@ function DashboardSidebar() {
                 }
             })
             }
-            getUserTransactions()
-        return () => getUserTransactions()
+            getUser()
+        return () => getUser()
     }, [])
     
     return (  
