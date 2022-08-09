@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../styles/dashboard.css';
 import NavbarDashboard from "./NavbarDashboard";
 import { MdDashboard } from "react-icons/md";
@@ -11,13 +11,15 @@ import Settings from "./settings";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "../api/api";
 import Spinner from 'react-spinkit';
+import firebase from '../firebase/firebase';
 
 
 function DashboardSidebar() {
     const [dashboard, setDashboard ] = useState(true)
     const [transactions, setTransactions ] = useState('')
     const [settings, setSettings ] = useState('')
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
+    const [data, setData] = useState('')
     const navigate = useNavigate
     
     const handleTransaction = () => {
@@ -42,8 +44,33 @@ function DashboardSidebar() {
         signOut()
         navigate('/login')
     }
+
+    useEffect(() => {
+        const getUserTransactions = async () => {
+            setLoading(true)
+            firebase.auth().onAuthStateChanged((user) => {
+                if (user) {
+                    firebase.firestore().collection('users')
+                    .doc(user.uid)
+                    .get()
+                    .then((doc) => {
+                        setData(doc.data())
+                        setLoading(false)
+                    })
+                }
+            })
+            }
+            getUserTransactions()
+        return () => getUserTransactions()
+    }, [])
     
     return (  
+        <>
+        {loading === true ? 
+        
+        <div className="d-flex align-items-center justify-content-center vh-100">
+                <Spinner name="line-scale-pulse-out" color="blue"/>
+            </div>: 
         <>
             <NavbarDashboard 
             handleTransaction={handleTransaction}
@@ -78,7 +105,7 @@ function DashboardSidebar() {
             <div className="col-lg-9 col-sm-12 col-md-12 ms-lg-5">
                 <div className="row">
                     <div className="col-6">
-                        <h4 className="mt-5 link">Welcome, Maria 👋🏼</h4>
+                        <h3 className="mt-5 link fw-bold">{`Welcome, ${data.FirstName} 👋🏼`}</h3>
                     </div>
                 </div>
                 <p>Let’s get you started with padipay</p>
@@ -86,7 +113,8 @@ function DashboardSidebar() {
                 {transactions && <Transactions/>}
                 {settings && <Settings />}
             </div>
-        </>
+        </> }
+        </> 
     );
 }
 
