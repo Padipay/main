@@ -1,5 +1,5 @@
 export const sendVerificationEmail = async (userEmail, username=null) => {
-    await fetch('http://localhost:5000/send-custom-verification-email', {
+    await fetch('/send-custom-verification-email', {
         method: 'POST',
         body: JSON.stringify({
           userEmail,
@@ -19,7 +19,7 @@ export const sendVerificationEmail = async (userEmail, username=null) => {
 }
 
 export const sendPasswordResetEmail = async (userEmail) => {
-  await fetch('http://localhost:5000/send-reset-password-email', {
+  await fetch('/send-reset-password-email', {
       method: 'POST',
       body: JSON.stringify({
         userEmail,
