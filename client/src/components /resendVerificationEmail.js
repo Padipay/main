@@ -37,8 +37,8 @@ function ResendVerificationEmail() {
         <div className="d-flex align-items-center justify-content-center vh-100">
             <FormContainerLayoutTwo image={Logo} type="account">
                 <form onSubmit={handleSubmit(onSubmit)}>    
-                    <h4 className="create-header-title">Reset Password</h4>
-                    <p className="reset-info">Please enter the email associated with your account to reset your password.</p>
+                    <h4 className="create-header-title">Resend Email</h4>
+                    <p className="reset-info">Please enter your email address</p>
                     <div className="form-floating mb-3 me-4 ms-4">
                         <input 
                         {...register("email")}

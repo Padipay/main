@@ -25,6 +25,7 @@ function Settings() {
             getUser()
         return () => getUser()
     }, [])
+
     return ( 
         <>
         <DashboardContentLayout>
@@ -44,15 +45,25 @@ function Settings() {
                             </div>
                             <div className="col-lg-6 col-sm-12">
                                 <div className="form-floating mb-3">
-                                    <input type="text" className="form-control" id="floatingInput1" placeholder="@maria_xx" value={data.FirstName}/>
+                                    <input type="text" 
+                                    className="form-control" 
+                                    id="floatingInput1" 
+                                    placeholder="First Name" 
+                                    value={data.FirstName || ''}
+                                    />
                                     <label htmlFor="floatingInput">First Name</label>
                                 </div>
                                 <div className="form-floating mb-3">
-                                    <input type="email" className="form-control" id="floatingInput2" placeholder="Enter legal full name" />
+                                    <input 
+                                    type="text" 
+                                    className="form-control" 
+                                    id="floatingInput2" 
+                                    placeholder="Last Name" 
+                                    value={data.LastName || ''}/>
                                     <label htmlFor="floatingInput">Last Name</label>
                                 </div>
                                 <div className="form-floating mb-3">
-                                    <input type="email" className="form-control" id="floatingInput3" placeholder="name@example.com" readOnly/>
+                                    <input type="email" className="form-control" id="floatingInput3" placeholder="name@example.com" value={data.email || ''} readOnly/>
                                     <label htmlFor="floatingInput">Email address</label>
                                 </div>
                                 <CustomButton
