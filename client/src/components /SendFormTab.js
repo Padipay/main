@@ -19,7 +19,7 @@ function SendFormTab({className}) {
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false)
-        }, 3000);
+        }, 7000);
         return () => clearTimeout(timer)
     }, [])
     return ( 
