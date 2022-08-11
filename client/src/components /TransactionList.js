@@ -3,10 +3,11 @@ import '../styles/transactions.css';
 import firebase from '../firebase/firebase'
 import EmptyTransaction from "./emptyTransaction";
 import Spinner from 'react-spinkit';
+import Skeleton from 'react-loading-skeleton'
+import "react-loading-skeleton/dist/skeleton.css";
 
 function TransactionList({totalTransaction}) {
     const [transactions, setTransactions] = useState([]);
-    const [receiveTotal, setReceiveTotal] = useState(null);
     const [loading, setLoading] = useState(true);
     // const userId = sessionStorage.getItem("userId");
     // const [userId, setUserId] = useState(null)
@@ -38,7 +39,18 @@ function TransactionList({totalTransaction}) {
     }, [])
     return ( 
         <>
-        {transactions.length === 0 ? <EmptyTransaction/> : !loading &&
+        {loading === true ?
+            <>
+                <Skeleton 
+                height={60} 
+                style={{marginLeft: 24, marginBottom: 20, marginTop: 20, width: '95%'}}
+                />
+                <Skeleton 
+                height={30} 
+                count={4} 
+                style={{marginLeft: 24, marginBottom: 20, width: '95%'}}/>
+            </>
+        : transactions.length === 0 ? <EmptyTransaction /> :
         <div className="table-header table-responsive-sm mt-3">
             <table className="table">
                 <thead className="table-secondary">
