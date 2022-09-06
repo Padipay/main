@@ -9,6 +9,10 @@ import firebase from '../firebase/firebase'
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
+import { paymentStatus } from "../redux/transfer/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+
+
 const Error = styled.p`
     color: rgb(220, 53, 69);
     font-weight: 600;
@@ -19,13 +23,16 @@ const Error = styled.p`
 `
 
 function CompleteTransaction() {
+    const dispatch = useDispatch();
+    const { transfer, recepient } = useSelector(state => state.transfer_details)
+
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const {tokenValue, sendAmount, receiveAmount} = JSON.parse(sessionStorage.getItem("transferDetails"));
-    const {accountNumber, accountName, bankName} = JSON.parse(sessionStorage.getItem("recepientDetails"));
+    const {tokenValue, sendAmount, receiveAmount} = transfer;
+    const {accountNumber, accountName, bankName} = recepient
     const[userId, setuserId] = useState('');
     
-    const [open, setOpen] = useState('');
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user) =>{
@@ -36,8 +43,8 @@ function CompleteTransaction() {
     }, [])
     const onSubmit = () => {
         saveTransaction(userId, receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber)
-       setOpen(true)
-      
+        setOpen(true)
+        dispatch(paymentStatus())
     }
     const [page, setPage ] = useState(3)
     return ( 
@@ -81,7 +88,7 @@ function CompleteTransaction() {
                             <button type="submit" className="btn btn-primary btn-lg">{`Pay ${sendAmount} ${tokenValue}`}</button>
                         </div>
                     </form>
-                    <PaymentDetails open={open}/> 
+                    {/* <PaymentDetails open={payment}/>  */}
                 </FormContainer>
             </div>
         </>

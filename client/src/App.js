@@ -2,58 +2,70 @@ import SendAmount from './components /sendAmount';
 import RecepientDetails from './components /recepientDetails';
 import ReviewTransaction from './components /reviewTransaction';
 import CompleteTransaction from './components /completeTransaction';
-import Homepage from './components /hompage';
+import Homepage from './components /homepage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import TransferContextProvider from './contextApi/TransferContext';
 import CreateAccount from './components /createAccount';
 import VerifyAccount from './components /verifyAccount';
 import Login from './components /login';
 import ResetPassword from './components /resetPassword';
 import NewPassword from './components /newPassword';
 import Dashboard from './components /Dashboard';
-import PrivateRoute from './components /Privates/PrivateRoute';
-import TransactionRoute from './components /Privates/TransactionRoute';
+import PrivateRoute from './components /CustomRoutes/PrivateRoute';
+import RefreshRoute from './components /CustomRoutes/RefreshRoute';
 import VerifyEmail from './components /verifyEmail';
 import SuccessfulTransaction from './components /SuccessfulTransaction';
 import NotFound from '../src/components /NotFound'
 import CreatePassword from './components /createPassword';
-import RegisterRoutes from './components /Privates/RegisterRoutes';
+import RegisterRoutes from './components /CustomRoutes/RegisterRoutes';
 import AdminRegister from './admin/components/adminRegisteration';
-import PaymentSuccess from './components /Privates/PaymentSuccessRoute';
+import PaymentSuccess from './components /CustomRoutes/PaymentSuccessRoute';
 import ResendVerificationEmail from './components /resendVerificationEmail';
+import { conversionRates } from './redux/transfer/actions/actions';
 
 import Action from './components /action';
 import Admin from './admin/admin';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import PaymentDetails from './components /paymentDetails';
 
 function App() {
-  // const onRefresh = () => {
-  //   sessionStorage.clear()
-  //   // navigate("/")
-  // }
+  const { payment } = useSelector(state => state.transfer_details)
+  const dispatch = useDispatch()
+
+  const urls = [
+    `https://api.coinbase.com/v2/prices/BUSD-NGN/spot`,
+    `https://api.coinbase.com/v2/prices/USDT-NGN/spot`
+  ];
   
-  // useEffect(() => {
-  //   window.addEventListener("beforeunload", onRefresh());
-  //   return () => {
-  //     window.removeEventListener("beforeunload", onRefresh());
-  //   };
-  // }, [])
+  const fetchRates = () => {
+      Promise.all(
+          urls.map(url => 
+            fetch(url)
+                .then(res => res.json())
+                .then(res => res.data.amount)
+            )
+        ).then(amount => {
+            const rates = {busd: amount[0], usdt: amount[1], trx: amount[1]}
+            dispatch(conversionRates(rates))
+          });
+  };
 
   useEffect(() => {
-    setTimeout(() => {
-      sessionStorage.clear()
-    }, 600000);
-  })
+      const interval = setInterval(() => {
+          fetchRates()
+      }, 7000);
+      return () => clearInterval(interval)
+  }, [])
+
   return (
    <>
-   <TransferContextProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Homepage/>}/>
           <Route path="/send" element={<SendAmount />} />
-          <Route path="/details" element={<TransactionRoute> <RecepientDetails/> </TransactionRoute>}/>
-          <Route path="/review" element={<TransactionRoute>  <ReviewTransaction/> </TransactionRoute>}/>
-          <Route path="/complete" element={<TransactionRoute> <CompleteTransaction /> </TransactionRoute>}/>
+          <Route path="/details" element={<RefreshRoute> <RecepientDetails/> </RefreshRoute>}/>
+          <Route path="/review" element={<RefreshRoute>  <ReviewTransaction/> </RefreshRoute>}/>
+          <Route path="/complete" element={<RefreshRoute> <CompleteTransaction /> </RefreshRoute>}/>
           <Route path="/register" element={<CreateAccount />} />
           <Route path="/password" element={<RegisterRoutes> <CreatePassword /> </RegisterRoutes>}/>
           <Route path="/success-transact" element={<PaymentSuccess> <SuccessfulTransaction /> </PaymentSuccess>} />
@@ -68,12 +80,10 @@ function App() {
           <Route path="/admin-register" element={<AdminRegister />} />
           <Route path="/admin/*" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
-          {/* <Route path="/create" element={<PrivateRoute> <CreateArticle/> </PrivateRoute>}/>
-          <Route path="/article/:id" element={<PrivateRoute> <ArticleDetails/> </PrivateRoute>}/>
-          <Route path="/edit/:id" element={<PrivateRoute> <EditArticle/> </PrivateRoute>}/> */}
         </Routes>
+        <PaymentDetails open={payment}/>
       </Router>
-    </TransferContextProvider>
+      
    </>
   );
 }

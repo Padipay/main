@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import '../index.css';
 import '../styles/recepientDetails.css';
 import Stepper from "./stepper";
@@ -13,6 +13,11 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/bootstrap.css';
 import styled from "styled-components";
 
+import { recepientDetails } from "../redux/transfer/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+
+
+
 const StyledFormContainerLayout = styled(FormContainerLayout).attrs(() => ({
     className: 'col-lg-9 col-sm-10'
   }))`
@@ -25,7 +30,7 @@ const schema  = yup.object({
     .required("Please enter a valid email"),
 
     phone_number: yup.string()
-    .required("Please enter a valid phone number")
+    // .required("Please enter a valid phone number")
     .min(9, 'Enter a valid phone number'),
 
     purpose: yup.string()
@@ -40,23 +45,33 @@ const schema  = yup.object({
 }).required();
 
 function RecepientDetails() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const {recepient} = useSelector(state => state.transfer_details)
+    // console.log(recepient.bankName)
+
     const { control, register, handleSubmit, watch, formState: { errors } } = useForm({
-        resolver: yupResolver(schema)
+        defaultValues: {
+            email: recepient.email,
+            purpose: recepient.purpose,
+            // accountNumber: recepient.accountNumber
+        },
+        resolver: yupResolver(schema),
+        mode: "all",
     });
     const [page, setPage ] = useState(1);
-    const [accountNumber, setAccountNumber] = useState('')
-    const [recepientEmail, setRecepientEmail] = useState('')
-    const [purpose, setPurpose] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
-    const [bankCode, setBankCode ] = useState('')
+    const [accountNumber, setAccountNumber] = useState(recepient.accountNumber)
+    const [recepientEmail, setRecepientEmail] = useState(recepient.email)
+    const [purpose, setPurpose] = useState(recepient.purpose)
+    const [phoneNumber, setPhoneNumber] = useState(recepient.phoneNumber)
+    const [bankCode, setBankCode ] = useState(recepient.bankCode)
     const [accountName, setAccountName ] = useState(null)
-    const [bankName, setBankName ] = useState(null)
+    const [bankName, setBankName ] = useState('')
 
     const [loading, setLoading ] = useState(false);
     const [error, setError ] = useState(null);
     const [visible, setVisible ] = useState(false);
-
-    const navigate = useNavigate();
 
     const bank_name = bankCodes.map((bank) => {
         return <option value={bank.code} key={bank.code}>{bank.name}</option>
@@ -86,15 +101,17 @@ function RecepientDetails() {
         bankVerification()
     };
     const handleContinue = () => {
-        const recepientDetails = {
+        const recepientDetail = {
             accountName: accountName,
             accountNumber: accountNumber,
             bankName: bankName,
+            bankCode: bankCode,
             email: recepientEmail,
             phoneNumber: phoneNumber,
             purpose: purpose
         };
-        sessionStorage.setItem("recepientDetails", JSON.stringify(recepientDetails));
+        dispatch(recepientDetails(recepientDetail))
+        // sessionStorage.setItem("recepientDetails", JSON.stringify(recepientDetail));
         navigate("/review")
     }
     
@@ -118,15 +135,6 @@ function RecepientDetails() {
                             onChange={(e) => setRecepientEmail(e.target.value)}/> 
                         </div>
                         {<p className="errors">{errors.email?.message}</p>}
-                        {/* <div className="input-border">
-                            <label className="label-send">Phone Number</label>
-                            <input 
-                            {...register("phone_number")}
-                            type="text" 
-                            className="input-field" 
-                            placeholder="🇳🇬 +234043504305"
-                            onChange={(e) => setPhoneNumber(e.target.value)}/> 
-                        </div> */}
                             <Controller 
                             name="phone_number"
                             control={control}
@@ -136,6 +144,7 @@ function RecepientDetails() {
                                 inputStyle={{borderRadius: 12, width:'92%', height:67}}
                                 inputClass={"input-phone"}
                                 containerClass= "phone-container"
+                                value={phoneNumber}
                                 onChange={(phone) => {
                                     setPhoneNumber(phone)
                                     onChange(phone)
@@ -151,22 +160,20 @@ function RecepientDetails() {
                             type="text" 
                             className="input-field" 
                             placeholder="School fees"
-                            onChange={(e) => setRecepientEmail(e.target.value)}/> 
+                            onChange={(e) => setPurpose(e.target.value)}/> 
                         </div>
                         {<p className="errors">{errors.purpose?.message}</p>}
                         <div className="input-border-recipient">
                             <select 
                             {...register("bankName")}
                             className="select-bank mt-4 ms-2 mb-3"
+                            value={bankCode}
                             onChange={
                                 (e) => {
                                     setBankCode(e.target.value) 
                                     setBankName(e.target.selectedOptions[0].text)}}
-                            defaultValue={'Select bank name'} 
                             >
-                                <option value="Select bank name" disabled>
-                                    Select bank name
-                                </option>
+                                <option value="1" disabled>Select bank name</option>
                                 {bank_name}
                             </select>
                             {/* <input type="text" className="input-field" placeholder="maria.yahaya@outlook.com"/>  */}
@@ -178,9 +185,8 @@ function RecepientDetails() {
                             {...register("accountNum")}
                             type="text" 
                             className="input-field" placeholder="00232003020"
-                            onChange={(e) => {
-                                setAccountNumber(e.target.value)
-                            }}
+                            value={accountNumber}
+                            onChange={(e) => setAccountNumber(e.target.value)}
                             /> 
                         </div>
                         {<p className="errors ">{errors.accountNum?.message}</p>}

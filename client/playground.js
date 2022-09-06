@@ -68,3 +68,131 @@
                     //     }).catch((err) => {
                     //         console.log(err.message)
                     // })
+
+// const convRates = async () => {
+    //     const temp = []
+    //     await firebase.firestore().collection("rates")
+    //         .onSnapshot((querySnapshot) => {
+    //             querySnapshot.forEach((doc) => {
+    //                 if (doc.exists) {
+    //                     temp.push({
+    //                         token: doc.data().Token,
+    //                         rate:  doc.data().currentRate
+    //                     });
+    //                 }
+    //                 setRates(temp)
+    //                 setLoading(false)
+    //             });
+    //         })
+    //     }
+
+    // const getBusdPrice = async () => {
+    //     await fetch(`https://api.coinbase.com/v2/prices/BUSD-NGN/spot`)
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //         const price = data.data.amount
+    //         setBusdPrice(price)
+            
+    //     }).catch((err) => {
+    //         console.log(err.message)
+    //     }) 
+    // }
+
+    // const getUSDTPrice = async () => {
+    //     await fetch(`https://api.coinbase.com/v2/prices/USDT-NGN/spot`)
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //         const price = data.data.amount
+    //         setUsdtPrice(price)
+    //     }).catch((err) => {
+    //         console.log(err.message)
+    //     }) 
+    // }
+
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         getUSDTPrice()
+    //         getBusdPrice()
+    //     }, 7000);
+    //     convRates()
+
+    //     return () => clearInterval(interval)
+    // }, [])
+
+    // <div className="row main-content">
+    //             <div className="col-lg-3 col-sm-2 d-none d-sm-block d-md-block">
+    //                 <Stepper page_num={page}/>
+    //             </div>
+    //                 <FormContainerLayout title="How much are you sending?">
+    //                     <SendAmountContainer>
+    //                         <div className="home-tab">
+    //                             <div className="tabs-container">
+    //                                 <div className="tabs">
+    //                                     <input type="radio" id="radio-1" name="tabs" defaultChecked onClick={() => setState('transfer')}/>
+    //                                     <label className="tab" htmlFor="radio-1">Transfer Money</label>
+    //                                     {/* <input type="radio" id="radio-2" name="tabs" onClick={() => setState('crypto')}/> */}
+    //                                     {/* <label className="tab" htmlFor="radio-2">Sell Crypto</label> */}
+    //                                     <span className="glider"></span>
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                         {state === 'transfer' ?<TransferMoney /> : <SellCrypto /> }
+    //                     </SendAmountContainer>
+    //                 </FormContainerLayout>
+
+    // const getBusdPrice = async () => {
+    //     await fetch(`https://api.coinbase.com/v2/prices/BUSD-NGN/spot`)
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //         const price = data.data.amount
+    //         setBusdPrice(price)
+    //         setLoading(false)
+            
+    //     }).catch((err) => {
+    //         console.log(err.message)
+    //     }) 
+    // }
+
+    // const getUSDTPrice = async () => {
+    //     await fetch(`https://api.coinbase.com/v2/prices/USDT-NGN/spot`)
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //         const price = data.data.amount
+    //         setUsdtPrice(price)
+    //     }).catch((err) => {
+    //         console.log(err.message)
+    //     }) 
+    // }
+
+
+//     <div className="input-border d-none">
+//     <label className="label-send">Recipient gets</label>
+//     <Controller 
+//         name="receive"
+//         control={control}
+//         render={({field, field: { onChange, value } }) => (
+//             <NumberFormat
+//             thousandSeparator={true}
+//             className="input-amount"
+//             inputMode="numeric"
+//             placeholder="500"
+//             decimalScale={3}
+//             onValueChange={(values) => {
+//                 const { value } = values;
+//                 onChange(value)
+//                 handleReceive(value)
+//             }}
+//             value={value}
+//             {...field}
+//             />
+//         )}
+//     />
+//     <StyledSelectTwo
+//     {...register("fiat")}
+//     defaultValue="NGN"
+//     name="token" id="fiat" 
+//     onChange={handleCountry}>
+//         <option value="ngn">NGN</option>
+//     </StyledSelectTwo>
+//     {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
+// </div>

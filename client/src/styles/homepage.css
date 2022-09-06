@@ -100,7 +100,7 @@
 
 .homepage .input-border {
     max-width: 89%;
-    height: auto;
+    height: 70px;
     border: 1px solid #E2E4E8;
     box-sizing: border-box;
     border-radius: 12px;
@@ -199,10 +199,11 @@
 .homepage .conversion {
     background-color: #E7F8FD;
     max-width: auto;
-    margin-top: -10px;
-    border-radius: 8px; 
+    margin-top: 5px;
+    margin-bottom: 18px;
+    border-radius: 8px;
     height: 50%;
-    /* margin-left: 28px;  */
+    margin-left: 45px;
 }
 .conversion p {
     font-weight: bold;

@@ -1,25 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MdSwapVert } from "react-icons/md";
 import '../styles/homepage.css';
-import btc from '../images/bitcoin-btc-logo.png';
-import eth from '../images/ethereum-eth-logo.png';
-import usdt from '../images/tether-usdt-logo.png';
 import nig from '../images/nigeria.png';
 
-import busd from '../images/binance-usd-busd-logo.png';
+import busd_img from '../images/binance-usd-busd-logo.png';
 import tron from '../images/tron-trx-logo.png';
-import trc20 from '../images/tether.png'
+import usdt_img from '../images/tether.png'
 
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { TransferContext } from "../contextApi/TransferContext";
-import firebase from '../firebase/firebase';
 import NumberFormat from 'react-number-format';
 import styled from "styled-components";
-import Skeleton from 'react-loading-skeleton'
 import "react-loading-skeleton/dist/skeleton.css";
+
+import { transferDetails } from "../redux/transfer/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 // import { getBusdPrice } from "../api/api";
 
@@ -52,8 +49,17 @@ const schema  = yup.object({
     .typeError("Please enter an amount send")
 }).required();
 
-function SendForm({type, labelOne, labelTwo}) {
+function SendForm({type}) {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const {rates, transfer} = useSelector(state => state.transfer_details)
+
     const { control, register, handleSubmit, setValue, formState: { errors } } = useForm({
+        defaultValues: {
+            send: transfer.sendAmount,
+            receive: transfer.receiveAmount
+        },
         resolver: yupResolver(schema),
         mode: "all",
     });
@@ -62,12 +68,7 @@ function SendForm({type, labelOne, labelTwo}) {
     const [receiveAmount, setReceive ] = useState('');
     const [sendAmount, setSend ] = useState('');
 
-    const [busdPrice, setBusdPrice] = useState(null);
-    const [usdtPrice, setUsdtPrice] = useState(null);
-    const [rates, setRates] = useState(null);
     const [switchInputs, setSwitchInputs ] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
 
     const handleToken = (e) => {
         setToken(e.target.value);
@@ -80,11 +81,11 @@ function SendForm({type, labelOne, labelTwo}) {
         setReceive(value)
         if(value) {
             if (token === 'BUSD') {
-                setValue("send", value / busdPrice)
+                setValue("send", value / rates.busd)
             }else if (token === 'USDT') {
-                setValue("send", value / usdtPrice)
+                setValue("send", value / rates.usdt)
             }else {
-                setValue("send", value / rates[2].rate)
+                setValue("send", value / rates.trx)
             }
         }else {
             setValue("send", '')
@@ -95,11 +96,11 @@ function SendForm({type, labelOne, labelTwo}) {
         setSend(value)
         if(value) {
             if (token === 'BUSD') {
-                setValue("receive", value * busdPrice)
+                setValue("receive", value * rates.busd)
             }else if (token === 'USDT') {
-                setValue("receive", value * usdtPrice)
+                setValue("receive", value * rates.usdt)
             }else{
-                setValue("receive", value * rates[2].rate)
+                setValue("receive", value * rates.trx)
             }
         }else {
             setValue("send", '')
@@ -110,65 +111,16 @@ function SendForm({type, labelOne, labelTwo}) {
         setSwitchInputs(() => !switchInputs)
     };    
     const onSubmit = () => {
-        navigate("/details")
-        const transferDetails = {
+        const transferDetail = {
             sendAmount: sendAmount, 
             receiveAmount: receiveAmount,
             tokenValue: token
         }
-        sessionStorage.setItem("transferDetails", JSON.stringify(transferDetails))
+        dispatch(transferDetails(transferDetail))
+        // sessionStorage.setItem("transferDetails", JSON.stringify(transferDetail))
+        navigate("/details")
     };
-    const convRates = async () => {
-        const temp = []
-        await firebase.firestore().collection("rates")
-            .onSnapshot((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    if (doc.exists) {
-                        temp.push({
-                            token: doc.data().Token,
-                            rate:  doc.data().currentRate
-                        });
-                    }
-                    setRates(temp)
-                    setLoading(false)
-                });
-            })
-        }
-
-    const getBusdPrice = async () => {
-        await fetch(`https://api.coinbase.com/v2/prices/BUSD-NGN/spot`)
-        .then((res) => res.json())
-        .then((data) => {
-            const price = data.data.amount
-            setBusdPrice(price)
-            
-        }).catch((err) => {
-            console.log(err.message)
-        }) 
-    }
-
-    const getUSDTPrice = async () => {
-        await fetch(`https://api.coinbase.com/v2/prices/USDT-NGN/spot`)
-        .then((res) => res.json())
-        .then((data) => {
-            const price = data.data.amount
-            setUsdtPrice(price)
-        }).catch((err) => {
-            console.log(err.message)
-        }) 
-    }
-
-    useEffect(() => {
-
-        const interval = setInterval(() => {
-            getUSDTPrice()
-        getBusdPrice()
-        }, 7000);
-        convRates()
-
-        return () => clearInterval(interval)
-    }, [])
-
+    
     return ( 
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -181,7 +133,7 @@ function SendForm({type, labelOne, labelTwo}) {
             <div className="row homepage">
                 <div className={switchInputs === true ? "input-flex" : ""}>
                     <div className="input-border">
-                        <label className="label-send">{labelOne}</label>
+                        <label className="label-send">You send</label>
                         <Controller 
                             name="send"
                             control={control}
@@ -216,15 +168,15 @@ function SendForm({type, labelOne, labelTwo}) {
                             <option value="USDT" disabled>USDT</option>
                             <option value="ETH" disabled>ETH</option>
                         </StyledSelect>
-                        {token === 'BUSD' && <img src={busd} alt="btc" className="select-token-image"/>}
-                        {token === 'USDT' && <img src={trc20} alt="trc20" className="select-token-image"/>}
+                        {token === 'BUSD' && <img src={busd_img} alt="btc" className="select-token-image"/>}
+                        {token === 'USDT' && <img src={usdt_img} alt="trc20" className="select-token-image"/>}
                         {token === 'TRX' && <img src={tron} alt="tron" className="select-token-image"/>}
                     </div>
                     { errors.send && <p className="errors mt-4">{errors.send?.message}</p>}
                     
                     <div className="receive-input">
                         <div className="input-border">
-                            <label className="label-send">{labelTwo}</label>
+                            <label className="label-send">Recipient gets</label>
                             <Controller 
                                 name="receive"
                                 control={control}
@@ -255,72 +207,24 @@ function SendForm({type, labelOne, labelTwo}) {
                             {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
                         </div>
                     </div>
-                    <div className="input-border d-none">
-                        <label className="label-send">{labelTwo}</label>
-                        <Controller 
-                            name="receive"
-                            control={control}
-                            render={({field, field: { onChange, value } }) => (
-                                <NumberFormat
-                                thousandSeparator={true}
-                                className="input-amount"
-                                inputMode="numeric"
-                                placeholder="500"
-                                decimalScale={3}
-                                onValueChange={(values) => {
-                                    const { value } = values;
-                                    onChange(value)
-                                    handleReceive(value)
-                                }}
-                                value={value}
-                                {...field}
-                                />
-                            )}
-                        />
-                        <StyledSelectTwo
-                        {...register("fiat")}
-                        defaultValue="NGN"
-                        name="token" id="fiat" 
-                        onChange={handleCountry}>
-                            <option value="ngn">NGN</option>
-                        </StyledSelectTwo>
-                        {country === 'NGN' && <img src={nig} alt="btc" className="select-token-image"/>}
-                    </div>
                     {errors.receive && <p className="errors mt-4">{errors.receive?.message}</p>}
                 </div> 
-                {!loading && 
                 <div className="conversion">
-                    {token === 'BUSD' ? 
-                        <NumberFormat
-                        thousandsGroupStyle="thousand"
-                        value={busdPrice}
-                        decimalScale={3}
-                        prefix={`1 ${token} = `}
-                        suffix={` NGN`}
-                        decimalSeparator="."
-                        displayType="text"
-                        type="text"
-                        thousandSeparator={true}
-                        allowNegative={true} 
-                        className="conversion-number"
-                        />
-                    : token === 'USDT' ? 
-                        <NumberFormat
-                        thousandsGroupStyle="thousand"
-                        value={usdtPrice}
-                        decimalScale={3}
-                        prefix={`1 ${token} = `}
-                        suffix={` NGN`}
-                        decimalSeparator="."
-                        displayType="text"
-                        type="text"
-                        thousandSeparator={true}
-                        allowNegative={true} 
-                        className="conversion-number"
-                        /> : 
-                    <p>{` 1 ${token} = ${rates[2].rate.toLocaleString()}`}</p>}
-                </div>}
-                <div className="homepage-seperator"></div>
+                    <NumberFormat
+                    thousandsGroupStyle="thousand"
+                    value={token === 'BUSD' ? rates.busd : token === 'USDT' ? rates.usdt : rates.trx}
+                    decimalScale={3}
+                    prefix={`1 ${token} = `}
+                    suffix={` NGN`}
+                    decimalSeparator="."
+                    displayType="text"
+                    type="text"
+                    thousandSeparator={true}
+                    allowNegative={true} 
+                    className="conversion-number"
+                    />
+                </div>
+                {/* <div className="homepage-seperator"></div> */}
                 {type === 'transfer' ? 
                 <div className="input-border">
                     <label className="label-send">Destination</label>

@@ -36,7 +36,7 @@ export const userTransaction = async () => {
     return temp
 }
 
-export const saveTransaction = (userId=null, receive, send, token, bankName, account_name, account_number) => {
+export const saveTransaction = (userId=null, receive, send, token, bankName, account_name, account_number=null) => {
     const transaction = firebase.firestore().collection('transactions').doc()
         transaction
             .set({

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState} from "react";
 import '../styles/reviewTransaction.css'
 import Stepper from "./stepper";
 import Header from "./header";
@@ -9,44 +9,48 @@ import { Link, useNavigate } from "react-router-dom";
 import firebase from '../firebase/firebase';
 import NumberFormat from 'react-number-format';
 
+import { useSelector } from "react-redux";
+
+
 function ReviewTransaction() {
+    const {transfer, recepient, rates} = useSelector(state => state.transfer_details)
     const [page, setPage ] = useState(2);
     const [transferDetails, setTransferDetails ] = useState({});
     const [recepientDetails, setRecepientDetails ] = useState({});
-    const [rates, setRates] = useState(null);
+    // const [rates, setRates] = useState(null);
     const navigate = useNavigate();
     const [loading, setLoading ] = useState(true)
 
-    useEffect(() => {
-        const transferDetails = JSON.parse(sessionStorage.getItem("transferDetails"));
-        const recepientDetails = JSON.parse(sessionStorage.getItem("recepientDetails"));
-        setTransferDetails(transferDetails)
-        setRecepientDetails(recepientDetails)
-        const convRates = async () => {
-            const temp = []
-            await firebase.firestore().collection("rates")
-                .onSnapshot((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        if (doc.exists) {
-                            temp.push({
-                                token: doc.data().Token,
-                                rate:  doc.data().currentRate
-                            });
-                        }
-                        setRates(temp)
-                        setLoading(false)
-                    });
-                })
-            }
-        convRates()
-        return () => convRates()
+    //   useEffect(() => {
+    //     const transferDetails = JSON.parse(sessionStorage.getItem("transferDetails"));
+    //     const recepientDetails = JSON.parse(sessionStorage.getItem("recepientDetails"));
+    //     setTransferDetails(transferDetails)
+    //     setRecepientDetails(recepientDetails)
+    //     const convRates = async () => {
+    //         const temp = []
+    //         await firebase.firestore().collection("rates")
+    //             .onSnapshot((querySnapshot) => {
+    //                 querySnapshot.forEach((doc) => {
+    //                     if (doc.exists) {
+    //                         temp.push({
+    //                             token: doc.data().Token,
+    //                             rate:  doc.data().currentRate
+    //                         });
+    //                     }
+    //                     setRates(temp)
+    //                     setLoading(false)
+    //                 });
+    //             })
+    //         }
+    //     convRates()
+    //     return () => {
+    //         convRates()
+    //     }
 
-    }, []);
-    const {sendAmount, receiveAmount, tokenValue} = transferDetails;
-    const {accountNumber, accountName } = recepientDetails;
- 
-   
-    // const {sendAmount, receiveAmount, tokenValue, recepientName, recepientAccNum } = useContext(TransferContext)
+    // }, []);
+    // console.log(rates)
+
+
     return ( 
         <>
             <Header />
@@ -70,13 +74,14 @@ function ReviewTransaction() {
                             <p className="details">
                                 <NumberFormat
                                     thousandsGroupStyle="thousand"
-                                    value={`${sendAmount}`}
-                                    suffix={` ${tokenValue}`}
+                                    value={`${transfer.sendAmount}`}
+                                    suffix={` ${transfer.tokenValue}`}
                                     decimalSeparator="."
                                     displayType="text"
                                     type="text"
                                     thousandSeparator={true}
                                     allowNegative={true} 
+                                    decimalScale={2}
                                 />
                             </p>
                         </div>
@@ -85,22 +90,33 @@ function ReviewTransaction() {
                             <p className="details">
                                 <NumberFormat
                                 thousandsGroupStyle="thousand"
-                                value={receiveAmount}
+                                value={transfer.receiveAmount}
                                 suffix={" NGN"}
                                 decimalSeparator="."
                                 displayType="text"
                                 type="text"
                                 thousandSeparator={true}
                                 allowNegative={true} 
+                                decimalScale={2}
                                 />
                             </p>
                         </div>
                         <div className="transfer-details">
-                            <p className="description">{`1 ${tokenValue} ~ NGN Rate`}</p>
-                            {!loading && 
-                            <p className="details">{tokenValue === 'BTC' ? `${rates[0].rate.toLocaleString()} ${tokenValue}` : 
-                            tokenValue === 'BUSD' ? `${rates[1].rate.toLocaleString()} ${tokenValue}`: tokenValue === 'TRX' ? `${rates[2].rate.toLocaleString()} ${tokenValue}` :
-                            `${rates[3].rate.toLocaleString()} ${tokenValue}`}</p> }
+                            <p className="description">{`1 ${transfer.tokenValue} ~ NGN Rate`}</p>
+                            <p className="details">
+                                <NumberFormat
+                                thousandsGroupStyle="thousand"
+                                value={transfer.tokenValue === 'BUSD' ? rates.busd : transfer.tokenValue === 'USDT' ? rates.usdt : rates.trx}
+                                decimalScale={3}
+                                suffix={` NGN`}
+                                decimalSeparator="."
+                                displayType="text"
+                                type="text"
+                                thousandSeparator={true}
+                                allowNegative={true} 
+                                decimalScale={2}
+                                />
+                            </p> 
                         </div>
                         
                         <div className="sub-content">
@@ -116,69 +132,21 @@ function ReviewTransaction() {
                             <div className="seperator"></div>
                             <div className="transfer-details mt-3">
                                 <p className="description">Recepient Name</p>
-                                {!loading && <p className="details">{`${accountName.substring(0, 15)}...`}</p>}
+                                <p className="details">{`${recepient.accountName.substring(0, 15)}...`}</p>
                             </div>
                             <div className="transfer-details">
                                 <p className="description">Account Number</p>
-                                <p className="details">{accountNumber}</p>
+                                <p className="details">{recepient.accountNumber}</p>
                             </div>
                             <div className="continue-btn">
-                                <Link to="/complete">
+                                <Link to="../complete">
                                     <button type="button" className="btn btn-primary btn-lg">Continue</button>
                                 </Link>
                             </div>
                         </div>
                     </FormContainerLayout>
-                    {/* <div className="col-lg-9 col-sm-12 send-content">
-                        <FormTitle title="Review transfer details"/>
-                        <div className="details-content">
-                            <div className="review-heading">
-                                <p className="main-heading">Transfer Details</p>
-                                <p className="edit">Edit</p>
-                            </div>
-                            <div className="seperator"></div>
-                            <div className="transfer-details mt-3">
-                                <p className="description">Send Amount</p>
-                                <p className="details">0.00002167 BTC</p>
-                            </div>
-                            <div className="transfer-details">
-                                <p className="description">Recepient Receives</p>
-                                <p className="details">500 NGN</p>
-                            </div>
-                            <div className="transfer-details">
-                                <p className="description">Amount in USD</p>
-                                <p className="details">0.85 USD</p>
-                            </div>
-                            <div className="transfer-details">
-                                <p className="description">NGN/BTC rate</p>
-                                <p className="details">23,064,666.27 NGN</p>
-                            </div>
-                        </div>
-
-                        <div className="sub-content">
-                            <div className="review-heading">
-                                <p className="main-heading">Recepient Details</p>
-                                <p className="edit">Edit</p>
-                            </div>
-                            <div className="seperator"></div>
-                            <div className="transfer-details mt-3">
-                                <p className="description">Recepient Name</p>
-                                <p className="details">Babangida Tolu</p>
-                            </div>
-                            <div className="transfer-details">
-                                <p className="description">Account Number</p>
-                                <p className="details">0211695605</p>
-                            </div>
-                            <div className="continue-btn">
-                                <Link to="/complete">
-                                    <button type="button" className="btn btn-primary btn-lg">Continue</button>
-                                </Link>
-                            </div>
-                        </div>
-
-                    </div> */}
                 </div>
-             </>
+            </>
     );
 }
 
