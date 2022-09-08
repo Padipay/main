@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 
 
 function ReviewTransaction() {
-    const {transfer, recepient, rates} = useSelector(state => state.transfer_details)
+    const {transfer, recepient, token_rates} = useSelector(state => state.transfer_details)
     const [page, setPage ] = useState(2);
     const [transferDetails, setTransferDetails ] = useState({});
     const [recepientDetails, setRecepientDetails ] = useState({});
@@ -106,7 +106,9 @@ function ReviewTransaction() {
                             <p className="details">
                                 <NumberFormat
                                 thousandsGroupStyle="thousand"
-                                value={transfer.tokenValue === 'BUSD' ? rates.busd : transfer.tokenValue === 'USDT' ? rates.usdt : rates.trx}
+                                value={transfer.tokenValue === 'BTC' ? token_rates.data[0]['BTC'] : transfer.tokenValue === 'USDT' ? 
+                                        token_rates.data[1]['USDT'] : transfer.tokenValue === 'ETH' ? 
+                                        token_rates.data[2]['ETH']: transfer.tokenValue === 'BUSD' ? token_rates.data[3]['BUSD']: null}
                                 decimalScale={3}
                                 suffix={` NGN`}
                                 decimalSeparator="."

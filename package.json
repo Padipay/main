@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/cocofemi/padipay/issues"
   },
-  "homepage": "https://github.com/cocofemi/padipay#readme"
+  "homepage": "https://github.com/cocofemi/padipay#readme",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
 }

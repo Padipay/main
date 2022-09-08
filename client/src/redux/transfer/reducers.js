@@ -17,11 +17,7 @@ const initialState = {
         phoneNumber: "",
         purpose: ""
     },
-    rates: {
-        BUSD: "",
-        USDT: "",
-        TRX: ""
-    },
+    token_rates: {},
     active: false,
     payment: false
 }
@@ -34,8 +30,12 @@ export default function transferReducer (state = initialState, action) {
             return{...state, recepient: action.payload, active:true};
         case types.PAYMENT:
             return{...state, payment:!state.payment};
-        case types.CONVERSION_RATES:
-            return{...state, rates: action.payload, loading: false};
+        case types.TOGGLE_LOADING:
+            return{...state, loading:!state.loading}
+        case types.RATES:
+            return{...state, token_rates:action.payload, loading: false}
+        case types.ERROR_FETCHING:
+            return{...state, error:action.payload}
         default:
             return state;
     }

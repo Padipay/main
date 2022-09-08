@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {  } from "react";
 import '../styles/Hometab.css'
 import '../styles/homepage.css';
 import styled from "styled-components";
 import { StyledFormContainer } from "../styles/globalStyles";
 import SkeletonCard from "./SkeletonCard";
 import SendForm from "./sendForm";
-import { useDispatch, useSelector } from "react-redux";
-import { conversionRates } from "../redux/transfer/actions/actions";
+import { useSelector } from "react-redux";
 
 
 const SendFormContainer = styled(StyledFormContainer)`
@@ -16,6 +15,8 @@ const SendFormContainer = styled(StyledFormContainer)`
 
 function SendFormTab({className}) {
     const {loading} = useSelector(state => state.transfer_details)
+
+    console.log(loading)
     return ( 
         <div className={className}>
             {loading && <SkeletonCard />}

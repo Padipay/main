@@ -3,9 +3,10 @@ import { MdSwapVert } from "react-icons/md";
 import '../styles/homepage.css';
 import nig from '../images/nigeria.png';
 
+import btc_img from '../images/bitcoin-btc-logo.png';
 import busd_img from '../images/binance-usd-busd-logo.png';
-import tron from '../images/tron-trx-logo.png';
 import usdt_img from '../images/tether.png'
+import eth_img from '../images/ethereum-eth-logo.png'
 
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
@@ -53,7 +54,7 @@ function SendForm({type}) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const {rates, transfer} = useSelector(state => state.transfer_details)
+    const {transfer, token_rates} = useSelector(state => state.transfer_details)
 
     const { control, register, handleSubmit, setValue, formState: { errors } } = useForm({
         defaultValues: {
@@ -63,10 +64,11 @@ function SendForm({type}) {
         resolver: yupResolver(schema),
         mode: "all",
     });
-    const [token, setToken ] = useState('BUSD');
+    const [token, setToken ] = useState('BTC');
     const [country, setCountry ] = useState('NGN');
     const [receiveAmount, setReceive ] = useState('');
     const [sendAmount, setSend ] = useState('');
+    
 
     const [switchInputs, setSwitchInputs ] = useState(false);
 
@@ -80,12 +82,14 @@ function SendForm({type}) {
     const handleReceive = (value) => {
         setReceive(value)
         if(value) {
-            if (token === 'BUSD') {
-                setValue("send", value / rates.busd)
+            if (token === 'BTC') {
+                setValue("send", value / token_rates.data[0]['BTC'])
             }else if (token === 'USDT') {
-                setValue("send", value / rates.usdt)
-            }else {
-                setValue("send", value / rates.trx)
+                setValue("send", value / token_rates.data[1]['USDT'])
+            }else if  (token === 'ETH'){
+                setValue("send", value / token_rates.data[2]['ETH'])
+            }else if  (token === 'BUSD'){
+                setValue("send", value / token_rates.data[3]['BUSD'])
             }
         }else {
             setValue("send", '')
@@ -95,12 +99,14 @@ function SendForm({type}) {
     const handleSend = (value) => {
         setSend(value)
         if(value) {
-            if (token === 'BUSD') {
-                setValue("receive", value * rates.busd)
+            if (token === 'BTC') {
+                setValue("receive", value * token_rates.data[0]['BTC'])
             }else if (token === 'USDT') {
-                setValue("receive", value * rates.usdt)
-            }else{
-                setValue("receive", value * rates.trx)
+                setValue("receive", value * token_rates.data[1]['USDT'])
+            }else if  (token === 'ETH'){
+                setValue("receive", value * token_rates.data[2]['ETH'])
+            }else if  (token === 'BUSD'){
+                setValue("receive", value * token_rates.data[3]['BUSD'])
             }
         }else {
             setValue("send", '')
@@ -120,7 +126,9 @@ function SendForm({type}) {
         // sessionStorage.setItem("transferDetails", JSON.stringify(transferDetail))
         navigate("/details")
     };
-    
+
+    // console.log(token_rates.data[0]['USDT'])
+
     return ( 
         <>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -160,17 +168,15 @@ function SendForm({type}) {
                             name="token" id="tokens" 
                             onChange={handleToken}>
 
-                            <option value="BUSD" >BUSD</option>
+                            <option value="BTC" >BTC</option>
                             <option value="USDT" >USDT</option>
-                            <option value="TRX" >TRON</option>
-
-                            <option value="BTC" disabled>BTC</option>
-                            <option value="USDT" disabled>USDT</option>
-                            <option value="ETH" disabled>ETH</option>
+                            <option value="ETH" >ETH</option>
+                            <option value="BUSD" >BUSD</option>
                         </StyledSelect>
+                        {token === 'BTC' && <img src={btc_img} alt="btc" className="select-token-image"/>}
                         {token === 'BUSD' && <img src={busd_img} alt="btc" className="select-token-image"/>}
                         {token === 'USDT' && <img src={usdt_img} alt="trc20" className="select-token-image"/>}
-                        {token === 'TRX' && <img src={tron} alt="tron" className="select-token-image"/>}
+                        {token === 'ETH' && <img src={eth_img} alt="tron" className="select-token-image"/>}
                     </div>
                     { errors.send && <p className="errors mt-4">{errors.send?.message}</p>}
                     
@@ -212,7 +218,9 @@ function SendForm({type}) {
                 <div className="conversion">
                     <NumberFormat
                     thousandsGroupStyle="thousand"
-                    value={token === 'BUSD' ? rates.busd : token === 'USDT' ? rates.usdt : rates.trx}
+                    value={token === 'BTC' ? token_rates.data[0]['BTC'] : token === 'USDT' ? 
+                            token_rates.data[1]['USDT'] : token === 'ETH' ? 
+                            token_rates.data[2]['ETH']: token === 'BUSD' ? token_rates.data[3]['BUSD']: null}
                     decimalScale={3}
                     prefix={`1 ${token} = `}
                     suffix={` NGN`}

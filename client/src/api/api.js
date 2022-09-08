@@ -1,5 +1,5 @@
 import firebase from '../firebase/firebase';
-
+import axios from 'axios';
 // export const bankName = async (accountNumber, bankCode) => {
 //     const options = {method: 'GET', headers: {Accept: 'application/json', 'Authorization': `Bearer ${PAYSTACK_SECRET_KEY}`}};
 
@@ -36,7 +36,7 @@ export const userTransaction = async () => {
     return temp
 }
 
-export const saveTransaction = (userId=null, receive, send, token, bankName, account_name, account_number=null) => {
+export const saveTransaction = (userId=null, receive, send, token, bankName, account_name, account_number) => {
     const transaction = firebase.firestore().collection('transactions').doc()
         transaction
             .set({
@@ -91,12 +91,18 @@ export const signOut = () => {
     })
 }
 
-// export const getBusdPrice = async () => {
-//    await fetch(`https://api.coinbase.com/v2/prices/BTC-NGN/spot`)
-//    .then((res) => res.json())
-//    .then((data) => {
-//        return data
-//    }).catch((err) => {
-//     console.log(err.message)
-// }) 
-// }
+export const getRates = async () => 
+    await fetch('/padipay/rates', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+    }).then((res) => {
+        if (!res.ok) {
+            throw Error('Could not load the data for the resource ')
+        }
+        return res.json()
+    }).then((data) => {
+        return data
+    }).catch((err) => console.log(err.message))

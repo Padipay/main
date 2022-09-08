@@ -1,4 +1,4 @@
-const express = require('express'); 
+const express = require('express');
 const Cors = require('cors')
 var bodyParser = require('body-parser')
 const dotenv = require('./dotenvConfig')()
@@ -14,6 +14,7 @@ const ejs = require('ejs');
 const sendVerificationEmail = require('./sendEmail');
 const sendSuccessfulTransactionEmail = require('./succesfulTransactionEmail');
 const sendResetPasswordEmail = require('./resetPasswordEmail');
+const fetchRates = require('./fetchRates');
 
 const client = require('twilio')(
   process.env.TWILIO_ACCOUNT_SID,
@@ -159,4 +160,18 @@ app.post('/api/messages', (req, res) => {
       console.log(err);
       res.send(JSON.stringify({ success: false }));
     });
+});
+
+
+app.post('/padipay/rates', async(req, res) => {
+    fetchRates().then((data) => {
+        res.status(200).json({
+          data, 
+          message: "Real time rates",
+          success: true 
+        })
+    }).catch((error) =>{
+        const message = error.message
+        res.status(500).json({message})
+    })
 });
