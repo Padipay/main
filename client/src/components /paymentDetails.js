@@ -20,7 +20,7 @@ import { paymentStatus } from "../redux/transfer/actions/actions";
 
 function PaymentDetails({open}) {
     const dispatch = useDispatch();
-    const { payment } = useSelector(state => state.transfer_details)
+    const { payment, transfer } = useSelector(state => state.transfer_details)
 
 //   const {tokenValue, sendAmount, receiveAmount} = JSON.parse(sessionStorage.getItem("transferDetails"));
 //   const {phoneNumber, email} = JSON.parse(sessionStorage.getItem("recepientDetails"));
@@ -103,7 +103,7 @@ function PaymentDetails({open}) {
                     <span>Amount Due</span>
                 </div>
                 <div className="address-details">
-                    <p>{`${address.substring(0, 25)}...`}</p> 
+                    <p>{`${transfer.sendAmount} ${transfer.tokenValue}`}</p> 
                     <RiFileCopyLine size={25} style={{fill: 'white', marginTop: 10, marginRight:10}}/>
                 </div>
                 {/* <Link className="link" to="" onClick={handleClose}>
