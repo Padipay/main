@@ -1,5 +1,4 @@
 import firebase from '../firebase/firebase';
-import axios from 'axios';
 // export const bankName = async (accountNumber, bankCode) => {
 //     const options = {method: 'GET', headers: {Accept: 'application/json', 'Authorization': `Bearer ${PAYSTACK_SECRET_KEY}`}};
 
