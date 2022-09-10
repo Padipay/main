@@ -9,9 +9,9 @@ import { paymentStatus } from "../redux/transfer/actions/actions";
 function CountdownTimer() {
     const navigate = useNavigate();
     const [data, setData] = useState(
-        { date: Date.now(), delay: 6000 } //60 seconds
+        { date: Date.now(), delay: 60000 } //60 seconds
       );
-    const wantedDelay = 6000;
+    const wantedDelay = 60000;
 
     const dispatch = useDispatch();
     const {end_time} = useSelector(state => state.transfer_details)
