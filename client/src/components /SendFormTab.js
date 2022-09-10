@@ -15,8 +15,6 @@ const SendFormContainer = styled(StyledFormContainer)`
 
 function SendFormTab({className}) {
     const {loading} = useSelector(state => state.transfer_details)
-
-    console.log(loading)
     return ( 
         <div className={className}>
             {loading && <SkeletonCard />}

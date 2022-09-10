@@ -8,6 +8,16 @@
     height: 630px;
     margin: 0 auto;
 }
+.modal-content-time-out {
+    background-color: #FFF; 
+    border: 1px solid rgba(0, 92, 255, 0.1);
+    box-sizing: border-box;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.04);
+    border-radius: 16px;
+    width: 400px;
+    height: 530px;
+    margin: 0 auto;
+}
 
 .modal-heading{
     display: flex;
@@ -72,10 +82,33 @@
     padding-left: 150px;
 }
 
+.logo-bottom-time-out{
+    margin-top: 40px;
+    padding-left: 120px;
+}
+
 .timer{
     color: rgb(0, 204, 255);
     font-weight: 700;
     font-size: larger;
     margin-right: 20px;
 
+}
+
+.time-out {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.time-out h4 {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+.time-out span{
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 700;
 }

@@ -27,6 +27,8 @@ import Admin from './admin/admin';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PaymentDetails from './components /paymentDetails';
+import TimeOutModal from './components /timeoutModal';
+
 import { fetch_api_rates } from './redux/transfer/actions/actions';
 
 
@@ -34,24 +36,6 @@ import { fetch_api_rates } from './redux/transfer/actions/actions';
 function App() {
   const { payment } = useSelector(state => state.transfer_details)
   const dispatch = useDispatch()
-
-  // const urls = [
-  //   `https://api.coinbase.com/v2/prices/BUSD-NGN/spot`,
-  //   `https://api.coinbase.com/v2/prices/USDT-NGN/spot`
-  // ];
-
-  // const fetchRates = () => {
-  //     Promise.all(
-  //         urls.map(url => 
-  //           fetch(url)
-  //               .then(res => res.json())
-  //               .then(res => res.data.amount)
-  //           )
-  //       ).then(amount => {
-  //           const rates = {busd: amount[0], usdt: amount[1], trx: amount[1]}
-  //           dispatch(conversionRates(rates))
-  //         });
-  // };
 
   useEffect(() => {
       // dispatch(toggleLoading())
@@ -85,6 +69,7 @@ function App() {
           <Route path="/admin/*" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <TimeOutModal open={payment}/>
         <PaymentDetails open={payment}/>
       </Router>
       

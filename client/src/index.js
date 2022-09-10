@@ -5,7 +5,6 @@ import App from './App';
 import { Provider } from "react-redux"
 import reportWebVitals from './reportWebVitals';
 import store from '../src/redux/store/store';
-import ModalLayout from './components /ModalLayout';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

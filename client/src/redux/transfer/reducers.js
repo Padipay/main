@@ -19,7 +19,8 @@ const initialState = {
     },
     token_rates: {},
     active: false,
-    payment: false
+    payment: false, 
+    end_time: null
 }
 
 export default function transferReducer (state = initialState, action) {
@@ -34,6 +35,8 @@ export default function transferReducer (state = initialState, action) {
             return{...state, loading:!state.loading}
         case types.RATES:
             return{...state, token_rates:action.payload, loading: false}
+        case types.END_TIMER:
+            return{...state, end_time:action.payload}
         case types.ERROR_FETCHING:
             return{...state, error:action.payload}
         default:

@@ -241,3 +241,23 @@
 //    const final_rate_three = percentOff(1.3, midPrice)
 
 //    console.log(final_rate_three, final_rate_two, final_rate_one)
+
+
+
+  // const urls = [
+  //   `https://api.coinbase.com/v2/prices/BUSD-NGN/spot`,
+  //   `https://api.coinbase.com/v2/prices/USDT-NGN/spot`
+  // ];
+
+  // const fetchRates = () => {
+  //     Promise.all(
+  //         urls.map(url => 
+  //           fetch(url)
+  //               .then(res => res.json())
+  //               .then(res => res.data.amount)
+  //           )
+  //       ).then(amount => {
+  //           const rates = {busd: amount[0], usdt: amount[1], trx: amount[1]}
+  //           dispatch(conversionRates(rates))
+  //         });
+  // };

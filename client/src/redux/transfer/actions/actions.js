@@ -55,3 +55,10 @@ export const fetch_api_rates = () => dispatch => {
         dispatch(api_rates(res))
     }).catch((err) => dispatch(fetchError(err)))
 };
+
+export const endTimer = (timer) => dispatch => {
+    dispatch({
+        type:types.END_TIMER,
+        payload: timer
+    })
+}
