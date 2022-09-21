@@ -1,0 +1,63 @@
+.create-header-title {
+    font-weight: bold;
+    /* font-size: 28px; */
+    color: #000015;
+    padding-bottom: 10px;
+    margin-left: 29px;
+}
+
+/* .form-floating {
+    width: 88%;
+    margin-left: 29px;
+} */
+
+.form-control {
+    border-radius: .45rem;
+    font-weight: 700;
+}
+
+.form-control:focus {
+    border-color: #003399;
+    box-shadow: rgb(0 181 233 / 35%) 0px 0px 0px 2px;
+    border: 1px solid #003399;
+}
+
+.send-btn .btn-primary {
+    width: 90%;
+    height: 56px;
+    background-color: #003399;
+    margin-left: 20px;
+    border-radius: 8px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+}
+.additional-info{
+    /* margin-left: 30px; */
+}
+.additional-info p{
+    font-weight: 700;
+    font-size: initial;
+}
+.additional-info span {
+    font-weight: 700;
+    color: #003399;
+    margin-left: 5px;
+}
+.forgot-password {
+    background-color: #E7F8FD;
+    max-width: 40%;
+    margin-left: 28px;
+    border-radius: 5px; 
+    height: 50%;
+}
+.forgot-password p {
+    font-weight: 600;
+    color: #003399;
+    margin-left: -3px;
+    margin-top: 10px;
+}
+
+.sk-three-bounce > div {
+    background-color: white !important;
+}

@@ -1,0 +1,18 @@
+.main-btn  {
+    max-width: 100%;
+    height: 56px;
+    background-color: #003399;
+    /* margin-left: 27px; */
+    border-radius: 8px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+    border: transparent
+}
+
+@media (min-width: 992px) {
+    /* .main-btn {
+        margin-left: 1.7em;
+    } */
+}

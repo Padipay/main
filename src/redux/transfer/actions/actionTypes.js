@@ -1,0 +1,9 @@
+export const TRANSFER_DETAILS = 'TRANSFER_DETAILS';
+export const RECEPIENT_DETAILS = 'RECEPIENT_DETAILS';
+export const PAYMENT = 'PAYMENT';
+export const CONVERSION_RATES = 'CONVERSION_RATES';
+export const RATES = 'RATES';
+export const TOGGLE_LOADING = 'TOGGLE_LOADING';
+export const ERROR_FETCHING = 'ERROR_FETCHING';
+export const END_TIMER = 'END_TIMER';
+

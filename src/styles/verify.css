@@ -1,0 +1,20 @@
+.image-verify {
+    height: 120px;
+    margin-left: 156px;
+    margin-bottom: 10px;
+}
+
+.verify h4 {
+    font-weight: 700;
+    text-align: center;
+}
+
+.verify h1 {
+    font-weight: 700;
+    text-align: center;
+}
+
+.verify p{
+    text-align: center;
+    margin-bottom: 0rem;
+}
