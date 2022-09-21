@@ -163,7 +163,7 @@ app.post('/api/messages', (req, res) => {
 });
 
 
-app.post('/padipay/rates', async(req, res) => {
+app.get('/padipay/rates', async(req, res) => {
     fetchRates().then((data) => {
         res.status(200).json({
           data, 
