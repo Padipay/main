@@ -1,5 +1,5 @@
 export const transactSuccessEmail = async (userEmail, send, receive, token, date, id) => {
-    await fetch('/send-success-email', {
+    await fetch(`${REACT_APP_BACKEND_URL}/send-success-email`, {
         method: 'POST',
         body: JSON.stringify({
           userEmail,

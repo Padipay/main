@@ -13,14 +13,3 @@ export const fetchRates = async (url) => {
         console.log(err.message)
     }) 
 }
-
-// export const getUSDTPrice = async () => {
-//     await fetch(`https://api.coinbase.com/v2/prices/USDT-NGN/spot`)
-//     .then((res) => res.json())
-//     .then((data) => {
-//         const price = data.data.amount
-//         setUsdtPrice(price)
-//     }).catch((err) => {
-//         console.log(err.message)
-//     }) 
-// }
