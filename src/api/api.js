@@ -91,7 +91,7 @@ export const signOut = () => {
 }
 
 export const getRates = async () => 
-    await fetch(`${process.env.REACT_APP_BACKEND_URL}/padipay/rates`, {
+    await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/padipay/rates`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
