@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;600&display=swap');
+
+        body{
+            font-family: "Montserrat";
+        }
+        .logo{
+            width: 20%;
+            height: 20%;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        .container {
+            border: 1px solid #EEEEEE;
+            border-radius: 16px;
+            width: 683px;
+            height: auto; 
+            padding-left: 60px;
+        }
+        .main-row p{
+            margin-bottom: 30px;
+        }
+        .last-item{
+            border-bottom: 1px solid #EEEEEE;
+            margin-top: 30px;
+        }
+        .apps {
+            display: flex;
+            margin-left: 180px;
+            margin-top: 40px;
+        }
+        .img-row{
+            display: flex;
+            margin-left: 280px;
+            margin-top: 30px;
+        }
+        .img-row img{
+            width: 30px;
+            height: 30px;
+            padding-right: 10px;
+        }
+        .success-details{
+            display: flex;
+            background-color: #F4F5F6;
+            border: 1px solid #F4F5F6;
+            border-radius: 8px;
+            width: 90%;
+            margin: 0 auto;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .item p {
+            margin-bottom: 40px;
+            margin-left: 30px;
+            margin-right: 300px;
+        }
+        .info p {
+            text-align: end;
+            margin-bottom: 40px;
+            margin-right: 30px;
+        }
+        .address{
+            text-align: center;
+            margin-top: 20px;
+        }
+        .message{
+            font-style: italic;
+            font-weight: lighter;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row main-row">
+            <img src="http://drive.google.com/uc?export=view&id=104yJg2mEaPWtnda3M4DoHdZaXJsYQwQl" alt="logo" class="logo">
+            <p class="mb-5">Hello <%= userEmail %>,</p>
+            <p>Your transaction was successful. Below are details of the transaction.</p>
+            <div class="row success-details">
+                <div class="item">
+                    <p>Date</p>
+                    <p>Transaction ID</p>
+                    <p>Amount Sent</p>
+                    <p>Received</p>
+                </div>
+                <div class="info">
+                    <p><%= date %></p>
+                    <p><%= id %></p>
+                    <p><%= send %> <%= token %></p>
+                    <p><%= ₦receive %></p>
+                </div>
+            </div>
+            <p class="message">The Padipay team 💙</p>
+            <span class="last-item"></span>
+        </div>
+        <div class="row apps">
+            <div class="col-3 me-3">
+                <img src="http://drive.google.com/uc?export=view&id=1eHrPpgCDvqPyCa7Rgr99f1LKMkm9KAog" alt="appstore">
+            </div>
+            <div class="col-3">
+                <img src="http://drive.google.com/uc?export=view&id=1eHrPpgCDvqPyCa7Rgr99f1LKMkm9KAog" alt="playstore">
+            </div>
+        </div>
+        <div class="row img-row">
+            <div class="col-1">
+                <img src="http://drive.google.com/uc?export=view&id=12VirUqvUTR1_sVICyjUtBMW5vWAa-oUN" alt="">
+            </div>
+            <div class="col-1">
+                <img src="http://drive.google.com/uc?export=view&id=1Sfkj6cWFC9s71pVLeFKVUZVPOLNKkeNu" alt="">
+            </div>
+            <div class="col-1">
+                <img src="http://drive.google.com/uc?export=view&id=1eix-aNnceOPfitwZ7dMgCWgwV4UZ0cpA" alt="">
+            </div>
+        </div>
+        <p class="address">365, Milton Avenue, NW4. London, United Kingdom</p>
+    </div>
+    <span style="color: #f1f1f1; display: none;"><%= randomNumber %></span>
+</body>
+</html>
