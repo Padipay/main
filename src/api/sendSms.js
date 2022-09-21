@@ -1,5 +1,5 @@
 export const sendSms = async (numberTo, body) => {
-    await fetch(`${REACT_APP_BACKEND_URL}/api/messages`, {
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/messages`, {
       method: 'POST',
       body: JSON.stringify({
         numberTo,
