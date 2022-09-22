@@ -93,10 +93,6 @@ export const signOut = () => {
 export const getRates = async () => 
     await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/padipay/rates`, {
         method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json; charset=UTF-8',
-        },
     }).then((res) => {
         if (!res.ok) {
             throw Error('Could not load the data for the resource ')
