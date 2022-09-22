@@ -91,8 +91,8 @@ export const signOut = () => {
 }
 
 export const getRates = async () => 
-    await fetch(`https://padipay-server.herokuapp.com/padipay/rates`, {
-        method: 'POST',
+    await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/padipay/rates`, {
+        method: 'GET',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json; charset=UTF-8',
