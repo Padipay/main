@@ -175,3 +175,10 @@ app.get('/padipay/rates', async(req, res) => {
         res.status(500).json({message})
     })
 });
+
+app.post('/notification', async(req, res) => {
+  res.status(200).json({
+    res: req.body,
+    success: true
+  })
+})
