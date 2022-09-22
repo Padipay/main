@@ -15,7 +15,7 @@ import styled from "styled-components";
 
 import { recepientDetails } from "../redux/transfer/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
-
+import { bankVerify } from "../api/api";
 
 
 const StyledFormContainerLayout = styled(FormContainerLayout).attrs(() => ({
@@ -47,15 +47,12 @@ const schema  = yup.object({
 function RecepientDetails() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const {recepient} = useSelector(state => state.transfer_details)
-    // console.log(recepient.bankName)
 
     const { control, register, handleSubmit, watch, formState: { errors } } = useForm({
         defaultValues: {
             email: recepient.email,
-            purpose: recepient.purpose,
-            // accountNumber: recepient.accountNumber
+            purpose: recepient.purpose
         },
         resolver: yupResolver(schema),
         mode: "all",
@@ -79,26 +76,21 @@ function RecepientDetails() {
     const bankVerification = async () => {
         setLoading(true)
         setError(null)
-        const options = {method: 'GET', headers: {Accept: 'application/json', 'Authorization': `Bearer ${process.env.REACT_APP_PAYSTACK_SECRET_KEY}`}};
 
-        await fetch(`https://api.paystack.co/bank/resolve?account_number=${accountNumber}&bank_code=${bankCode}`, options)
-        .then(response => response.json())
-        .then(response => {
-            if (response.status === true) {
-                setAccountName(response.data.account_name)
+        bankVerify(accountNumber, bankCode)
+            .then((res) => {
+                setAccountName(res.data.account_name)
                 setBankName(bankName)
-
                 setVisible(true)
                 setLoading(false)
-            }else{
-               setError("Could not verify account details. Check details and try again.")
-               setLoading(false)
-            }
-        }).catch(err => console.log(err));
+            }).catch((err) => {
+                setError("Could not verify account details. Check details and try again.")
+                setLoading(false)
+            }); 
     };
     
-    const onSubmit = () => {
-        bankVerification()
+    const onSubmit = async () => {
+        bankVerification()     
     };
     const handleContinue = () => {
         const recepientDetail = {
@@ -111,7 +103,6 @@ function RecepientDetails() {
             purpose: purpose
         };
         dispatch(recepientDetails(recepientDetail))
-        // sessionStorage.setItem("recepientDetails", JSON.stringify(recepientDetail));
         navigate("/review")
     }
     
@@ -195,7 +186,7 @@ function RecepientDetails() {
                         {visible &&
                         <div className="border-account-name">
                             <label className="label-send">Account Name</label>
-                            <p>{accountName}</p>
+                            <p>{accountName.length < 40 ? accountName : `${accountName.substring(0, 40)}...`}</p>
                         </div> }
                         {accountName === null &&
                         <div className="send-btn">

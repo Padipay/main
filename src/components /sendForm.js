@@ -59,12 +59,13 @@ function SendForm({type}) {
     const { control, register, handleSubmit, setValue, formState: { errors } } = useForm({
         defaultValues: {
             send: transfer.sendAmount,
-            receive: transfer.receiveAmount
+            receive: transfer.receiveAmount,
+            token: transfer.tokenValue || 'BTC'
         },
         resolver: yupResolver(schema),
         mode: "all",
     });
-    const [token, setToken ] = useState('BTC');
+    const [token, setToken ] = useState(transfer.tokenValue || 'BTC');
     const [country, setCountry ] = useState('NGN');
     const [receiveAmount, setReceive ] = useState('');
     const [sendAmount, setSend ] = useState('');

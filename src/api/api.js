@@ -1,21 +1,14 @@
 import firebase from '../firebase/firebase';
-// export const bankName = async (accountNumber, bankCode) => {
-//     const options = {method: 'GET', headers: {Accept: 'application/json', 'Authorization': `Bearer ${PAYSTACK_SECRET_KEY}`}};
 
-//     await fetch(`https://api.paystack.co/bank/resolve?account_number=${accountNumber}&bank_code=${bankCode}`, options)
-//     .then(response => response.json())
-//     .then(response => {
-//         if (response.status === true) {
-//             setAccountName(response.data.account_name)
-//             setVisible(true)
-//             setLoading(false)
-//         }else{
-//            setError("Could not verify account details. Check details and try again.")
-//            setLoading(false)
-//         }
-//     }).catch(err => console.log(err));
-
-// }
+export const bankVerify = async (accountNumber, bankCode) => {
+    try {
+        const options = {method: 'GET', headers: {Accept: 'application/json', 'Authorization': `Bearer ${process.env.REACT_APP_PAYSTACK_SECRET_KEY}`}};
+        const response = await fetch(`https://api.paystack.co/bank/resolve?account_number=${accountNumber}&bank_code=${bankCode}`, options)
+        return await response.json()
+    } catch (error) {
+        console.log("Could not verify account details. Check details and try again.")
+    }
+}
 
 export const userTransaction = async () => {
     const temp = []
@@ -91,7 +84,7 @@ export const signOut = () => {
 }
 
 export const getRates = async () => 
-    await fetch(`https://padipay-server.herokuapp.com/padipay/rates`, {
+    await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/padipay/rates`, {
         method: 'GET',
     }).then((res) => {
         if (!res.ok) {
