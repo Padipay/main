@@ -4,18 +4,18 @@ function Homepage() {
     return ( 
         <>
             <nav className="navbar navbar-expand-lg">
-        <div className="container-fluid">
-                <img src={logo} alt="logo" />
-            {/* <button className="fancy-toggler navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button> */}
-            {/* <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div className="navbar-nav ms-auto mt-4">
-                    <a className="btn btn-primary get-started">Join Waitlist</a>
+                <div className="container-fluid">
+                        <img src={logo} alt="logo" />
+                    {/* <button className="fancy-toggler navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button> */}
+                    {/* <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div className="navbar-nav ms-auto mt-4">
+                            <a className="btn btn-primary get-started">Join Waitlist</a>
+                        </div>
+                    </div> */}
                 </div>
-            </div> */}
-        </div>
-    </nav>
+            </nav>
     <div className="container-fluid">
         <div className="row main-text-row">
             <div className="col-lg-4 col-sm-12 wallet-img order-first order-lg-2">
