@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import firebase from '../firebase/firebase';
 import { useNavigate } from "react-router";
+import { paymentStatus } from "../redux/transfer/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const ResetInfo = styled.p `
     margin-left: 30px;
@@ -19,21 +21,24 @@ const ResetInfo = styled.p `
 function SuccessfulTransaction() {
     // const[userId, setuserId] = useState(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const { payment_status } = useSelector(state => state.transfer_details)
 
-    // useEffect(() => {
-    //     firebase.auth().onAuthStateChanged((user) =>{
-    //         setuserId(user)
-    //     })
-    //     console.log(userId)
-    // }, [])
+    useEffect(() => {
+        // firebase.auth().onAuthStateChanged((user) =>{
+        //     setuserId(user)
+        // })
+        // console.log(userId)
+        dispatch(paymentStatus())
+
+    }, [])
 
     const handleClick = async () => {
         const isAuthenticated = await sessionStorage.getItem('Auth-Token')
         if (isAuthenticated) {
             navigate('/dashboard')
            }else{
-            navigate('/')
-            sessionStorage.clear()
+            window.location.reload()
            }
     }
     return ( 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import uniqid from 'uniqid';
 import Stepper from "./stepper";
 import '../styles/completeTransaction.css';
 import PaymentDetails from "./paymentDetails";
@@ -8,8 +9,10 @@ import { saveTransaction } from "../api/api";
 import firebase from '../firebase/firebase'
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { paymentOrder } from "../api/binancepay";
+import { LargeSpinner } from "../styles/globalStyles";
 
-import { paymentStatus } from "../redux/transfer/actions/actions";
+import { paymentStatus, binancePay, fetchError, paymentTimestamp } from "../redux/transfer/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -22,17 +25,24 @@ const Error = styled.p`
     margin-left: 43px
 `
 
+const StyledSpinnerSpan = styled.span`
+    position: absolute;
+    margin-left: inherit;
+    margin-top: 0px;
+`
+
 function CompleteTransaction() {
     const dispatch = useDispatch();
-    const { transfer, recepient } = useSelector(state => state.transfer_details)
+    const { transfer, recepient, payment } = useSelector(state => state.transfer_details)
+    const [loading, setLoading] = useState(false)
 
     const { register, formState: { errors }, handleSubmit } = useForm();
 
     const {tokenValue, sendAmount, receiveAmount} = transfer;
-    const {accountNumber, accountName, bankName} = recepient
+    const {accountNumber, accountName, bankName, purpose} = recepient
     const[userId, setuserId] = useState('');
     
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((user) =>{
@@ -41,11 +51,38 @@ function CompleteTransaction() {
             }
         })
     }, [])
-    const onSubmit = () => {
-        saveTransaction(userId, receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber)
-        setOpen(true)
-        dispatch(paymentStatus())
+
+    const createPayment = async () => {
+        setLoading(true)
+        if (tokenValue === 'BUSD' || tokenValue === 'USDT') {
+            await paymentOrder(sendAmount, tokenValue)
+                .then((res) => {
+                    dispatch(binancePay(res.data.data))
+                    setLoading(false)
+                    dispatch(paymentStatus())
+                }).catch((err) => fetchError(err.message))
+        }else {
+            setLoading(false)
+            dispatch(paymentStatus())
+        }
     }
+
+    const onSubmit = () => {
+        // saveTransaction(userId, receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber)
+        // setOpen(true)
+        // createPayment()      
+        const date = new Date();
+        const timestamp = date.getTime()
+        const exipryTime = timestamp + (20 * 60 * 1000)
+
+        const data = {
+            timestamp,
+            exipryTime
+        }
+        dispatch(paymentStatus())
+        dispatch(paymentTimestamp(data))
+    }
+    
     const [page, setPage ] = useState(3)
     return ( 
         <>
@@ -85,10 +122,11 @@ function CompleteTransaction() {
                             <a href="/">Terms and Conditions</a>
                         </div>
                         <div className="continue-btn mb-5">
-                            <button type="submit" className="btn btn-primary btn-lg">{`Pay ${sendAmount} ${tokenValue}`}</button>
+                            <button type="submit" className="btn btn-primary btn-lg" disabled={loading === true}>{`Pay ${sendAmount} ${tokenValue}`}
+                              <StyledSpinnerSpan>{loading && <LargeSpinner name="three-bounce" color="white" />} </StyledSpinnerSpan>
+                            </button>
                         </div>
                     </form>
-                    {/* <PaymentDetails open={payment}/>  */}
                 </FormContainer>
             </div>
         </>

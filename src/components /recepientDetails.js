@@ -12,7 +12,7 @@ import FormContainerLayout from "./formContainerLayout";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/bootstrap.css';
 import styled from "styled-components";
-
+import { StyledSpinnerSpan, LargeSpinner } from "../styles/globalStyles";
 import { recepientDetails } from "../redux/transfer/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { bankVerify } from "../api/api";
@@ -47,7 +47,7 @@ const schema  = yup.object({
 function RecepientDetails() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {recepient} = useSelector(state => state.transfer_details)
+    const {recepient, transfer} = useSelector(state => state.transfer_details)
 
     const { control, register, handleSubmit, watch, formState: { errors } } = useForm({
         defaultValues: {
@@ -69,6 +69,7 @@ function RecepientDetails() {
     const [loading, setLoading ] = useState(false);
     const [error, setError ] = useState(null);
     const [visible, setVisible ] = useState(false);
+    
 
     const bank_name = bankCodes.map((bank) => {
         return <option value={bank.code} key={bank.code}>{bank.name}</option>
@@ -92,6 +93,7 @@ function RecepientDetails() {
     const onSubmit = async () => {
         bankVerification()     
     };
+
     const handleContinue = () => {
         const recepientDetail = {
             accountName: accountName,
@@ -190,8 +192,8 @@ function RecepientDetails() {
                         </div> }
                         {accountName === null &&
                         <div className="send-btn">
-                            <button type="submit" className="btn btn-primary btn-lg mb-5">Next
-                            {loading && <div className="loader"></div>}
+                            <button type="submit" className="btn btn-primary btn-lg mb-5" disabled={loading === true}>Next
+                            <StyledSpinnerSpan>{loading && <LargeSpinner name="three-bounce" color="white" />}</StyledSpinnerSpan>
                             </button>
                         </div>}
                         {accountName != null &&

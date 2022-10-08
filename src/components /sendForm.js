@@ -119,8 +119,8 @@ function SendForm({type}) {
     };    
     const onSubmit = () => {
         const transferDetail = {
-            sendAmount: sendAmount, 
-            receiveAmount: receiveAmount,
+            sendAmount, 
+            receiveAmount,
             tokenValue: token
         }
         dispatch(transferDetails(transferDetail))

@@ -33,7 +33,7 @@ import { fetch_api_rates } from './redux/transfer/actions/actions';
 
 
 function App() {
-  const { payment } = useSelector(state => state.transfer_details)
+  const { payment_status } = useSelector(state => state.transfer_details)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -55,7 +55,7 @@ function App() {
           <Route path="/complete" element={<RefreshRoute> <CompleteTransaction /> </RefreshRoute>}/>
           <Route path="/register" element={<CreateAccount />} />
           <Route path="/password" element={<RegisterRoutes> <CreatePassword /> </RegisterRoutes>}/>
-          <Route path="/success-transact" element={<PaymentSuccess> <SuccessfulTransaction /> </PaymentSuccess>} />
+          <Route path="/success-transact" element={<RefreshRoute> <SuccessfulTransaction /> </RefreshRoute>} />
           <Route path="/verify" element={<VerifyAccount />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/login" element={<Login />} />
@@ -68,8 +68,8 @@ function App() {
           <Route path="/admin/*" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <TimeOutModal open={payment}/>
-        <PaymentDetails open={payment}/>
+        <TimeOutModal open={payment_status}/>
+        <PaymentDetails open={payment_status}/>
       </Router>
       
    </>

@@ -4,14 +4,13 @@ import Countdown from 'react-countdown';
 import { endTimer } from "../redux/transfer/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import TimeOutModal from "./timeoutModal";
-import { paymentStatus } from "../redux/transfer/actions/actions";
 
 function CountdownTimer() {
     const navigate = useNavigate();
     const [data, setData] = useState(
-        { date: Date.now(), delay: 60000 } //60 seconds
+        { date: Date.now(), delay: 600000 } //60 seconds
       );
-    const wantedDelay = 60000;
+    const wantedDelay = 600000;
 
     const dispatch = useDispatch();
     const {end_time} = useSelector(state => state.transfer_details)
@@ -34,7 +33,7 @@ function CountdownTimer() {
             const delta = parseInt(savedDate, 10) - currentTime;
 
             if (delta > wantedDelay) {
-                //Yes we clear uour saved end date
+                //Yes we clear our saved end date
                 if (end_time > 0)
                   dispatch(endTimer(null))
               } else {

@@ -15,12 +15,27 @@ import { transactSuccessEmail } from "../api/transactionSuccessEmail";
 import { sendSms } from "../api/sendSms";
 import CountdownTimer from './countdownTimer';
 import { useDispatch, useSelector } from "react-redux";
-import { paymentStatus } from "../redux/transfer/actions/actions";
+import { paymentStatus, endTimer } from "../redux/transfer/actions/actions";
+import styled from "styled-components";
+import { payout, savePayment, getCryptoPayment } from "../api/api";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { toastNotification } from "../utils/toasts";
+
+
+
+const PaymentQrCode = styled.img `
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+`
 
 
 function PaymentDetails({open}) {
     const dispatch = useDispatch();
-    const { payment, transfer } = useSelector(state => state.transfer_details)
+    const { payment_status, transfer, recepient, payment_timestamp } = useSelector(state => state.transfer_details)
 
 //   const {tokenValue, sendAmount, receiveAmount} = JSON.parse(sessionStorage.getItem("transferDetails"));
 //   const {phoneNumber, email} = JSON.parse(sessionStorage.getItem("recepientDetails"));
@@ -28,44 +43,64 @@ function PaymentDetails({open}) {
   const handleClose = () => dispatch(paymentStatus());
   const handleShow = () => setShow(true);
   const [transactions, setTransactions] = useState(null);
-  const [status, setStatus] = useState(null);
+  const [active, setActive] = useState(false);
   const [success, setSuccess] = useState(false)
+  const [intervalID, setIntervalID] = useState(0);
 
-  const [address, setAddress] = useState('0x9A18182dAef0d99DdE8cedD817515A8Fe8491C96')
+
+  const[address, setAddress] = useState('0x9A18182dAef0d99DdE8cedD817515A8Fe8491C96')
 
   const navigate = useNavigate()  
-    // useEffect(() => {
-    //     const getStatus = setInterval( async () => {
-    //         const transactionid = sessionStorage.getItem("transactionId")
-    //         const temp = []
-    //         if (transactionid) {
-    //             await firebase
-    //                 .firestore().collection('transactions')
-    //                 .doc(transactionid)
-    //                 .onSnapshot((doc) => {
-    //                     temp.push(doc.data())
-    //                     setTransactions(temp)
-    //                     if (transactions && transactions[0].status === true) {
-    //                         const date = new Date(transactions[0].date.toDate()).toDateString()
-    //                         const body = `Your transaction with ID number: ${transactionid} on padipay was successful.`
-    //                         const phone_number = `+${phoneNumber}`
-    //                         sendSms(phone_number, body)
-    //                         transactSuccessEmail(email, sendAmount, receiveAmount, tokenValue, date, transactionid)
-    //                         console.log("status has changed")
-    //                         setSuccess(true)
-    //                         sessionStorage.setItem("success", true)
-    //                         navigate('/success-transact')
-    //                     }
-    //                 })         
-    //             }
-    //     }, 5000);
-    //     return () => clearInterval(getStatus)
-    // }, [transactions])  
+  const customer_ref = "PP_" + Math.floor(Math.random() * 5000000000)
+  const date = new Date().toLocaleString()
+
+    
+
+  const checkPayment = async () => {
+   await getCryptoPayment().then((res) => {
+        console.log(res[0].timestamp)
+        const response = res[0].timestamp
+            setSuccess(true)
+            paymentNotification()
+        // if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+        //     setSuccess(true)
+        //     paymentNotification()
+        // }
+   })
+  }
+
+  const paymentNotification = async () => {
+        await payout(recepient.email, recepient.accountName, 
+            recepient.accountNumber, Number(transfer.receiveAmount), customer_ref)
+        .then((res) => {
+            console.log(res.data)
+            savePayment(customer_ref, transfer.receiveAmount, transfer.sendAmount, 
+                transfer.tokenValue, recepient.bankName, recepient.accountName, 
+                recepient.accountNumber)
+        })
+        await transactSuccessEmail(recepient.email, transfer.sendAmount, 
+            transfer.receiveAmount, transfer.tokenValue, date, customer_ref).then((res) => {
+                console.log(res)
+                dispatch(endTimer(null))
+                navigate('/success-transact')
+            })
+  }
+      
+  useEffect(() => {
+    const paymentInterval = setInterval(() => {
+        if (payment_status === true) checkPayment()
+        }, 10000);   
+        setIntervalID(paymentInterval);
+  }, [payment_status])
+
+  useEffect(() => {
+    if (success) clearInterval(intervalID)
+  }, [success])
     return (  
         <>
       <Modal
         show={open}
-        onHide={payment}
+        onHide={handleClose}
         backdrop="static"
         keyboard={false}
         centered={true}
@@ -83,29 +118,30 @@ function PaymentDetails({open}) {
                 <div className="modal-info">
                     <p>Complete your transaction by sending to the address below</p>
                 </div>
-                {/* <div className="amount-due">
-                    <p>{`Amount Due `}</p>
-                </div> */}
                 <div className="barcode">
                     <QRCode 
                     value="0x9A18182dAef0d99DdE8cedD817515A8Fe8491C96"
                     logoHeight={100}
-                    logoWidth={100}/>
+                    logoWidth={100}
+                    />
                 </div>
                 <div className="address">
                     <span>Address</span>
                 </div>
                 <div className="address-details">
                     <p>{`${address.substring(0, 25)}...`}</p> 
-                    <RiFileCopyLine size={25} style={{fill: 'white', marginTop: 10, marginRight:10}}/>
+                    <RiFileCopyLine size={25} style={{fill: 'white', marginTop: 10, marginRight:10, cursor:"pointer"}}
+                    onClick={() =>  navigator.clipboard.writeText(`${address}`, toastNotification('Copied to Clipboard'))}
+                    />
                 </div>
                 <div className="address">
                     <span>Amount Due</span>
                 </div>
                 <div className="address-details">
                     <p>{`${transfer.sendAmount} ${transfer.tokenValue}`}</p> 
-                    <RiFileCopyLine size={25} style={{fill: 'white', marginTop: 10, marginRight:10}}/>
-                </div>
+                    <RiFileCopyLine size={25} style={{fill: 'white', marginTop: 10, marginRight:10, cursor:"pointer"}} 
+                    onClick={() =>  navigator.clipboard.writeText(`${transfer.sendAmount} ${transfer.tokenValue}`, toastNotification('Copied to Clipboard'))}/>
+                </div> 
                 {/* <Link className="link" to="" onClick={handleClose}>
                     <div className="cancel">
                         <p><MdOutlineClose size={20} style={{fill: 'red'}}/> Cancel Payment transaction</p>
@@ -117,6 +153,7 @@ function PaymentDetails({open}) {
             </>
         </Modal.Body>
       </Modal>
+      <ToastContainer/>
         </>
     );
 }

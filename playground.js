@@ -260,4 +260,35 @@
   //           const rates = {busd: amount[0], usdt: amount[1], trx: amount[1]}
   //           dispatch(conversionRates(rates))
   //         });
-  // };
+  // };\
+
+//   if (!(payment.timestamp < data[0].timestamp) && !(payment.timestamp > data[0].timestamp)) 
+//   console.log(payment.active)
+//   console.log(payment.active)
+    // useEffect(() => {
+    //     const getStatus = setInterval( async () => {
+    //         const transactionid = sessionStorage.getItem("transactionId")
+    //         const temp = []
+    //         if (transactionid) {
+    //             await firebase
+    //                 .firestore().collection('transactions')
+    //                 .doc(transactionid)
+    //                 .onSnapshot((doc) => {
+    //                     temp.push(doc.data())
+    //                     setTransactions(temp)
+    //                     if (transactions && transactions[0].status === true) {
+    //                         const date = new Date(transactions[0].date.toDate()).toDateString()
+    //                         const body = `Your transaction with ID number: ${transactionid} on padipay was successful.`
+    //                         const phone_number = `+${phoneNumber}`
+    //                         sendSms(phone_number, body)
+    //                         transactSuccessEmail(email, sendAmount, receiveAmount, tokenValue, date, transactionid)
+    //                         console.log("status has changed")
+    //                         setSuccess(true)
+    //                         sessionStorage.setItem("success", true)
+    //                         navigate('/success-transact')
+    //                     }
+    //                 })         
+    //             }
+    //     }, 5000);
+    //     return () => clearInterval(getStatus)
+    // }, [transactions]) 
