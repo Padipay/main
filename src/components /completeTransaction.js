@@ -72,7 +72,7 @@ function CompleteTransaction() {
         // setOpen(true)
         // createPayment()      
         const date = new Date();
-        const timestamp = date.getTime()
+        const timestamp = Math.floor(date.getTime()/1000)
         const exipryTime = timestamp + (20 * 60 * 1000)
 
         const data = {

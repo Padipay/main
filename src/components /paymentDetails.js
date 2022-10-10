@@ -4,21 +4,18 @@ import '../styles/modal.css';
 import logo from '../images/Logo2.png'
 import { QRCode } from 'react-qrcode-logo';
 
-import { MdOutlineClose } from "react-icons/md";
 import { RiFileCopyLine } from "react-icons/ri";
 import { BiStopwatch } from "react-icons/bi";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import firebase from '../firebase/firebase';
 import { transactSuccessEmail } from "../api/transactionSuccessEmail";
-import { sendSms } from "../api/sendSms";
 import CountdownTimer from './countdownTimer';
 import { useDispatch, useSelector } from "react-redux";
 import { paymentStatus, endTimer } from "../redux/transfer/actions/actions";
 import styled from "styled-components";
 import { payout, savePayment, getCryptoPayment } from "../api/api";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toastNotification } from "../utils/toasts";
 
@@ -42,14 +39,13 @@ function PaymentDetails({open}) {
   const [show, setShow] = useState(false); 
   const handleClose = () => dispatch(paymentStatus());
   const handleShow = () => setShow(true);
-  const [transactions, setTransactions] = useState(null);
-  const [active, setActive] = useState(false);
+//   const [transactions, setTransactions] = useState(null);
+//   const [active, setActive] = useState(false);
   const [success, setSuccess] = useState(false)
   const [intervalID, setIntervalID] = useState(0);
 
 
-  const[address, setAddress] = useState('0x9A18182dAef0d99DdE8cedD817515A8Fe8491C96')
-
+  const[address, setAddress] = useState('0x78565af8DEfD0217EAd6723999D31aeaA763b848')
   const navigate = useNavigate()  
   const customer_ref = "PP_" + Math.floor(Math.random() * 5000000000)
   const date = new Date().toLocaleString()
@@ -58,20 +54,22 @@ function PaymentDetails({open}) {
 
   const checkPayment = async () => {
    await getCryptoPayment().then((res) => {
-        console.log(res[0].timestamp)
-        const response = res[0].timestamp
+        console.log(res.result[0].timeStamp)
+        const response = res.result[0].timeStamp
+            // setSuccess(true)
+            // paymentNotification()
+        if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
             setSuccess(true)
             paymentNotification()
-        // if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
-        //     setSuccess(true)
-        //     paymentNotification()
-        // }
+        }
    })
   }
 
+//   console.log(payment_timestamp)
+
   const paymentNotification = async () => {
         await payout(recepient.email, recepient.accountName, 
-            recepient.accountNumber, Number(transfer.receiveAmount), customer_ref)
+            recepient.accountNumber, Number(transfer.sendAmount), customer_ref)
         .then((res) => {
             console.log(res.data)
             savePayment(customer_ref, transfer.receiveAmount, transfer.sendAmount, 

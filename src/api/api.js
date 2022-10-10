@@ -97,13 +97,26 @@ export const getRates = async () =>
 
 export const getCryptoPayment = async () => {
     try {
-        const options = {method: 'GET'}
-        const response = await fetch('https://api.ethplorer.io/getAddressTransactions/0x9A18182dAef0d99DdE8cedD817515A8Fe8491C96?apiKey=freekey&limit=3',options)
+        // const options = {method: 'GET'}
+        const response = await fetch("https://api-testnet.bscscan.com/api?module=account&action=txlist&address=0x78565af8DEfD0217EAd6723999D31aeaA763b848&startblock=0&endblock=99999999&page=1&offset=10&sort=desc&apikey=PGJ8XEAQADRZGVNX8EMBY6S1Y5BH3ZSGRX")
         return response.json()
     } catch (error) {
         console.log("Couldn't fetch payment details")
     }
 }
+
+// const getPayment = async () => {
+//     await fetch("https://api-testnet.bscscan.com/api?module=account&action=txlist&address=0x78565af8DEfD0217EAd6723999D31aeaA763b848&startblock=0&endblock=99999999&page=1&offset=10&sort=desc&apikey=PGJ8XEAQADRZGVNX8EMBY6S1Y5BH3ZSGRX")
+//     .then((res) => {
+//         if (!res.ok) {
+//             throw Error('Could not send message')
+//         }
+//         return res.json()
+
+//     }).then((data) => console.log(data.result))
+//     .catch((e) => console.log(e.message))
+// }
+
 
 export const payout = async(email, accName, accNum, amount, id) => {
     try {
