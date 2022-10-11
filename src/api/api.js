@@ -98,7 +98,7 @@ export const getRates = async () =>
 export const getCryptoPayment = async () => {
     try {
         // const options = {method: 'GET'}
-        const response = await fetch("https://api-testnet.bscscan.com/api?module=account&action=txlist&address=0x78565af8DEfD0217EAd6723999D31aeaA763b848&startblock=0&endblock=99999999&page=1&offset=10&sort=desc&apikey=PGJ8XEAQADRZGVNX8EMBY6S1Y5BH3ZSGRX")
+        const response = await fetch(`https://api-testnet.bscscan.com/api?module=account&action=txlist&address=${process.env.REACT_APP_WALLET_ADDRESS}&startblock=0&endblock=99999999&page=1&offset=10&sort=desc&apikey=${process.env.REACT_APP_BSC_SCAN_API_KEY}`)
         return response.json()
     } catch (error) {
         console.log("Couldn't fetch payment details")
