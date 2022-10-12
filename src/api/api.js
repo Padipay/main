@@ -10,21 +10,23 @@ export const bankVerify = async (accountNumber, bankCode) => {
     }
 }
 
-export const userTransaction = async () => {
+export const getUserTransaction = async () => {
     const temp = []
-    await firebase.firestore()
-        .collection('users')
+    await firebase.firestore().collection('users')
         .doc(firebase.auth().currentUser.uid)
         .collection('transactions')
+        .orderBy("date", "desc")
+        .limit(25)
+        
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                temp.push(doc.data())
+                temp.push({data:doc.data(), id:doc.id})
+                // console.log(temp)
             })
         }).catch((err) => {
             console.log(err.message)
         }) 
-        console.log(temp)
     return temp
 }
 
@@ -168,12 +170,26 @@ export const savePayment = (ref, receiveAmount, sendAmount, tokenValue, bankName
         }).then(() => {
             console.log('Payment saved successfully')
             return transaction.get();
-        }).then((doc) => {
-            if (!doc.exists) {
-                console.log("No such document!"); //Error
-              } else {
-                  console.log(doc.data())
-            }
-        })
-        .catch((err) => console.log(err.message))
+        }).catch((err) => console.log(err.message))
+}
+
+export const userTransaction = (ref, receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber) => {
+    firebase.firestore()
+        .collection('users')
+        .doc(firebase.auth().currentUser.uid)
+        .collection('transactions').doc()
+        .set({
+            receive: receiveAmount,
+            send: sendAmount,
+            token: tokenValue,
+            bankName: bankName,
+            account_name: accountName,
+            account_number: accountNumber,
+            status: "paid",
+            payment_ref: ref,
+            date: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+            console.log('Payment saved successfully')
+            // return transaction.get();
+        }).catch((err) => console.log(err.message))
 }

@@ -14,12 +14,11 @@ import CountdownTimer from './countdownTimer';
 import { useDispatch, useSelector } from "react-redux";
 import { paymentStatus, endTimer } from "../redux/transfer/actions/actions";
 import styled from "styled-components";
-import { payout, savePayment, getCryptoPayment } from "../api/api";
+import { payout, savePayment, getCryptoPayment, userTransaction } from "../api/api";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toastNotification } from "../utils/toasts";
-
-
+import firebase from '../firebase/firebase';
 
 const PaymentQrCode = styled.img `
     width: 200px;
@@ -65,23 +64,29 @@ function PaymentDetails({open}) {
    })
   }
 
-//   console.log(payment_timestamp)
-
   const paymentNotification = async () => {
         await payout(recepient.email, recepient.accountName, 
-            recepient.accountNumber, Number(transfer.sendAmount), customer_ref)
+            recepient.accountNumber, Number(transfer.receiveAmount), customer_ref)
         .then((res) => {
-            console.log(res.data)
-            savePayment(customer_ref, transfer.receiveAmount, transfer.sendAmount, 
-                transfer.tokenValue, recepient.bankName, recepient.accountName, 
-                recepient.accountNumber)
+            console.log(res)
+            if (res.success === true) {
+                if (firebase.auth().currentUser) {
+                    userTransaction(customer_ref, transfer.receiveAmount, transfer.sendAmount, 
+                        transfer.tokenValue, recepient.bankName, recepient.accountName, 
+                        recepient.accountNumber)
+                }else {
+                    savePayment(customer_ref, transfer.receiveAmount, transfer.sendAmount, 
+                    transfer.tokenValue, recepient.bankName, recepient.accountName, 
+                    recepient.accountNumber)
+                }
+                transactSuccessEmail(recepient.email, transfer.sendAmount, 
+                    transfer.receiveAmount, transfer.tokenValue, date, customer_ref).then((res) => {
+                        console.log(res)
+                        dispatch(endTimer(null))
+                        navigate('/success-transact')
+                })
+            }
         })
-        await transactSuccessEmail(recepient.email, transfer.sendAmount, 
-            transfer.receiveAmount, transfer.tokenValue, date, customer_ref).then((res) => {
-                console.log(res)
-                dispatch(endTimer(null))
-                navigate('/success-transact')
-            })
   }
       
   useEffect(() => {

@@ -302,3 +302,29 @@
     // 1665438325
     
 // "proxy": "http://localhost:5000",
+
+// export const savePayment = (ref, receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber) => {
+//     const transaction = firebase.firestore().collection('transactions').doc()
+//         transaction
+//         .set({
+//             receive: receiveAmount,
+//             send: sendAmount,
+//             token: tokenValue,
+//             bankName: bankName,
+//             account_name: accountName,
+//             account_number: accountNumber,
+//             status: "paid",
+//             payment_ref: ref,
+//             date: firebase.firestore.FieldValue.serverTimestamp()
+//         }).then(() => {
+//             console.log('Payment saved successfully')
+//             return transaction.get();
+//         }).then((doc) => {
+//             if (!doc.exists) {
+//                 console.log("No such document!"); //Error
+//               } else {
+//                   console.log(doc.data())
+//             }
+//         })
+//         .catch((err) => console.log(err.message))
+// }
