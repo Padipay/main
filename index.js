@@ -184,31 +184,22 @@ app.get('/padipay/rates', async(req, res) => {
 });
 
 app.post('/notification', async(req, res) => {
-  const event = req.body
-  const encryptedData =  crypto
-      .createHmac("SHA512", '80ad3f0e2db64a61b0bec492a09bcf35')
-      .update(JSON.stringify(event)) 
-      .digest("hex");
-  const signatureFromWebhook = req.headers['signature'];
+  try {
+    const event = req.body.event
+    const encryptedData =  crypto
+        .createHmac("SHA512", '80ad3f0e2db64a61b0bec492a09bcf35')
+        .update(JSON.stringify(event)) 
+        .digest("hex");
+    const signatureFromWebhook = req.headers['signature'];
+    if (encryptedData === signatureFromWebhook) {
+      console.log("success")
+      console.log(event)
 
-if(encryptedData === signatureFromWebhook) {
-  console.log(event)
-//   switch (event.type) {
-//     case 'payout.successful':
-//       console.log("process");
-//       console.log(JSON.stringify(req.body))
-//       break;
-//     default:
-//       console.log("process");
-//       console.log(JSON.stringify(req.body))
-//       break;
-//   }
-// }
-// else {
-//   console.log("discard");
-// }
-}
-  res.status(200).json({success: 'true'})
+    }
+    res.status(200).json({success: 'true'})
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 // app.post('/create-order', async (req, res) => {
