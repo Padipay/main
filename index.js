@@ -54,6 +54,7 @@ app.use(express.static(path.resolve(__dirname, "../client/build")))
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.get('/express_backend', (req, res) => { 
+  console.log('welcome')
     res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
 }); 
 
@@ -175,6 +176,7 @@ app.get('/padipay/rates', async(req, res) => {
           message: "Real time rates",
           success: true 
         })
+        console.log("success")
     }).catch((error) =>{
         const message = error.message
         res.status(500).json({message})
@@ -185,12 +187,11 @@ app.post('/notification', async(req, res) => {
   const event = req.body
   const encryptedData =  crypto
       .createHmac("SHA512", '80ad3f0e2db64a61b0bec492a09bcf35')
-      .update(JSON.stringify(payload)) 
+      .update(JSON.stringify(event)) 
       .digest("hex");
   const signatureFromWebhook = req.headers['signature'];
 
 if(encryptedData === signatureFromWebhook) {
-  const event = req.body;
   console.log(event)
 //   switch (event.type) {
 //     case 'payout.successful':
@@ -207,7 +208,7 @@ if(encryptedData === signatureFromWebhook) {
 //   console.log("discard");
 // }
 }
-  res.status(200)
+  res.status(200).json({success: 'true'})
 })
 
 // app.post('/create-order', async (req, res) => {
