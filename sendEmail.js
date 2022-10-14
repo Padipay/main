@@ -9,7 +9,7 @@ sgMail.setApiKey(SENDGRID_KEY)
 module.exports = function sendVerificationEmail(userEmail, template, actionLink){
     const message = {
       from: {
-        name: 'Padipay',
+        name: 'Padipay Success',
         email: VERIFIED_EMAIL
       },
       to: userEmail,
