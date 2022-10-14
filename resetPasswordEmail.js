@@ -9,7 +9,7 @@ sgMail.setApiKey(SENDGRID_KEY)
 module.exports = function sendResetPasswordEmail(userEmail, template, actionLink){
     const message = {
       from: {
-        name: 'Reset Password',
+        name: 'Padipay Reset Password',
         email: VERIFIED_EMAIL
       },
       to: userEmail,

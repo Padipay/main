@@ -190,19 +190,22 @@ app.post('/notification', async(req, res) => {
   const signatureFromWebhook = req.headers['signature'];
 
 if(encryptedData === signatureFromWebhook) {
-  switch (event.type) {
-    case 'payout.successful':
-      console.log("process");
-      console.log(JSON.stringify(req.body))
-      break;
-    default:
-      console.log("process");
-      console.log(JSON.stringify(req.body))
-      break;
-  }
-}
-else {
-  console.log("discard");
+  const event = req.body;
+  console.log(event)
+//   switch (event.type) {
+//     case 'payout.successful':
+//       console.log("process");
+//       console.log(JSON.stringify(req.body))
+//       break;
+//     default:
+//       console.log("process");
+//       console.log(JSON.stringify(req.body))
+//       break;
+//   }
+// }
+// else {
+//   console.log("discard");
+// }
 }
   res.status(200)
 })

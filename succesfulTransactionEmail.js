@@ -9,7 +9,7 @@ sgMail.setApiKey(SENDGRID_KEY)
 module.exports = function sendSuccessfulTransactionEmail(userEmail, template, send, receive, token, date, id){
   const message = {
     from: {
-      name: 'Successful Transaction',
+      name: 'Padipay Successful Transaction',
       email: VERIFIED_EMAIL
     },
     to: userEmail,
