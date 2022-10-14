@@ -1,3 +1,4 @@
+import crypto from "crypto";
 const express = require('express');
 const Cors = require('cors')
 var bodyParser = require('body-parser')
@@ -181,7 +182,29 @@ app.get('/padipay/rates', async(req, res) => {
 });
 
 app.post('/notification', async(req, res) => {
-  res.status(200).json({"returnCode":"SUCCESS","returnMessage":null})
+  const event = req.body
+  const encryptedData =  crypto
+      .createHmac("SHA512", '80ad3f0e2db64a61b0bec492a09bcf35')
+      .update(JSON.stringify(payload)) 
+      .digest("hex");
+  const signatureFromWebhook = req.headers['signature'];
+
+if(encryptedData === signatureFromWebhook) {
+  switch (event.type) {
+    case 'payout.successful':
+      console.log("process");
+      console.log(JSON.stringify(req.body))
+      break;
+    default:
+      console.log("process");
+      console.log(JSON.stringify(req.body))
+      break;
+  }
+}
+else {
+  console.log("discard");
+}
+  res.status(200)
 })
 
 // app.post('/create-order', async (req, res) => {
