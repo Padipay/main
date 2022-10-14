@@ -7,7 +7,8 @@ import Skeleton from 'react-loading-skeleton'
 import "react-loading-skeleton/dist/skeleton.css";
 import { getUserTransaction } from "../api/api";
 import NumberFormat from 'react-number-format';
-
+import { Pagination } from "./pagination";
+import Pagination2 from "./pagination2";
 
 function TransactionList({totalTransaction}) {
     const [transactions, setTransactions] = useState([]);
@@ -15,6 +16,14 @@ function TransactionList({totalTransaction}) {
     // const userId = sessionStorage.getItem("userId");
     // const [userId, setUserId] = useState(null)
     // {`${item.id.substring(0, 8)}...`}
+
+    const [currentPage, setCurrentPage] = useState(null);
+    const [currentCountries, setCurrentCountries] = useState([]);
+    const [totalPages, setTotalPages] = useState(null);
+    
+    const [postsPerPage, setPostsPerPage] = useState(10);
+
+
 
 
     useEffect(() => {
@@ -46,7 +55,18 @@ function TransactionList({totalTransaction}) {
         return () => getUserTransaction()
     }, [])
 
-    // console.log(totalTransaction)
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = transactions.slice(indexOfFirstPost, indexOfLastPost)
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
+    // onPageChanged = data => {
+    //     const { currentPage, totalPages, pageLimit } = data;
+    //     setCurrentPage(currentPage)
+    //     setTotalPages(totalPages)
+    // }
+
     return ( 
         <>
         {loading === true ?
@@ -60,11 +80,12 @@ function TransactionList({totalTransaction}) {
                 count={4} 
                 style={{marginLeft: 24, marginBottom: 20, width: '95%'}}/>
             </>
-        : transactions.length === 0 ? <EmptyTransaction /> :
+        : currentPosts.length === 0 ? <EmptyTransaction /> :
         <div className="table-header table-responsive mt-3">
             <table className="table">
                 <thead className="table-secondary">
                     <tr>
+                        <th scope="col">S/N</th>
                         <th scope="col">TYPE</th>
                         <th scope="col">TRANSACTION REF</th>
                         <th scope="col">SENT</th>
@@ -76,8 +97,9 @@ function TransactionList({totalTransaction}) {
                     </tr>
                 </thead>
                 <tbody>
-                    {transactions.map((item,index) => (
+                    {currentPosts.map((item,index) => (
                         <tr key={index}>
+                            <th>{index + 1}</th>
                             <th>Transfer</th>
                             <td>{item.id}</td>
                             <td>
@@ -114,26 +136,9 @@ function TransactionList({totalTransaction}) {
                     
                 </tbody>
             </table>
-            <div className="me-5">
-                <nav aria-label="Page navigation example">
-                    <ul className="pagination justify-content-end">
-                            <li className="page-item">
-                            <a className="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                {/* <span class="sr-only">Previous</span> */}
-                            </a>
-                            </li>
-                            <li className="page-item"><a className="page-link" href="#">1</a></li>
-                            <li className="page-item"><a className="page-link" href="#">2</a></li>
-                            <li className="page-item"><a className="page-link" href="#">3</a></li>
-                            <li className="page-item">
-                            <a className="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                {/* <span class="sr-only">Next</span> */}
-                            </a>
-                            </li>
-                    </ul>
-                </nav>
+            <div className="d-flex justify-content-between me-2">
+                <p className="mt-1">{`Page ${currentPage} of ${Math.ceil(transactions.length / postsPerPage)}`}</p>
+                {/* <Pagination postsPerPage={postsPerPage} totalPosts={transactions.length} paginate={paginate}/> */}
             </div>
         </div> 
         

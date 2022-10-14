@@ -106,9 +106,12 @@ function CompleteTransaction() {
                         <p>3. Send Crypto and wait for your transaction to be completed.</p>
                     </div>
                     <div className="steps-details">
-                        <p>4. By checking the terms and conditions bx you agree to all the legal terms and conditions are prescribed by padipay.</p>
+                        <p className="text-danger">4. You bear the cost of transactions fees for your crypto wallet exchange.</p>
                     </div>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="steps-details">
+                        <p>5. By checking the terms and conditions bx you agree to all the legal terms and conditions are prescribed by padipay.</p>
+                    </div>
+                    <form onSubmit={handleSubmit(onSubmit)} className="mt-5">
                             <div className="steps-details">
                                 <div className="form-check">
                                     <input {...register("tandc", { required: true })} className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
@@ -119,7 +122,7 @@ function CompleteTransaction() {
                             </div>
                             {errors.tandc && <Error>Please accept the terms and conditions.</Error>}
                         <div className="steps-details mt-2">
-                            <a href="/">Terms and Conditions</a>
+                            <a href="/" className="fw-bold fs-5">Terms and Conditions</a>
                         </div>
                         <div className="continue-btn mb-5">
                             <button type="submit" className="btn btn-primary btn-lg" disabled={loading === true}>{`Pay ${sendAmount} ${tokenValue}`}

@@ -15,9 +15,7 @@ export const getUserTransaction = async () => {
     await firebase.firestore().collection('users')
         .doc(firebase.auth().currentUser.uid)
         .collection('transactions')
-        .orderBy("date", "desc")
-        .limit(25)
-        
+        .orderBy("date", "desc")        
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {

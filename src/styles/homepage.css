@@ -100,7 +100,7 @@
 
 .homepage .input-border {
     max-width: 89%;
-    height: 70px;
+    height: 75px;
     border: 1px solid #E2E4E8;
     box-sizing: border-box;
     border-radius: 12px;
@@ -170,8 +170,8 @@
     /* position: relative; */
     /* right: 293px; */
     /* top: 20px; */
-    margin-top: -47px;
-    margin-left: 8px;
+    margin-top: -52px;
+    margin-left: 6px;
 }
 @media (max-width: 357px) {
     .select-country-image{
@@ -188,6 +188,7 @@
     font-weight: bold;
     margin-top: -4px;
     background-color: white;
+    margin-left: 42px;
 }
 @media (max-width: 357px) {
     .select-destination {
@@ -277,7 +278,7 @@
 .first-step p {
     margin-left: 40px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: bold;
     font-size: 16px;
     line-height: 24px;
 }

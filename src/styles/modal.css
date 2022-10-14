@@ -71,6 +71,9 @@
     font-weight: 700;
     font-size: 14px;
 }
+.cancel {
+    cursor: pointer;
+}
 .cancel p {
     color: white;
     text-align: center;

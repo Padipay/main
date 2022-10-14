@@ -45,6 +45,7 @@ function Login() {
                         navigate('/dashboard')
                     })
                     .catch((error) => {
+                        setLoading(false)
                         setError('User does not exist, try again')
                     })
                 }else{

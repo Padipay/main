@@ -8,6 +8,11 @@
     justify-content: center;
 }
 
+.back-button{
+    position: absolute;
+    cursor: pointer;
+}
+
 @media (max-width: 576px) {
     .main-content-container {
         max-width: 100%;

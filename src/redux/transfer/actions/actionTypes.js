@@ -8,6 +8,7 @@ export const ERROR_FETCHING = 'ERROR_FETCHING';
 export const END_TIMER = 'END_TIMER';
 export const BINANCE_PAY = 'BINANCE_PAY';
 export const PAYMENT_STATUS = 'PAYMENT_STATUS';
+export const EDIT_TRANSFER = 'EDIT_TRANSFER';
 
 
 

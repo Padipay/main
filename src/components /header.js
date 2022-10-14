@@ -48,7 +48,7 @@ function Header() {
                         </button>
                         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div className="navbar-nav ms-auto mt-4">
-                            <Link to={token != null ? "/dashboard" : "/account"}>
+                            <Link to={token != null ? "/dashboard" : "/login"}>
                             <button type="button" className="btn btn-outline-primary">{token != null ? 'Go to Dasboard' : 'Create an Account'}</button>
                             </Link>
                             </div>

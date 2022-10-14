@@ -4,6 +4,7 @@ const initialState = {
     error: "",
     loading: true,
     transfer:{},
+    edit_transfer: false,
     recepient: {
         accountName: "",
         accountNumber: "",
@@ -28,6 +29,8 @@ export default function transferReducer (state = initialState, action) {
     switch (action.type) {
         case types.TRANSFER_DETAILS:
             return{...state, transfer: action.payload, active:true};
+        case types.EDIT_TRANSFER:
+            return{...state, edit_transfer:!state.edit_transfer}
         case types.RECEPIENT_DETAILS:
             return{...state, recepient: action.payload, active:true};
         case types.PAYMENT_STATUS:

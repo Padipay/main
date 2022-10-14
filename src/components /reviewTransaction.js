@@ -1,26 +1,31 @@
-import React, { useCallback, useEffect, useState} from "react";
+import React, { useState} from "react";
 import '../styles/reviewTransaction.css'
 import Stepper from "./stepper";
 import Header from "./header";
-import FormTitle from "./formTitle";
 import FormContainerLayout from "./formContainerLayout";
 import { RiEdit2Fill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
-import firebase from '../firebase/firebase';
 import NumberFormat from 'react-number-format';
+import { editTransfer } from "../redux/transfer/actions/actions";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 function ReviewTransaction() {
     const {transfer, recepient, token_rates} = useSelector(state => state.transfer_details)
-    const [page, setPage ] = useState(2);
-    const [transferDetails, setTransferDetails ] = useState({});
-    const [recepientDetails, setRecepientDetails ] = useState({});
+    const [page ] = useState(2);
+    // const [transferDetails, setTransferDetails ] = useState({});
+    // const [recepientDetails, setRecepientDetails ] = useState({});
     // const [rates, setRates] = useState(null);
     const navigate = useNavigate();
-    const [loading, setLoading ] = useState(true)
+    // const [loading, setLoading ] = useState(true)
 
+    const dispatch = useDispatch()
+
+    const handleEdit = () => {
+        dispatch(editTransfer())
+        navigate('/send')
+    }
     //   useEffect(() => {
     //     const transferDetails = JSON.parse(sessionStorage.getItem("transferDetails"));
     //     const recepientDetails = JSON.parse(sessionStorage.getItem("recepientDetails"));
@@ -48,7 +53,7 @@ function ReviewTransaction() {
     //     }
 
     // }, []);
-    // console.log(rates)
+    // console.log(transfer)
 
 
     return ( 
@@ -61,12 +66,10 @@ function ReviewTransaction() {
                     <FormContainerLayout title="Review transfer details" style={{ height: 220}}>
                         <div className="review-heading">
                             <p className="main-heading">Transfer Details</p>
-                            <Link className="link" to="/send">
-                                <p className="edit"> 
+                                <p className="edit" onClick={handleEdit}> 
                                     <RiEdit2Fill size={20} style={{fill: '#003399', marginRight: 15}}/>  
                                     Edit
                                 </p>
-                            </Link>
                         </div>
                         <div className="seperator"></div>
                         <div className="transfer-details mt-3">
@@ -81,7 +84,7 @@ function ReviewTransaction() {
                                     type="text"
                                     thousandSeparator={true}
                                     allowNegative={true} 
-                                    decimalScale={2}
+                                    // decimalScale={0}
                                 />
                             </p>
                         </div>
@@ -109,7 +112,6 @@ function ReviewTransaction() {
                                 value={transfer.tokenValue === 'BTC' ? token_rates.data[0]['BTC'] : transfer.tokenValue === 'USDT' ? 
                                         token_rates.data[1]['USDT'] : transfer.tokenValue === 'ETH' ? 
                                         token_rates.data[2]['ETH']: transfer.tokenValue === 'BUSD' ? token_rates.data[3]['BUSD']: null}
-                                decimalScale={3}
                                 suffix={` NGN`}
                                 decimalSeparator="."
                                 displayType="text"

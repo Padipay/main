@@ -76,3 +76,10 @@ export const binancePay = (data) => dispatch => {
         payload:data
     })
 }
+
+export const editTransfer = () => dispatch => {
+    dispatch({
+        type: types.EDIT_TRANSFER
+    })
+    // dispatch(transferDetails(data))
+}

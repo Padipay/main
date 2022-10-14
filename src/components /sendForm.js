@@ -16,7 +16,7 @@ import NumberFormat from 'react-number-format';
 import styled from "styled-components";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { transferDetails } from "../redux/transfer/actions/actions";
+import { transferDetails, editTransfer } from "../redux/transfer/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 // import { getBusdPrice } from "../api/api";
@@ -54,21 +54,21 @@ function SendForm({type}) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const {transfer, token_rates} = useSelector(state => state.transfer_details)
+    const {transfer, token_rates, edit_transfer} = useSelector(state => state.transfer_details)
 
-    const { control, register, handleSubmit, setValue, formState: { errors } } = useForm({
+    const { control, register, handleSubmit, setValue, getValues, formState: { errors, isValid } } = useForm({
         defaultValues: {
             send: transfer.sendAmount,
             receive: transfer.receiveAmount,
-            token: transfer.tokenValue || 'BTC'
+            token: transfer.tokenValue || 'USDT'
         },
         resolver: yupResolver(schema),
         mode: "all",
     });
-    const [token, setToken ] = useState(transfer.tokenValue || 'BTC');
+    const [token, setToken ] = useState(transfer.tokenValue || 'USDT');
     const [country, setCountry ] = useState('NGN');
     const [receiveAmount, setReceive ] = useState('');
-    const [sendAmount, setSend ] = useState('');
+    const [sendAmount, setSend ] = useState(transfer.sendAmount);
     
 
     const [switchInputs, setSwitchInputs ] = useState(false);
@@ -82,22 +82,25 @@ function SendForm({type}) {
     
     const handleReceive = (value) => {
         setReceive(value)
-        if(value) {
-            if (token === 'BTC') {
-                setValue("send", value / token_rates.data[0]['BTC'])
-            }else if (token === 'USDT') {
-                setValue("send", value / token_rates.data[1]['USDT'])
-            }else if  (token === 'ETH'){
-                setValue("send", value / token_rates.data[2]['ETH'])
-            }else if  (token === 'BUSD'){
-                setValue("send", value / token_rates.data[3]['BUSD'])
-            }
+        if (token === 'BTC') {
+            const btcValue = value / token_rates.data[0]['BTC']
+            setValue("send", btcValue.toFixed(8))
+        }else if (token === 'USDT') {
+            const usdtValue = value / token_rates.data[1]['USDT']
+            setValue("send", usdtValue.toFixed(2))
+        }else if  (token === 'ETH'){
+            const ethValue = value / token_rates.data[2]['ETH']
+            setValue("send", ethValue.toFixed(8))
+        }else if  (token === 'BUSD'){
+            const busdValue = value / token_rates.data[3]['BUSD']
+            setValue("send", busdValue.toFixed(2))
         }else {
             setValue("send", '')
             setValue("receive", '')
         }
     };
-    const handleSend = (value) => {
+    const handleSend = (e) => {
+        const value  = e.target.value
         setSend(value)
         if(value) {
             if (token === 'BTC') {
@@ -118,17 +121,21 @@ function SendForm({type}) {
         setSwitchInputs(() => !switchInputs)
     };    
     const onSubmit = () => {
+        const values = getValues()
         const transferDetail = {
-            sendAmount, 
-            receiveAmount,
-            tokenValue: token
+            sendAmount: values.send, 
+            receiveAmount: values.receive,
+            tokenValue: values.token
         }
-        dispatch(transferDetails(transferDetail))
-        // sessionStorage.setItem("transferDetails", JSON.stringify(transferDetail))
-        navigate("/details")
+        if (edit_transfer) {
+            navigate('/review')
+            dispatch(transferDetails(transferDetail))
+            dispatch(editTransfer())
+        }else{
+            dispatch(transferDetails(transferDetail))
+            navigate("/details")
+        }
     };
-
-    // console.log(token_rates.data[0]['USDT'])
 
     return ( 
         <>
@@ -143,7 +150,16 @@ function SendForm({type}) {
                 <div className={switchInputs === true ? "input-flex" : ""}>
                     <div className="input-border">
                         <label className="label-send">You send</label>
-                        <Controller 
+                        <input 
+                            {...register("send")}
+                            type="number" 
+                            pattern="\d+\.?\d?(?!\d)"
+                            className="input-amount" placeholder="0.001"
+                            // value={accountNumber}
+                            onChange={handleSend}
+                            value={sendAmount || ''}
+                            /> 
+                        {/* <Controller 
                             name="send"
                             control={control}
                             render={({field, field: { onChange, value } }) => (
@@ -152,17 +168,25 @@ function SendForm({type}) {
                                 className="input-amount"
                                 inputMode="numeric"
                                 placeholder="0.001"
-                                decimalScale={3}
+                                // decimalScale={5}
                                 onValueChange={(values) => {
                                     const {value} = values;
                                     onChange(value)
-                                    handleSend(value)
+                                    if (token === 'BTC') {
+                                        setValue("receive", value * token_rates.data[0]['BTC'])
+                                    }else if (token === 'USDT') {
+                                        setValue("receive", value * token_rates.data[1]['USDT'])
+                                    }else if  (token === 'ETH'){
+                                        setValue("receive", value * token_rates.data[2]['ETH'])
+                                    }else if  (token === 'BUSD'){
+                                        setValue("receive", value * token_rates.data[3]['BUSD'])
+                                    }
                                 }}
                                 value={value}
                                 {...field}
                                 />
                             )}
-                        />
+                        /> */}
                         <StyledSelect
                             {...register("token")}
                             // defaultValue="BTC"
@@ -193,13 +217,13 @@ function SendForm({type}) {
                                     className="input-amount"
                                     inputMode="numeric"
                                     placeholder="500"
-                                    decimalScale={3}
+                                    decimalScale={0}
                                     onValueChange={(values) => {
                                         const { value } = values;
                                         onChange(value)
                                         handleReceive(value)
                                     }}
-                                    value={value}
+                                    value={receiveAmount}
                                     {...field}
                                     />
                                 )}
@@ -234,16 +258,16 @@ function SendForm({type}) {
                     />
                 </div>
                 {/* <div className="homepage-seperator"></div> */}
-                {type === 'transfer' ? 
+                {/* {type === 'transfer' ? 
                 <div className="input-border">
                     <label className="label-send">Destination</label>
                     <select name="destination" id="" className="select-destination" onChange={handleCountry}>
                         <option value="NGN">NGN</option>
                     </select>
                     <img src={nig} alt="ngn" className="select-country-image"/>
-                </div> : null }
-                <div className="col text-center homepage-send-btn mb-4">
-                    <button type="submit" className="btn btn-primary btn-lg">Continue</button>
+                </div> : null } */}
+                <div className="col-12 text-center homepage-send-btn mb-4">
+                    <button type="submit" className="btn btn-primary btn-lg" disabled={!isValid}>Send Money Fast 🚀</button>
                 </div>
             </div>
         </form>

@@ -29,8 +29,8 @@ function TimeOutModal({open}) {
                 <div className="time-out">
                     <FiAlertCircle size={60} style={{fill: 'white', marginTop: 10}}/>
                     <h4>Transaction timeout</h4>
-                    <span>We didn't receive any transfer notification before the transaction timeout.
-                        Not to worry if we do, we would credit the receiving account.
+                    <span>We didn't receive any transfer before the transaction timed-out. Not to worry if the transfer was done, you will definitely get credited to the receiving account.”
+“                           help@padipay.io for any further assistance. Thank you!
                     </span>
 
                     <span>You can contact help@padipay.io for any further assistance</span>

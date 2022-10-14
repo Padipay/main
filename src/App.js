@@ -38,6 +38,7 @@ function App() {
 
   useEffect(() => {
       // dispatch(toggleLoading())
+      dispatch(fetch_api_rates())
       const interval = setInterval(() => {
           dispatch(fetch_api_rates())
       }, 4000);

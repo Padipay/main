@@ -19,6 +19,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toastNotification } from "../utils/toasts";
 import firebase from '../firebase/firebase';
+import { Link } from "react-router-dom";
+import { MdOutlineClose } from "react-icons/md";
 
 const PaymentQrCode = styled.img `
     width: 200px;
@@ -36,13 +38,14 @@ function PaymentDetails({open}) {
 //   const {tokenValue, sendAmount, receiveAmount} = JSON.parse(sessionStorage.getItem("transferDetails"));
 //   const {phoneNumber, email} = JSON.parse(sessionStorage.getItem("recepientDetails"));
   const [show, setShow] = useState(false); 
-  const handleClose = () => dispatch(paymentStatus());
+  const handleClose = () => {
+        window.location.reload()
+    };
   const handleShow = () => setShow(true);
 //   const [transactions, setTransactions] = useState(null);
 //   const [active, setActive] = useState(false);
   const [success, setSuccess] = useState(false)
   const [intervalID, setIntervalID] = useState(0);
-
 
   const[address, setAddress] = useState('0x78565af8DEfD0217EAd6723999D31aeaA763b848')
   const navigate = useNavigate()  
@@ -145,11 +148,11 @@ function PaymentDetails({open}) {
                     <RiFileCopyLine size={25} style={{fill: 'white', marginTop: 10, marginRight:10, cursor:"pointer"}} 
                     onClick={() =>  navigator.clipboard.writeText(`${transfer.sendAmount} ${transfer.tokenValue}`, toastNotification('Copied to Clipboard'))}/>
                 </div> 
-                {/* <Link className="link" to="" onClick={handleClose}>
-                    <div className="cancel">
+                
+                    <div className="cancel" onClick={handleClose}>
                         <p><MdOutlineClose size={20} style={{fill: 'red'}}/> Cancel Payment transaction</p>
                     </div>
-                </Link> */}
+                
                 <div className="logo-bottom">
                     <img src={logo} alt="" />
                 </div>
