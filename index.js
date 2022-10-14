@@ -1,4 +1,4 @@
-import crypto from "crypto";
+const crypto = require('crypto');
 const express = require('express');
 const Cors = require('cors')
 var bodyParser = require('body-parser')
