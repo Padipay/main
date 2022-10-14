@@ -79,7 +79,7 @@ function Homepage() {
                     <div className="col-4 first-step mb-4 shadow mb-5 bg-body">
                         <img src={faster} alt="" />
                         <h6>Faster</h6>
-                        <p>Sending money with Coinprofile takes under 5 minutes - much faster than other services</p>
+                        <p>Sending money with Padipay takes under 5 minutes - much faster than other services</p>
                     </div>
                     <div className="col-4 first-step mb-4 shadow mb-5 bg-body">
                         <img src={cheaper} alt="" />
