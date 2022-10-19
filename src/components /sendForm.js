@@ -47,6 +47,7 @@ const schema  = yup.object().shape({
         return String(val).replace(/,/g, '') <= 2000000
     }),
     send: yup.string("Enter an amount to send")
+
     .required("Please enter an amount send")
     .typeError("Please enter an amount send")
 }).required();
@@ -63,7 +64,7 @@ function SendForm({type}) {
     const [switchInputs, setSwitchInputs ] = useState(false);
     const [rates, setRates] = useState(transfer.rate || null);
 
-    const { control, register, handleSubmit, watch, setValue, getValues, formState: { errors, isValid } } = useForm({
+    const { control, register, handleSubmit, trigger, setValue, getValues, formState: { errors, isValid } } = useForm({
         defaultValues: {
             send: sendAmount,
             receive: receiveAmount,
@@ -76,6 +77,7 @@ function SendForm({type}) {
     const handleToken = (e) => {
         setToken(e.target.value);
         const receive = getValues("receive")
+        if (receiveAmount) {
             if (e.target.value === 'BTC') {
                 const btcValue = parseFloat(receiveAmount.replace(/,/g, '')) / token_rates.data[0]['BTC']
                 setSend(btcValue.toFixed(8))
@@ -101,7 +103,8 @@ function SendForm({type}) {
                 setValue("send", bnbValue.toFixed(2))
                 setSend(bnbValue.toFixed(2))
                 setRates(token_rates.data[4]['BNB'].toFixed(2))
-            }        
+            }    
+        }       
     };
     const handleCountry = (e) => {
         setCountry(e.target.value);
@@ -117,26 +120,31 @@ function SendForm({type}) {
                 setReceive(receive.toLocaleString())
                 setValue("receive", receive)
                 setRates(token_rates.data[0]['BTC'].toFixed(2))
+                trigger("receive");
             }else if (token === 'USDT') {
                 const receive = value * token_rates.data[1]['USDT'].toFixed(2)
                 setReceive(receive.toLocaleString())
                 setValue("receive", receive)
                 setRates(token_rates.data[1]['USDT'].toFixed(2))
+                trigger("receive");
             }else if  (token === 'ETH'){
                 const receive = value * token_rates.data[2]['ETH'].toFixed(2)
                 setReceive(receive.toLocaleString())
                 setValue("receive", receive)
                 setRates(token_rates.data[2]['ETH'].toFixed(2))
+                trigger("receive");
             }else if  (token === 'BUSD'){
                 const receive = value * token_rates.data[3]['BUSD'].toFixed(2)
                 setReceive(receive.toLocaleString())
                 setValue("receive", receive)
                 setRates(token_rates.data[3]['BUSD'].toFixed(2))
+                trigger("receive");
             }else if  (token === 'BNB') {
                 const receive = value * token_rates.data[4]['BNB'].toFixed(2)
                 setReceive(receive.toLocaleString())
                 setValue("receive", receive)
                 setRates(token_rates.data[4]['BNB'].toFixed(2))
+                trigger("receive");
             }
         }else {
             setSend('')
@@ -155,22 +163,27 @@ function SendForm({type}) {
                 const btcvalue = parseFloat(value.replace(/,/g, '')) / token_rates.data[0]['BTC']
                 setSend(btcvalue.toFixed(8))
                 setValue("send", btcvalue)
+                trigger("send");
             }else if (token === 'USDT') {
                 const usdtValue = parseFloat(value.replace(/,/g, '')) / token_rates.data[1]['USDT']
                 setSend(usdtValue.toFixed(2))
                 setValue("send", usdtValue)
+                trigger("send");
             }else if  (token === 'ETH'){
                 const ethValue = parseFloat(value.replace(/,/g, '')) / token_rates.data[2]['ETH']
                 setSend(ethValue.toFixed(8))
                 setValue("send", ethValue)
+                trigger("send");
             }else if  (token === 'BUSD'){
                 const busdValue = parseFloat(value.replace(/,/g, '')) / token_rates.data[3]['BUSD']
                 setSend(busdValue.toFixed(2))
                 setValue("send", busdValue)
+                trigger("send");
             }else if(token === 'BNB') {
                 const bnbValue = parseFloat(value.replace(/,/g, '')) / token_rates.data[4]['BNB']
                 setSend(bnbValue.toFixed(2))
                 setValue("send", bnbValue)
+                trigger("send");
             }
             else {
                 setSend('')
@@ -198,8 +211,6 @@ function SendForm({type}) {
             navigate("/details")
         }
     };
-    // console.log(token_rates)
-
     return ( 
         <>
         <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
@@ -305,7 +316,10 @@ function SendForm({type}) {
                             {...register("receive", {
                                 onChange: (e) => {
                                     handleReceive(e)
-                                }
+                                },
+                                validate: (value) => {
+                                    return parseFloat(value.replace(/,/g, '')) <= 2000000 || 'Maximum amount to send is 2,000,000 NGN'
+                                }                    
                             })}
                             type="text" 
                             step="0.01"
