@@ -106,7 +106,7 @@ function CompleteTransaction() {
                         <p>3. Send Crypto and wait for your transaction to be completed.</p>
                     </div>
                     <div className="steps-details">
-                        <p className="text-danger">4. You bear the cost of transactions fees for your crypto wallet exchange.</p>
+                        <p className="text-danger">4. You bear the cost of transaction fees for your crypto wallet exchange.</p>
                     </div>
                     <div className="steps-details">
                         <p>5. By checking the terms and conditions bx you agree to all the legal terms and conditions are prescribed by padipay.</p>
