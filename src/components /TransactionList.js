@@ -61,11 +61,14 @@ function TransactionList({totalTransaction}) {
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
-    const onPageChanged = data => {
+    const onPageChanged = (data) => {
         const { currentPage, totalPages, pageLimit } = data;
         setCurrentPage(currentPage)
         setTotalPages(totalPages)
+        setPostsPerPage(pageLimit)
     }
+
+    // console.log(currentPage)
 
     return ( 
         <>
@@ -80,7 +83,7 @@ function TransactionList({totalTransaction}) {
                 count={4} 
                 style={{marginLeft: 24, marginBottom: 20, width: '95%'}}/>
             </>
-        : transactions.length === 0 ? <EmptyTransaction /> :
+        : currentPosts.length === 0 ? <EmptyTransaction /> :
         <div className="table-header table-responsive mt-3">
             <table className="table">
                 <thead className="table-secondary">
@@ -97,9 +100,9 @@ function TransactionList({totalTransaction}) {
                     </tr>
                 </thead>
                 <tbody>
-                    {transactions.map((item,index) => (
+                    {currentPosts.map((item,index) => (
                         <tr key={index}>
-                            <th>{index + 1}</th>
+                            <th>{`${(postsPerPage * (currentPage-1)) + index + 1}`}</th>
                             <th>Transfer</th>
                             <td>{item.id}</td>
                             <td>
@@ -137,9 +140,9 @@ function TransactionList({totalTransaction}) {
                 </tbody>
             </table>
             <div className="d-flex justify-content-between me-2">
-                {/* <p className="mt-1">{`Page ${currentPage} of ${Math.ceil(transactions.length / postsPerPage)}`}</p> */}
+                <p className="mt-1">{`Page ${currentPage} of ${Math.ceil(transactions.length / postsPerPage)}`}</p>
                 {/* <Pagination postsPerPage={postsPerPage} totalPosts={transactions.length} paginate={paginate}/> */}
-                {/* <Pagination2 totalRecords={transactions.length} pageLimit={10} pageNeighbours={1} onPageChanged={onPageChanged} /> */}
+                <Pagination2 totalRecords={transactions.length} pageLimit={10} pageNeighbours={1} onPageChanged={onPageChanged} />
             </div>
         </div> 
         

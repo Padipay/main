@@ -41,7 +41,7 @@ function App() {
       dispatch(fetch_api_rates())
       const interval = setInterval(() => {
           dispatch(fetch_api_rates())
-      }, 4000);
+      }, 7000);
       return () => clearInterval(interval)
   }, [])
 

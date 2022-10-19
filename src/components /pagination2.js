@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import '../styles/pagination.css';
 
-function Pagination2(totalRecords = null, pageLimit = 30, pageNeighbours = 0, onPageChanged) {
+function Pagination2({totalRecords = null, pageLimit = 10, pageNeighbours = 0, onPageChanged}) {
     const [currentPage, setCurrentPage] = useState(1)
     const LEFT_PAGE = 'LEFT';
     const RIGHT_PAGE = 'RIGHT';
@@ -21,22 +21,18 @@ function Pagination2(totalRecords = null, pageLimit = 30, pageNeighbours = 0, on
         return range;
     }
 
-    pageLimit = typeof pageLimit === 'number' ? pageLimit : 30;
-    totalRecords = typeof totalRecords === 'number' ? totalRecords : 0;
+    // const pageLimit = typeof pageLimit === 'number' ? pageLimit : 30;
+    // const totalRecords = typeof totalRecords === 'number' ? totalRecords : 0;
 
     // pageNeighbours can be: 0, 1 or 2
-    pageNeighbours = typeof pageNeighbours === 'number'
-      ? Math.max(0, Math.min(pageNeighbours, 2))
-      : 0;
+    // const pageNeighbours = typeof pageNeighbours === 'number'
+    //   ? Math.max(0, Math.min(pageNeighbours, 2))
+    //   : 0;
 
-    const totalPages = Math.ceil(this.totalRecords / this.pageLimit);
-
-    useEffect(() => {
-        gotoPage(1)
-    },[])
+    const totalPages = Math.ceil(totalRecords / pageLimit);
 
     const gotoPage = page => {
-        const currentPage = Math.max(0, Math.min(page, this.totalPages));
+        const currentPage = Math.max(0, Math.min(page, totalPages));
     
         const paginationData = {
           currentPage,
@@ -49,6 +45,10 @@ function Pagination2(totalRecords = null, pageLimit = 30, pageNeighbours = 0, on
         onPageChanged(paginationData);
     }
 
+    useEffect(() => {
+        gotoPage(1)
+    },[])
+
     const handleClick = page => evt => {
         evt.preventDefault();
         gotoPage(page);
@@ -56,12 +56,12 @@ function Pagination2(totalRecords = null, pageLimit = 30, pageNeighbours = 0, on
     
       const handleMoveLeft = evt => {
         evt.preventDefault();
-        gotoPage(currentPage - (pageNeighbours * 2) - 1);
+        gotoPage(currentPage - (pageNeighbours * 1) - 1);
       }
     
       const handleMoveRight = evt => {
         evt.preventDefault();
-        gotoPage(currentPage + (pageNeighbours * 2) + 1);
+        gotoPage(currentPage + (pageNeighbours * 1) + 1);
       }
 
     /**
@@ -77,9 +77,9 @@ function Pagination2(totalRecords = null, pageLimit = 30, pageNeighbours = 0, on
    */
 
     const fetchPageNumbers = () => {
-        const totalPages = totalPages;
-        const currentPage = currentPage;
-        const pageNeighbours = pageNeighbours;
+        // const totalPages = totalPages;
+        // const currentPage = currentPage;
+        // const pageNeighbours = pageNeighbours;
 
         /**
          * totalNumbers: the total page numbers to show on the control

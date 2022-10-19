@@ -6,7 +6,8 @@ import nig from '../images/nigeria.png';
 import btc_img from '../images/bitcoin-btc-logo.png';
 import busd_img from '../images/binance-usd-busd-logo.png';
 import usdt_img from '../images/tether.png'
-import eth_img from '../images/ethereum-eth-logo.png'
+import eth_img from '../images/ethereum-eth-logo.png';
+import bnb from '../images/bnb.png';
 
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
@@ -35,7 +36,7 @@ const StyledSelect = styled.select `
 const StyledSelectTwo = styled(StyledSelect)`
     padding-left: 6px;
 `
-const schema  = yup.object({
+const schema  = yup.object().shape({
     receive: yup.string("Enter an amount to receive")
     .required("Please enter an amount receive")
     .typeError("Please enter an amount receive")
@@ -55,66 +56,126 @@ function SendForm({type}) {
     const dispatch = useDispatch();
 
     const {transfer, token_rates, edit_transfer} = useSelector(state => state.transfer_details)
+    const [token, setToken ] = useState(transfer.tokenValue || 'USDT');
+    const [country, setCountry ] = useState('NGN');
+    const [receiveAmount, setReceive ] = useState(transfer.receiveAmount || '5,000');
+    const [sendAmount, setSend ] = useState(transfer.sendAmount || Number(parseFloat(receiveAmount.replace(/,/g, '')) / token_rates.data[1]['USDT']).toFixed(2));
+    const [switchInputs, setSwitchInputs ] = useState(false);
+    const [rates, setRates] = useState(transfer.rate || null);
 
-    const { control, register, handleSubmit, setValue, getValues, formState: { errors, isValid } } = useForm({
+    const { control, register, handleSubmit, watch, setValue, getValues, formState: { errors, isValid } } = useForm({
         defaultValues: {
-            send: transfer.sendAmount,
-            receive: transfer.receiveAmount,
+            send: sendAmount,
+            receive: receiveAmount,
             token: transfer.tokenValue || 'USDT'
         },
         resolver: yupResolver(schema),
         mode: "all",
     });
-    const [token, setToken ] = useState(transfer.tokenValue || 'USDT');
-    const [country, setCountry ] = useState('NGN');
-    const [receiveAmount, setReceive ] = useState('');
-    const [sendAmount, setSend ] = useState(transfer.sendAmount);
-    
-
-    const [switchInputs, setSwitchInputs ] = useState(false);
 
     const handleToken = (e) => {
         setToken(e.target.value);
+        const receive = getValues("receive")
+            if (e.target.value === 'BTC') {
+                const btcValue = parseFloat(receiveAmount.replace(/,/g, '')) / token_rates.data[0]['BTC']
+                setSend(btcValue.toFixed(8))
+                setRates(token_rates.data[0]['BTC'].toFixed(2))
+                setValue("send", btcValue.toFixed(8))
+            }else if (e.target.value === 'USDT') {
+                const usdtValue = parseFloat(receiveAmount.replace(/,/g, '')) / token_rates.data[1]['USDT']
+                setValue("send", usdtValue.toFixed(2))
+                setRates(token_rates.data[1]['USDT'].toFixed(2))
+                setSend(usdtValue.toFixed(2))
+            }else if  (e.target.value === 'ETH'){
+                const ethValue = parseFloat(receiveAmount.replace(/,/g, '')) / token_rates.data[2]['ETH']
+                setValue("send", ethValue.toFixed(8))
+                setSend(ethValue.toFixed(8))
+                setRates(token_rates.data[2]['ETH'].toFixed(2))
+            }else if  (e.target.value === 'BUSD'){
+                const busdValue = parseFloat(receiveAmount.replace(/,/g, '')) / token_rates.data[3]['BUSD']
+                setValue("send", busdValue.toFixed(2))
+                setSend(busdValue.toFixed(2))
+                setRates(token_rates.data[3]['BUSD'].toFixed(2))
+            }else if(e.target.value === 'BNB') {
+                const bnbValue = parseFloat(receiveAmount.replace(/,/g, '')) / token_rates.data[4]['BNB']
+                setValue("send", bnbValue.toFixed(2))
+                setSend(bnbValue.toFixed(2))
+                setRates(token_rates.data[4]['BNB'].toFixed(2))
+            }        
     };
     const handleCountry = (e) => {
         setCountry(e.target.value);
     };
-    
-    const handleReceive = (value) => {
-        setReceive(value)
-        if (token === 'BTC') {
-            const btcValue = value / token_rates.data[0]['BTC']
-            setValue("send", btcValue.toFixed(8))
-        }else if (token === 'USDT') {
-            const usdtValue = value / token_rates.data[1]['USDT']
-            setValue("send", usdtValue.toFixed(2))
-        }else if  (token === 'ETH'){
-            const ethValue = value / token_rates.data[2]['ETH']
-            setValue("send", ethValue.toFixed(8))
-        }else if  (token === 'BUSD'){
-            const busdValue = value / token_rates.data[3]['BUSD']
-            setValue("send", busdValue.toFixed(2))
-        }else {
-            setValue("send", '')
-            setValue("receive", '')
-        }
-    };
     const handleSend = (e) => {
         const value  = e.target.value
+        // const value = (Number(e.target.value.replace(/\D/g, '')) || '').toLocaleString();
         setSend(value)
+        // setValue("send", value, true)
         if(value) {
             if (token === 'BTC') {
-                setValue("receive", value * token_rates.data[0]['BTC'])
+                const receive = value * token_rates.data[0]['BTC'].toFixed(2)
+                setReceive(receive.toLocaleString())
+                setValue("receive", receive)
+                setRates(token_rates.data[0]['BTC'].toFixed(2))
             }else if (token === 'USDT') {
-                setValue("receive", value * token_rates.data[1]['USDT'])
+                const receive = value * token_rates.data[1]['USDT'].toFixed(2)
+                setReceive(receive.toLocaleString())
+                setValue("receive", receive)
+                setRates(token_rates.data[1]['USDT'].toFixed(2))
             }else if  (token === 'ETH'){
-                setValue("receive", value * token_rates.data[2]['ETH'])
+                const receive = value * token_rates.data[2]['ETH'].toFixed(2)
+                setReceive(receive.toLocaleString())
+                setValue("receive", receive)
+                setRates(token_rates.data[2]['ETH'].toFixed(2))
             }else if  (token === 'BUSD'){
-                setValue("receive", value * token_rates.data[3]['BUSD'])
+                const receive = value * token_rates.data[3]['BUSD'].toFixed(2)
+                setReceive(receive.toLocaleString())
+                setValue("receive", receive)
+                setRates(token_rates.data[3]['BUSD'].toFixed(2))
+            }else if  (token === 'BNB') {
+                const receive = value * token_rates.data[4]['BNB'].toFixed(2)
+                setReceive(receive.toLocaleString())
+                setValue("receive", receive)
+                setRates(token_rates.data[4]['BNB'].toFixed(2))
             }
         }else {
-            setValue("send", '')
-            setValue("receive", '')
+            setSend('')
+            setReceive('')
+        }
+    };
+
+
+    const handleReceive = (e) => {
+        // let { name, value } = e.target;
+        const value = (Number(e.target.value.replace(/\D/g, '')) || '').toLocaleString();
+        setReceive(value)
+        // setValue("receive", value, true)
+        if (value) {
+            if (token === 'BTC') {
+                const btcvalue = parseFloat(value.replace(/,/g, '')) / token_rates.data[0]['BTC']
+                setSend(btcvalue.toFixed(8))
+                setValue("send", btcvalue)
+            }else if (token === 'USDT') {
+                const usdtValue = parseFloat(value.replace(/,/g, '')) / token_rates.data[1]['USDT']
+                setSend(usdtValue.toFixed(2))
+                setValue("send", usdtValue)
+            }else if  (token === 'ETH'){
+                const ethValue = parseFloat(value.replace(/,/g, '')) / token_rates.data[2]['ETH']
+                setSend(ethValue.toFixed(8))
+                setValue("send", ethValue)
+            }else if  (token === 'BUSD'){
+                const busdValue = parseFloat(value.replace(/,/g, '')) / token_rates.data[3]['BUSD']
+                setSend(busdValue.toFixed(2))
+                setValue("send", busdValue)
+            }else if(token === 'BNB') {
+                const bnbValue = parseFloat(value.replace(/,/g, '')) / token_rates.data[4]['BNB']
+                setSend(bnbValue.toFixed(2))
+                setValue("send", bnbValue)
+            }
+            else {
+                setSend('')
+                setReceive('')
+            }
         }
     };
     const handleSwitch = () => {
@@ -123,9 +184,10 @@ function SendForm({type}) {
     const onSubmit = () => {
         const values = getValues()
         const transferDetail = {
-            sendAmount: values.send, 
-            receiveAmount: values.receive,
-            tokenValue: values.token
+            sendAmount: sendAmount, 
+            receiveAmount: receiveAmount,
+            tokenValue: values.token,
+            rate: rates
         }
         if (edit_transfer) {
             navigate('/review')
@@ -136,10 +198,11 @@ function SendForm({type}) {
             navigate("/details")
         }
     };
+    // console.log(token_rates)
 
     return ( 
         <>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
             <div className="switch" onClick={handleSwitch}>
                 <MdSwapVert 
                 size={20} 
@@ -150,14 +213,34 @@ function SendForm({type}) {
                 <div className={switchInputs === true ? "input-flex" : ""}>
                     <div className="input-border">
                         <label className="label-send">You send</label>
+                        {/* <Controller
+                            name="send"
+                            control={control}
+                            render={({ field: { value, onChange, ...field } }) => (
+                                <input 
+                                type="number" 
+                                className="input-amount" 
+                                placeholder="0.001"
+                                onChange={(e) =>{
+                                    onChange(e.target.value)
+                                    handleSend(e)
+                                }}/>
+                              )}
+                              value={sendAmount}
+                            />  */}
                         <input 
-                            {...register("send")}
+                            {...register("send", {
+                                onChange: (e) => {
+                                    handleSend(e)
+                                } 
+                            })}
                             type="number" 
-                            pattern="\d+\.?\d?(?!\d)"
+                            step="any"
+                            // name="send"
+                            // pattern="\d+\.?\d?(?!\d)"
                             className="input-amount" placeholder="0.001"
-                            // value={accountNumber}
-                            onChange={handleSend}
-                            value={sendAmount || ''}
+                            // onChange={handleSend}
+                            value={sendAmount}
                             /> 
                         {/* <Controller 
                             name="send"
@@ -172,17 +255,9 @@ function SendForm({type}) {
                                 onValueChange={(values) => {
                                     const {value} = values;
                                     onChange(value)
-                                    if (token === 'BTC') {
-                                        setValue("receive", value * token_rates.data[0]['BTC'])
-                                    }else if (token === 'USDT') {
-                                        setValue("receive", value * token_rates.data[1]['USDT'])
-                                    }else if  (token === 'ETH'){
-                                        setValue("receive", value * token_rates.data[2]['ETH'])
-                                    }else if  (token === 'BUSD'){
-                                        setValue("receive", value * token_rates.data[3]['BUSD'])
-                                    }
+                                    handleSend(value)
                                 }}
-                                value={value}
+                                // value={value}
                                 {...field}
                                 />
                             )}
@@ -191,24 +266,56 @@ function SendForm({type}) {
                             {...register("token")}
                             // defaultValue="BTC"
                             name="token" id="tokens" 
-                            onChange={handleToken}>
-
+                            onChange={handleToken} 
+                            value={token}>
+                
                             <option value="BTC" >BTC</option>
                             <option value="USDT" >USDT</option>
                             <option value="ETH" >ETH</option>
                             <option value="BUSD" >BUSD</option>
+                            <option value="BNB" >BNB</option>
                         </StyledSelect>
                         {token === 'BTC' && <img src={btc_img} alt="btc" className="select-token-image"/>}
                         {token === 'BUSD' && <img src={busd_img} alt="btc" className="select-token-image"/>}
                         {token === 'USDT' && <img src={usdt_img} alt="trc20" className="select-token-image"/>}
                         {token === 'ETH' && <img src={eth_img} alt="tron" className="select-token-image"/>}
+                        {token === 'BNB' && <img src={bnb} alt="tron" className="select-token-image"/>}
                     </div>
                     { errors.send && <p className="errors mt-4">{errors.send?.message}</p>}
                     
                     <div className="receive-input">
                         <div className="input-border">
                             <label className="label-send">Recipient gets</label>
-                            <Controller 
+                            {/* <Controller
+                            name="receive"
+                            control={control}
+                            render={({ field: { value, onChange, ...field } }) => (
+                                <input 
+                                type="text" 
+                                className="input-amount" 
+                                placeholder="1,000"
+                                onChange={(e) =>{
+                                    onChange(e.target.value)
+                                    handleReceive(e)
+                                }}/>
+                              )}
+                              value={receiveAmount}
+                            />  */}
+                            <input 
+                            {...register("receive", {
+                                onChange: (e) => {
+                                    handleReceive(e)
+                                }
+                            })}
+                            type="text" 
+                            step="0.01"
+                            // name="send"
+                            // pattern="\d+\.?\d?(?!\d)"
+                            className="input-amount" placeholder="1,000"
+                            // onChange={handleReceive}
+                            value={receiveAmount}
+                            /> 
+                            {/* <Controller 
                                 name="receive"
                                 control={control}
                                 render={({field, field: { onChange, value } }) => (
@@ -217,17 +324,17 @@ function SendForm({type}) {
                                     className="input-amount"
                                     inputMode="numeric"
                                     placeholder="500"
-                                    decimalScale={0}
+                                    decimalScale={1}
                                     onValueChange={(values) => {
                                         const { value } = values;
                                         onChange(value)
                                         handleReceive(value)
                                     }}
-                                    value={receiveAmount}
+                                    // value={receiveAmount}
                                     {...field}
                                     />
                                 )}
-                            />
+                            /> */}
                             <StyledSelectTwo
                                 {...register("fiat")}
                                 defaultValue="NGN"
@@ -245,8 +352,8 @@ function SendForm({type}) {
                     thousandsGroupStyle="thousand"
                     value={token === 'BTC' ? token_rates.data[0]['BTC'] : token === 'USDT' ? 
                             token_rates.data[1]['USDT'] : token === 'ETH' ? 
-                            token_rates.data[2]['ETH']: token === 'BUSD' ? token_rates.data[3]['BUSD']: null}
-                    decimalScale={3}
+                            token_rates.data[2]['ETH']: token === 'BUSD' ? token_rates.data[3]['BUSD']: token === 'BNB' ? token_rates.data[4]['BNB'] : null}
+                    decimalScale={2}
                     prefix={`1 ${token} = `}
                     suffix={` NGN`}
                     decimalSeparator="."

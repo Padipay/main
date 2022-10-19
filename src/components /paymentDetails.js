@@ -56,34 +56,41 @@ function PaymentDetails({open}) {
 
   const checkPayment = async () => {
    await getCryptoPayment().then((res) => {
-        console.log(res.result[0].timeStamp)
+    //    res.result.filter((item) => {
+    //        if (item.timeStamp === '1665718323') {
+    //             console.log(item.value / 1000000000000000000)
+    //        }
+    //     })
+    console.log(res.result[0].timeStamp)
         const response = res.result[0].timeStamp
             // setSuccess(true)
             // paymentNotification()
         if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+            const sentToken = res.result[0].value / 1000000000000000000
+            const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
             setSuccess(true)
-            paymentNotification()
+            paymentNotification(paidAmount, sentToken)
         }
    })
   }
 
-  const paymentNotification = async () => {
+  const paymentNotification = async (paidAmount, sentToken) => {
         await payout(recepient.email, recepient.accountName, 
-            recepient.accountNumber, Number(transfer.receiveAmount), customer_ref)
+            recepient.accountNumber, Number(paidAmount), customer_ref)
         .then((res) => {
             console.log(res)
             if (res.success === true) {
                 if (firebase.auth().currentUser) {
-                    userTransaction(customer_ref, transfer.receiveAmount, transfer.sendAmount, 
+                    userTransaction(customer_ref, paidAmount, sentToken, 
                         transfer.tokenValue, recepient.bankName, recepient.accountName, 
                         recepient.accountNumber)
                 }else {
-                    savePayment(customer_ref, transfer.receiveAmount, transfer.sendAmount, 
+                    savePayment(customer_ref, paidAmount, sentToken, 
                     transfer.tokenValue, recepient.bankName, recepient.accountName, 
                     recepient.accountNumber)
                 }
-                transactSuccessEmail(recepient.email, transfer.sendAmount, 
-                    transfer.receiveAmount, transfer.tokenValue, date, customer_ref).then((res) => {
+                transactSuccessEmail(recepient.email, sentToken, 
+                    paidAmount.toLocaleString(), transfer.tokenValue, date, customer_ref).then((res) => {
                         console.log(res)
                         dispatch(endTimer(null))
                         navigate('/success-transact')
@@ -102,6 +109,8 @@ function PaymentDetails({open}) {
   useEffect(() => {
     if (success) clearInterval(intervalID)
   }, [success])
+
+//   console.log(transfer)
     return (  
         <>
       <Modal

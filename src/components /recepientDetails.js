@@ -26,8 +26,8 @@ const StyledFormContainerLayout = styled(FormContainerLayout).attrs(() => ({
 
 const schema  = yup.object({
     email: yup.string()
-    .email("Enter recepient email")
-    .required("Please enter a valid email"),
+    .email("Please enter a valid email")
+    .required("Enter recepient email"),
 
     phone_number: yup.string()
     // .required("Please enter a valid phone number")
@@ -41,7 +41,7 @@ const schema  = yup.object({
     .typeError("Account Number cannot be empty"),
 
     bankName: yup.string()
-    .required("Select a bank name")
+    .required("Select bank name")
 }).required();
 
 function RecepientDetails() {
@@ -121,11 +121,14 @@ function RecepientDetails() {
                         <div className="input-border-recipient">
                             <label className="label-send">Recepient Email</label>
                             <input 
-                            {...register("email")}
+                            {...register("email", {
+                                onChange: (e) => {
+                                    setRecepientEmail(e.target.value) 
+                                }
+                            })}
                             type="email" 
                             className="input-field" 
-                            placeholder="maria.yahaya@outlook.com"
-                            onChange={(e) => setRecepientEmail(e.target.value)}/> 
+                            placeholder="maria.yahaya@outlook.com"/> 
                         </div>
                         {<p className="errors">{errors.email?.message}</p>}
                             <Controller 
@@ -149,11 +152,14 @@ function RecepientDetails() {
                         <div className="input-border-recipient">
                             <label className="label-send">Purpose of transfer</label>
                             <input 
-                            {...register("purpose")}
+                            {...register("purpose", {
+                                onChange: (e) => {
+                                    setPurpose(e.target.value)
+                                }
+                            })}
                             type="text" 
                             className="input-field" 
-                            placeholder="School fees"
-                            onChange={(e) => setPurpose(e.target.value)}/> 
+                            placeholder="School fees"/> 
                         </div>
                         {<p className="errors">{errors.purpose?.message}</p>}
                         <div className="input-border-recipient">
@@ -166,21 +172,23 @@ function RecepientDetails() {
                                     setBankCode(e.target.value) 
                                     setBankName(e.target.selectedOptions[0].text)}}
                             >
-                                <option value="1" disabled>Select bank name</option>
+                                <option value="">Select bank name</option>
                                 {bank_name}
                             </select>
                             {/* <input type="text" className="input-field" placeholder="maria.yahaya@outlook.com"/>  */}
-                            {<p className="errors ms-3 mt-3">{errors.bankName?.message}</p>}
+                            {<p className="errors ms-3 mt-2">{errors.bankName?.message}</p>}
                         </div>
                         <div className="input-border-recipient mt-4">
                             <label className="label-send">Account Number</label>
                             <input 
-                            {...register("accountNum")}
+                            {...register("accountNum", {
+                                onChange: (e) => {
+                                    setAccountNumber(e.target.value)
+                                }
+                            })}
                             type="text" 
                             className="input-field" placeholder="00232003020"
-                            value={accountNumber}
-                            onChange={(e) => setAccountNumber(e.target.value)}
-                            /> 
+                            value={accountNumber}/> 
                         </div>
                         {<p className="errors ">{errors.accountNum?.message}</p>}
                         {error != null ? <p className="errors ">{error}</p> : null}

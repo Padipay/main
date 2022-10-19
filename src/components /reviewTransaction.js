@@ -55,6 +55,8 @@ function ReviewTransaction() {
     // }, []);
     // console.log(transfer)
 
+    console.log(transfer.rate)
+
 
     return ( 
         <>
@@ -109,9 +111,10 @@ function ReviewTransaction() {
                             <p className="details">
                                 <NumberFormat
                                 thousandsGroupStyle="thousand"
-                                value={transfer.tokenValue === 'BTC' ? token_rates.data[0]['BTC'] : transfer.tokenValue === 'USDT' ? 
-                                        token_rates.data[1]['USDT'] : transfer.tokenValue === 'ETH' ? 
-                                        token_rates.data[2]['ETH']: transfer.tokenValue === 'BUSD' ? token_rates.data[3]['BUSD']: null}
+                                value={transfer.rate}
+                                // value={transfer.tokenValue === 'BTC' ? token_rates.data[0]['BTC'] : transfer.tokenValue === 'USDT' ? 
+                                //         token_rates.data[1]['USDT'] : transfer.tokenValue === 'ETH' ? 
+                                //         token_rates.data[2]['ETH']: transfer.tokenValue === 'BUSD' ? token_rates.data[3]['BUSD']: null}
                                 suffix={` NGN`}
                                 decimalSeparator="."
                                 displayType="text"

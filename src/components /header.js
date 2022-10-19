@@ -31,7 +31,7 @@ function Header() {
                         <Link to="/" className="image-link">
                             <img src={logo} alt="logo" />
                         </Link>
-                        <div className="col-lg-5 col-sm-3 info">
+                        <div className="col-lg-5 col-sm-3 info mt-4">
                             <h4 className="nav-info">Funds Transfer</h4>
                             <p className="nav-info-2">This should take approximately 3 mins.</p>
                         </div>

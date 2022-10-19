@@ -1,6 +1,6 @@
 .navbar {
     border-bottom: none;
-    padding-top: 40px;
+    /* padding-top: 40px; */
     padding-left: 80px;
     display: flex;
     align-items: center;
@@ -110,3 +110,17 @@
       width: 12px;
     }
   }
+
+  .auth-btn{
+    background-color: #00CCFF ;
+    border-radius: 8px;
+    font-weight: 600;
+    /* height: 48px; */
+    max-width: 128px;
+    margin-right: 10px;
+}
+@media (max-width: 989px) {
+  .sign-up {
+    display: none;
+  }
+}

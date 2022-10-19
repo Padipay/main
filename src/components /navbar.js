@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import '../styles/navbar.css';
-import logo from '../images/10.png';
 import { Link } from "react-router-dom";
 import HamburgerMenu from "./hamburgerMenu";
-import firebase from '../firebase/firebase';
 import { useNavigate } from "react-router";
 
 function Navbar({image}) {
@@ -35,7 +33,10 @@ function Navbar({image}) {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav ms-auto mt-4">
-                        <button className="btn btn-primary get-started" onClick={handleClick}>{userId != true ? 'Get Started' : 'Dashboard'}</button>
+                        <Link to="/register" className="sign-up">
+                            <button className="btn btn-primary auth-btn">Sign Up</button>
+                        </Link>
+                        <button className="btn btn-primary auth-btn" onClick={handleClick}>{userId !== true ? 'Get Started' : 'Dashboard'}</button>
                     </div>
                 </div>
             </div>
