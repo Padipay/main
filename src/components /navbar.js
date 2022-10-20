@@ -36,7 +36,7 @@ function Navbar({image}) {
                         <Link to="/register" className="sign-up">
                             <button className="btn btn-primary auth-btn">Sign Up</button>
                         </Link>
-                        <button className="btn btn-primary auth-btn" onClick={handleClick}>{userId !== true ? 'Get Started' : 'Dashboard'}</button>
+                        <button className="btn btn-primary auth-btn" onClick={handleClick}>{userId !== true ? 'Login' : 'Dashboard'}</button>
                     </div>
                 </div>
             </div>

@@ -73,7 +73,7 @@ function DashboardSidebar() {
             logOut={logOut}
             />
             <div className="col-lg-2 col-sm-12 col-md-12 sidebar">
-                <ul className="nav nav-pills nav-fill flex-column mt-5">
+                <ul className="nav nav-pills nav-fill flex-column mt-3">
                     <li className="nav-item" key="item">
                         <Link to="" className={dashboard === true ? "nav-link active" : "nav-link"} aria-current="page" onClick={() => handleDashboard()}>
                             <MdDashboard  size={30} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>
@@ -99,7 +99,7 @@ function DashboardSidebar() {
             <div className="col-lg-9 col-sm-12 col-md-12 ms-lg-5">
                 <div className="row">
                     <div className="col-6">
-                        {data != null ? <h3 className="mt-5 link fw-bold">{`Welcome, ${data.FirstName} 👋🏼`}</h3> : <h3 className="mt-5 link fw-bold">Welcome</h3>}
+                        {data != null ? <h3 className="mt-3 link fw-bold">{`Welcome, ${data.FirstName} 👋🏼`}</h3> : <h3 className="mt-5 link fw-bold">Welcome</h3>}
                     </div>
                 </div>
                 <p>Let’s get you started with padipay</p>

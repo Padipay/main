@@ -1,7 +1,9 @@
 /* .dashboard-container {
     background-color: #FFFFFF;
 } */
-
+.home-page {
+    background-color: #edf6fe;
+}
 @media (max-width: 1024px) {
     .sidebar{
        display: none;
@@ -13,7 +15,7 @@
 }
 .dashboard .navbar{
     padding: 10px;
-    border-bottom: 1px solid lightgray;
+    /* border-bottom: 1px solid lightgray; */
 }
 
 .navbar-items span {
@@ -77,8 +79,10 @@
     display: block;
 }
 .dashboard-container .sidebar{
-    background: #FAFAFC;
-    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.05);
+    /* background: #FAFAFC;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.05); */
+    font-weight: bold;
+    font-size: 15px;
 }
 
 .dashboard-container h4 {

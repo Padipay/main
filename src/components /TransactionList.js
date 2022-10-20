@@ -12,7 +12,7 @@ import Pagination2 from "./pagination2";
 
 function TransactionList({totalTransaction}) {
     const [transactions, setTransactions] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     // const userId = sessionStorage.getItem("userId");
     // const [userId, setUserId] = useState(null)
     // {`${item.id.substring(0, 8)}...`}
@@ -24,7 +24,19 @@ function TransactionList({totalTransaction}) {
     const [postsPerPage, setPostsPerPage] = useState(10);
 
 
-
+    // const getUserTransaction = async () => {
+    //     const temp = []
+    //     await firebase.firestore().collection('users')
+    //         .doc(firebase.auth().currentUser.uid)
+    //         .collection('transactions')
+    //         .orderBy("date", "desc") 
+    //         .onSnapshot((querySnapshot) => {
+    //             querySnapshot.forEach((doc) => {
+    //                 temp.push({data:doc.data(), id:doc.id})
+    //             })
+    //         })
+    //     return temp
+    // }
 
     useEffect(() => {
         // const getUserTransactions = async () => {
@@ -47,13 +59,16 @@ function TransactionList({totalTransaction}) {
         //     })
         //     }
         //     getUserTransactions()
+            setLoading(true)
             getUserTransaction().then((res) => {
                 setTransactions(res)
-                totalTransaction(res.length)
+                totalTransaction(transactions.length)
                 setLoading(false)
             }).catch((err) => console.log(err.message))
         return () => getUserTransaction()
     }, [])
+
+    // console.log(transactions.length)
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;

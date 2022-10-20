@@ -12,21 +12,17 @@ export const bankVerify = async (accountNumber, bankCode) => {
 
 export const getUserTransaction = async () => {
     const temp = []
-    await firebase.firestore().collection('users')
-        .doc(firebase.auth().currentUser.uid)
-        .collection('transactions')
-        .orderBy("date", "desc")        
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                temp.push({data:doc.data(), id:doc.id})
-                // console.log(temp)
+        await firebase.firestore().collection('users')
+            .doc(firebase.auth().currentUser.uid)
+            .collection('transactions')
+            .orderBy("date", "desc") 
+            .onSnapshot((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    temp.push({data:doc.data(), id:doc.id})
+                })
             })
-        }).catch((err) => {
-            console.log(err.message)
-        }) 
-    return temp
-}
+        return temp
+    }
 
 export const saveTransaction = (userId=null, receive, send, token, bankName, account_name, account_number) => {
     const transaction = firebase.firestore().collection('transactions').doc()
