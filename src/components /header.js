@@ -2,9 +2,18 @@ import React from "react";
 import '../styles/Header.css'
 import logo from '../images/Logo.png';
 import { Link } from "react-router-dom";
+import { toggleLoading } from "../redux/transfer/actions/actions";
+import { useDispatch } from "react-redux";
 
 function Header() {
+
+    const dispatch = useDispatch();
     const token = sessionStorage.getItem("Auth-Token")
+
+    const handleHomeClick = () => {
+        dispatch(toggleLoading())
+    }
+    
     return ( 
         <>
             {/* <div className="main-header">
@@ -28,7 +37,7 @@ function Header() {
             <div className="second-nav">
                 <nav className="navbar navbar-expand-lg">
                     <div className="container">
-                        <Link to="/" className="image-link">
+                        <Link to="/" className="image-link" onClick={handleHomeClick}>
                             <img src={logo} alt="logo" />
                         </Link>
                         <div className="col-lg-5 col-sm-3 info mt-4">
