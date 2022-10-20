@@ -68,7 +68,7 @@ function TransactionList({totalTransaction}) {
         setPostsPerPage(pageLimit)
     }
 
-    // console.log(currentPage)
+    // console.log(currentPosts)
 
     return ( 
         <>
@@ -83,7 +83,7 @@ function TransactionList({totalTransaction}) {
                 count={4} 
                 style={{marginLeft: 24, marginBottom: 20, width: '95%'}}/>
             </>
-        : currentPosts.length === 0 ? <EmptyTransaction /> :
+        : transactions.length === 0 ? <EmptyTransaction /> :
         <div className="table-header table-responsive mt-3">
             <table className="table">
                 <thead className="table-secondary">
@@ -140,7 +140,7 @@ function TransactionList({totalTransaction}) {
                 </tbody>
             </table>
             <div className="d-flex justify-content-between me-2">
-                <p className="mt-1">{`Page ${currentPage} of ${Math.ceil(transactions.length / postsPerPage)}`}</p>
+                <p className="mt-3">{`Page ${currentPage} of ${Math.ceil(transactions.length / postsPerPage)}`}</p>
                 {/* <Pagination postsPerPage={postsPerPage} totalPosts={transactions.length} paginate={paginate}/> */}
                 <Pagination2 totalRecords={transactions.length} pageLimit={10} pageNeighbours={1} onPageChanged={onPageChanged} />
             </div>
