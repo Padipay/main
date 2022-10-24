@@ -8,9 +8,9 @@ import easier from '../images/easier.png';
 import faster from '../images/faster.png';
 import cheaper from '../images/cheaper.png';
 import Questions from "./questions";
-import Footer from "./footer";
-import SendFormTab from "./SendFormTab";
-import Navbar from "./navbar";
+import Footer from "./Layouts/footer";
+import SendFormTab from "./transaction/SendFormTab";
+import Navbar from "./Layouts/navbar";
 import logo from '../images/Logo3.png';
 import firebase from '../firebase/firebase';
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import RecoverEmail from './RecoverEmail';
-import NewPassword from './newPassword';
-import VerifyEmail from './verifyEmail';
+import RecoverEmail from './authentication/RecoverEmail';
+import NewPassword from './authentication/newPassword';
+import VerifyEmail from './authentication/verifyEmail';
 import { useSearchParams, useLocation } from 'react-router-dom';
 
 import NotFound from './NotFound';

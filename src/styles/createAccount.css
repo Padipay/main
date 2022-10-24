@@ -61,3 +61,8 @@
 .sk-three-bounce > div {
     background-color: white !important;
 }
+.verify-error {
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+}

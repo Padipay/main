@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import FormContainerLayout from "../../components /formContainerLayout";
-import FormContainerLayoutTwo from "../../components /formContainerLayoutTwo";
+import FormContainerLayoutTwo from "../../components /Layouts/formContainerLayout";
 import Logo from '../../images/Logo.png';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";

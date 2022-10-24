@@ -1,11 +1,9 @@
 import React from "react";
-import verify from '../images/verify.png';
 import { Link } from "react-router-dom";
 import logo from '../images/Logo.png';
 import notfound from '../images/10.png';
-import FormContainerLayoutTwo from "./formContainerLayoutTwo";
 import Logo from '../images/Logo.png';
-import Navbar from "./navbar";
+import Navbar from "./Layouts/navbar";
 
 function NotFound() {
     return ( 

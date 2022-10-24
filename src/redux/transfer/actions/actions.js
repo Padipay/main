@@ -81,5 +81,4 @@ export const editTransfer = () => dispatch => {
     dispatch({
         type: types.EDIT_TRANSFER
     })
-    // dispatch(transferDetails(data))
 }

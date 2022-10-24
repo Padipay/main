@@ -4,6 +4,9 @@
 .home-page {
     background-color: #edf6fe;
 }
+.dashboard-logo{
+    margin-left: -27px;
+}
 @media (max-width: 1024px) {
     .sidebar{
        display: none;
@@ -202,4 +205,13 @@
 
 ul {
     list-style-type: none;
+}
+
+.dash-send-btn{
+    /* display: flex;
+    justify-content: end; */
+}
+.dash-send-btn button {
+    background-color: #003399;
+    font-weight: bold;
 }

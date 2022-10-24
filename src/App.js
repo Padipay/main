@@ -1,32 +1,45 @@
-import SendAmount from './components /sendAmount';
-import RecepientDetails from './components /recepientDetails';
-import ReviewTransaction from './components /reviewTransaction';
-import CompleteTransaction from './components /completeTransaction';
+import SendAmount from './components /transaction/sendAmount';
+import RecepientDetails from './components /transaction/recepientDetails';
+import ReviewTransaction from './components /transaction/reviewTransaction';
+import CompleteTransaction from './components /transaction/completeTransaction';
+import SuccessfulTransaction from './components /transaction/SuccessfulTransaction';
+import PaymentDetails from './components /transaction/paymentDetails';
+
 import Homepage from './components /homepage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import CreateAccount from './components /createAccount';
-import VerifyAccount from './components /verifyAccount';
-import Login from './components /login';
-import ResetPassword from './components /resetPassword';
-import NewPassword from './components /newPassword';
-import Dashboard from './components /Dashboard';
+
+import CreateAccount from './components /authentication/createAccount';
+import VerifyAccount from './components /authentication/verifyAccount';
+import Login from './components /authentication/login';
+import ResetPassword from './components /authentication/resetPassword'
+import NewPassword from './components /authentication/newPassword';
+import CreatePassword from './components /authentication/createPassword';
+import VerifyEmail from './components /authentication/verifyEmail';
+import ResendVerificationEmail from './components /authentication/resendVerificationEmail';
+
 import PrivateRoute from './components /CustomRoutes/PrivateRoute';
 import RefreshRoute from './components /CustomRoutes/RefreshRoute';
-import VerifyEmail from './components /verifyEmail';
-import SuccessfulTransaction from './components /SuccessfulTransaction';
-import NotFound from '../src/components /NotFound'
-import CreatePassword from './components /createPassword';
 import RegisterRoutes from './components /CustomRoutes/RegisterRoutes';
+import VerifyRoutes from './components /CustomRoutes/VerifyRoutes';
+
+
+import NotFound from '../src/components /NotFound'
+
+
 import AdminRegister from './admin/components/adminRegisteration';
 import PaymentSuccess from './components /CustomRoutes/PaymentSuccessRoute';
-import ResendVerificationEmail from './components /resendVerificationEmail';
+
+
+import Settings from './components /Dashboard/settings';
+import Dashboard from './components /Dashboard/Dashboard';
+import Transactions from './components /Dashboard/Transactions';
 
 import Action from './components /action';
 import Admin from './admin/admin';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PaymentDetails from './components /paymentDetails';
-import TimeOutModal from './components /timeoutModal';
+
+import TimeOutModal from './components /Layouts/timeoutModal';
 
 import { fetch_api_rates } from './redux/transfer/actions/actions';
 
@@ -36,12 +49,19 @@ function App() {
   const { payment_status } = useSelector(state => state.transfer_details)
   const dispatch = useDispatch()
 
+  const clearStorage = () => {
+    setTimeout(() => {
+      sessionStorage.clear()
+    }, 80000);
+  }
+
   useEffect(() => {
       // dispatch(toggleLoading())
       dispatch(fetch_api_rates())
       const interval = setInterval(() => {
           dispatch(fetch_api_rates())
       }, 7000);
+      clearStorage()
       return () => clearInterval(interval)
   }, [])
 
@@ -57,14 +77,18 @@ function App() {
           <Route path="/register" element={<CreateAccount />} />
           <Route path="/password" element={<RegisterRoutes> <CreatePassword /> </RegisterRoutes>}/>
           <Route path="/success-transact" element={<RefreshRoute> <SuccessfulTransaction /> </RefreshRoute>} />
-          <Route path="/verify" element={<VerifyAccount />} />
+          <Route path="/verify" element={<VerifyRoutes> <VerifyAccount /> </VerifyRoutes>} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/reset" element={<ResetPassword />} />
-          <Route path="/resend-email" element={<ResendVerificationEmail />} />
+          <Route path="/resend-email" element={<VerifyRoutes> <ResendVerificationEmail /> </VerifyRoutes>} />
           <Route path="/action" element={<Action />} />
           <Route path="/resetpassword" element={<NewPassword />} />
+
           <Route path="/dashboard" element={<PrivateRoute> <Dashboard/> </PrivateRoute>} />
+          <Route path="/settings" element={<PrivateRoute> <Settings/> </PrivateRoute>} />
+          <Route path="/transactions" element={<PrivateRoute> <Transactions/> </PrivateRoute>} />
+
           <Route path="/admin-register" element={<AdminRegister />} />
           <Route path="/admin/*" element={<Admin />} />
           <Route path="*" element={<NotFound />} />

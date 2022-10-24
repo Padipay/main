@@ -331,3 +331,85 @@
 
 // eth = '0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378'
 // usdt = '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd'
+
+{/* <Controller
+                            name="send"
+                            control={control}
+                            render={({ field: { value, onChange, ...field } }) => (
+                                <input 
+                                type="number" 
+                                className="input-amount" 
+                                placeholder="0.001"
+                                onChange={(e) =>{
+                                    onChange(e.target.value)
+                                    handleSend(e)
+                                }}/>
+                              )}
+                              value={sendAmount}
+                            />  */}
+
+                            {/* <Controller 
+                            name="send"
+                            control={control}
+                            render={({field, field: { onChange, value } }) => (
+                                <NumberFormat
+                                thousandSeparator={true}
+                                className="input-amount"
+                                inputMode="numeric"
+                                placeholder="0.001"
+                                // decimalScale={5}
+                                onValueChange={(values) => {
+                                    const {value} = values;
+                                    onChange(value)
+                                    handleSend(value)
+                                }}
+                                // value={value}
+                                {...field}
+                                />
+                            )}
+                        /> */}
+                        {/* <Controller
+                            name="receive"
+                            control={control}
+                            render={({ field: { value, onChange, ...field } }) => (
+                                <input 
+                                type="text" 
+                                className="input-amount" 
+                                placeholder="1,000"
+                                onChange={(e) =>{
+                                    onChange(e.target.value)
+                                    handleReceive(e)
+                                }}/>
+                              )}
+                              value={receiveAmount}
+                            />  */}
+                            {/* <Controller 
+                                name="receive"
+                                control={control}
+                                render={({field, field: { onChange, value } }) => (
+                                    <NumberFormat
+                                    thousandSeparator={true}
+                                    className="input-amount"
+                                    inputMode="numeric"
+                                    placeholder="500"
+                                    decimalScale={1}
+                                    onValueChange={(values) => {
+                                        const { value } = values;
+                                        onChange(value)
+                                        handleReceive(value)
+                                    }}
+                                    // value={receiveAmount}
+                                    {...field}
+                                    />
+                                )}
+                            /> */}
+                            {/* <div className="homepage-seperator"></div> */}
+                {/* {type === 'transfer' ? 
+                <div className="input-border">
+                    <label className="label-send">Destination</label>
+                    <select name="destination" id="" className="select-destination" onChange={handleCountry}>
+                        <option value="NGN">NGN</option>
+                    </select>
+                    <img src={nig} alt="ngn" className="select-country-image"/>
+                </div> : null } */}
+                
