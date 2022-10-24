@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import '../../styles/formContainer.css';
+import '../../styles/Layouts/formContainer.css';
 import { StyledMainContentContainer, StyledMainFormContainer } from "../../styles/globalStyles";
 import styled from "styled-components";
 

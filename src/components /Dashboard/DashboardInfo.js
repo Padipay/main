@@ -1,5 +1,5 @@
 import React from "react";
-import '../../styles/dashboard.css';
+import '../../styles/authentication/dashboard.css';
 import { useSelector } from "react-redux";
 import Skeleton from 'react-loading-skeleton'
 import "react-loading-skeleton/dist/skeleton.css";

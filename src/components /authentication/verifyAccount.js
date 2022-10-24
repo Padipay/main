@@ -2,7 +2,7 @@ import React from "react";
 import FormContainerLayoutTwo from "../Layouts/formContainerLayoutTwo";
 import Logo from '../../images/Logo.png';
 import verify from '../../images/verify.png';
-import '../../styles/verify.css';
+import '../../styles/authentication/verify.css';
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 

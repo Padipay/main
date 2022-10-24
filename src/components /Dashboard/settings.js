@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-import '../../styles/dashboard.css';
+import '../../styles/authentication/dashboard.css';
 import CustomButton from "../Layouts/button";
 import DashboardContentLayout from "./dashboardContentLayout";
 import SideNavbar from './SideNavbar'
 import firebase from '../../firebase/firebase';
-import { useForm, Controller } from "react-hook-form";
-import * as yup from "yup";
-import { StyledError, LargeSpinner } from "../../styles/globalStyles";
+import { useForm } from "react-hook-form";
+import { StyledError } from "../../styles/globalStyles";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DashboardInfo from "./DashboardInfo";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getUser } from "../../redux/auth/actions/actions";
 import Skeleton from 'react-loading-skeleton'
 import "react-loading-skeleton/dist/skeleton.css";
@@ -19,7 +18,7 @@ import { editProfile } from "../../redux/auth/actions/actions";
 function Settings() {
     const[user, setUser] = useState(null)
     const[loading, setLoading] = useState(false)
-    const { control, register, reset, handleSubmit, setValue, formState: { errors } } = useForm({});
+    const { register, reset, handleSubmit, formState: { errors } } = useForm({});
     const dispatch = useDispatch()
 
     useEffect(() => {

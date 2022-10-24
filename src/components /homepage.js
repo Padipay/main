@@ -15,19 +15,10 @@ import logo from '../images/Logo3.png';
 import firebase from '../firebase/firebase';
 
 function Homepage() {
-
-    // useEffect(() => {
-    //     const user = firebase.auth().currentUser;
-    //     console.log(user)
-    // }, [])
     return ( 
         <div className="home-page">
             <div className="container-fluid homepage-container">
                 <div className="row">
-                    {/* <div className="header-navbar">
-                        <img src={logo} alt="logo" />
-                        <button className="btn btn-primary get-started">Get started</button>
-                    </div> */}
                 </div>
                 <Navbar image={logo}/>
                 <div className="row mt-5 header-content">

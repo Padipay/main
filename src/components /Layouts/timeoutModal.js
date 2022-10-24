@@ -1,5 +1,5 @@
 import { useState } from "react";
-import '../../styles/modal.css';
+import '../../styles/Layouts/modal.css';
 import '../../styles/homepage.css';
 import Modal from 'react-bootstrap/Modal';
 // import '../styles/modal.css';

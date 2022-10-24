@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import uniqid from 'uniqid';
+
 import Stepper from "../Layouts/stepper";
-import '../../styles/completeTransaction.css';
+import '../../styles/transactions/completeTransaction.css';
 // import PaymentDetails from "./paymentDetails";
 import Header from "../Layouts/header";
 import FormContainer from "../Layouts/formContainerLayout";
@@ -9,10 +9,9 @@ import FormContainer from "../Layouts/formContainerLayout";
 import firebase from '../../firebase/firebase'
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { paymentOrder } from "../../api/binancepay";
 import { LargeSpinner } from "../../styles/globalStyles";
 
-import { paymentStatus, binancePay, fetchError, paymentTimestamp } from "../../redux/transfer/actions/actions";
+import { paymentStatus, paymentTimestamp } from "../../redux/transfer/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -33,14 +32,14 @@ const StyledSpinnerSpan = styled.span`
 
 function CompleteTransaction() {
     const dispatch = useDispatch();
-    const { transfer, recepient, payment } = useSelector(state => state.transfer_details)
-    const [loading, setLoading] = useState(false)
+    const { transfer } = useSelector(state => state.transfer_details)
+    const [loading] = useState(false)
 
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const {tokenValue, sendAmount, receiveAmount} = transfer;
-    const {accountNumber, accountName, bankName, purpose} = recepient
-    const[userId, setuserId] = useState('');
+    const {tokenValue, sendAmount} = transfer;
+    // const {accountNumber, accountName, bankName, purpose} = recepient
+    const[, setuserId] = useState('');
     
     // const [open, setOpen] = useState(false);
 
@@ -52,20 +51,6 @@ function CompleteTransaction() {
         })
     }, [])
 
-    const createPayment = async () => {
-        setLoading(true)
-        if (tokenValue === 'BUSD' || tokenValue === 'USDT') {
-            await paymentOrder(sendAmount, tokenValue)
-                .then((res) => {
-                    dispatch(binancePay(res.data.data))
-                    setLoading(false)
-                    dispatch(paymentStatus())
-                }).catch((err) => fetchError(err.message))
-        }else {
-            setLoading(false)
-            dispatch(paymentStatus())
-        }
-    }
 
     const onSubmit = () => {
         // saveTransaction(userId, receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber)
@@ -83,7 +68,7 @@ function CompleteTransaction() {
         dispatch(paymentTimestamp(data))
     }
     
-    const [page, setPage ] = useState(3)
+    const [page ] = useState(3)
     return ( 
         <>
         <Header />

@@ -1,21 +1,9 @@
 import React, { useState } from 'react';
-import '../../styles/stepper.css';
+import '../../styles/Layouts/stepper.css';
 import { Link } from 'react-router-dom';
 
 function Stepper({page_num}) {
     const [page, setPage ] = useState(page_num);
-
-    // const pageDisplay = () => {
-    //     if (page === 0) {
-    //         return <SendAmount />
-    //     }else if (page === 1) {
-    //         return <RecepientDetails />
-    //     }else if (page === 2) {
-    //         return <ReviewTransaction />
-    //     }else{
-    //         return <CompleteTransaction />
-    //     }
-    // }
     return ( 
         <>
             <div className="row content">

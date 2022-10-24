@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FormContainerLayoutTwo from "../Layouts/formContainerLayoutTwo";
 import Logo from '../../images/Logo.png';
-import '../../styles/resetPassword.css';
+import '../../styles/authentication/resetPassword.css';
 import { useNavigate } from "react-router";
 import { sendVerificationEmail } from "../../api/sendEmail";
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,15 +9,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
-import styled from "styled-components";
-import { LargeSpinner } from "../../styles/globalStyles";
 import CustomButton from '../Layouts/button';
 
-const StyledSpinnerSpan = styled.span`
-    position: absolute;
-    margin-left: inherit;
-    margin-top: 0px;
-`
+
 
 
 const schema  = yup.object({
@@ -27,11 +21,11 @@ const schema  = yup.object({
 }).required();
 
 function ResendVerificationEmail() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
     const[email, setEmail] = useState('')
-    const[loading, setLoading] = useState(false)
+    const[, setLoading] = useState(false)
     const navigate = useNavigate();
 
 
@@ -61,11 +55,6 @@ function ResendVerificationEmail() {
                         <label htmlFor="floatingInput">Email address</label>
                     </div>
                     {<p className="errors">{errors.email?.message}</p>}
-                    {/* <div className="send-btn">
-                        <button type="submit" className="btn btn-primary btn-lg mb-5 mt-3" disabled={loading}>Sign in
-                            <StyledSpinnerSpan>{loading && <LargeSpinner name="three-bounce" color="white" /> }</StyledSpinnerSpan>
-                        </button>
-                    </div> */}
                     <CustomButton title="Send email"/>
                 </form>
                 <ToastContainer />

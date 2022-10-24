@@ -1,21 +1,14 @@
 import React, { useState } from "react";
 import FormContainerLayoutTwo from "../Layouts/formContainerLayoutTwo";
 import Logo from '../../images/Logo.png'
-import '../../styles/createAccount.css';
+import '../../styles/authentication/createAccount.css';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
-import styled from "styled-components";
 import { StyledError } from "../../styles/globalStyles";
 import { authUser } from "../../redux/auth/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from '../Layouts/button';
-
-const StyledSpinnerSpan = styled.span`
-    position: absolute;
-    margin-left: inherit;
-    margin-top: 0px;
-`
 
 function CreateAccount() {
     const {auth_user } = useSelector(state => state.auth_details)
@@ -28,13 +21,13 @@ function CreateAccount() {
     const dispatch = useDispatch()
 
     const onSubmit = ({fname, lname, email}) => {
-        navigate('/password')
         const data = {
             fname,
             lname,
             email
         }
         dispatch(authUser(data))
+        navigate('/password')
     }
 
     return (

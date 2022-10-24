@@ -2,9 +2,9 @@ import React from "react";
 import logo from '../../images/Logo.png';
 import avatar from '../../images/avatar.png';
 import { BiLogInCircle } from "react-icons/bi";
-import '../../styles/dashboard.css';
-import '../../styles/Header.css'
-import '../../styles/navbar.css';
+import '../../styles/authentication/dashboard.css';
+import '../../styles/Layouts/Header.css'
+import '../../styles/Layouts/navbar.css';
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";

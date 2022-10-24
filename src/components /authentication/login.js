@@ -1,25 +1,19 @@
 import React, { useEffect } from "react";
 import FormContainerLayoutTwo from "../Layouts/formContainerLayoutTwo";
 import Logo from '../../images/Logo.png';
-import '../../styles/createAccount.css';
+import '../../styles/authentication/createAccount.css';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
-import { LargeSpinner } from "../../styles/globalStyles";
 import styled from "styled-components";
 import { login, verifyError, authError } from "../../redux/auth/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from '../Layouts/button';
 
-const StyledSpinnerSpan = styled.span`
-    position: absolute;
-    margin-left: inherit;
-    margin-top: 0px;
-`
 
 function Login() {
-    const {loading, error, verify_error } = useSelector(state => state.auth_details)
-    const { control, register, handleSubmit, setValue, getValues, formState: { errors } } = useForm({});
+    const {error, verify_error } = useSelector(state => state.auth_details)
+    const { register, handleSubmit, formState: { errors } } = useForm({});
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const onSubmit = async ({email, password}) => {

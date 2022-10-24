@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Modal from 'react-bootstrap/Modal'
-import '../../styles/modal.css';
+import '../../styles/Layouts/modal.css';
 import logo from '../../images/Logo2.png'
 import { QRCode } from 'react-qrcode-logo';
 
@@ -12,24 +12,13 @@ import { useNavigate } from "react-router-dom";
 import { transactSuccessEmail } from "../../api/transactionSuccessEmail";
 import CountdownTimer from '../Layouts/countdownTimer';
 import { useDispatch, useSelector } from "react-redux";
-import { paymentStatus, endTimer } from "../../redux/transfer/actions/actions";
-import styled from "styled-components";
+import { endTimer } from "../../redux/transfer/actions/actions";
 import { payout, savePayment, getCryptoPayment, userTransaction } from "../../api/api";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toastNotification } from "../../utils/toasts";
 import firebase from '../../firebase/firebase';
-import { Link } from "react-router-dom";
 import { MdOutlineClose } from "react-icons/md";
-
-const PaymentQrCode = styled.img `
-    width: 200px;
-    height: 200px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-`
-
 
 function PaymentDetails({open}) {
     const dispatch = useDispatch();
@@ -37,17 +26,17 @@ function PaymentDetails({open}) {
 
 //   const {tokenValue, sendAmount, receiveAmount} = JSON.parse(sessionStorage.getItem("transferDetails"));
 //   const {phoneNumber, email} = JSON.parse(sessionStorage.getItem("recepientDetails"));
-  const [show, setShow] = useState(false); 
+  const [, setShow] = useState(false); 
   const handleClose = () => {
         window.location.reload()
     };
-  const handleShow = () => setShow(true);
+//   const handleShow = () => setShow(true);
 //   const [transactions, setTransactions] = useState(null);
 //   const [active, setActive] = useState(false);
   const [success, setSuccess] = useState(false)
   const [intervalID, setIntervalID] = useState(0);
 
-  const[address, setAddress] = useState('0x78565af8DEfD0217EAd6723999D31aeaA763b848')
+  const[address] = useState('0x78565af8DEfD0217EAd6723999D31aeaA763b848')
   const navigate = useNavigate()  
   const customer_ref = "PP_" + Math.floor(Math.random() * 5000000000)
   const date = new Date().toLocaleString()
@@ -109,8 +98,6 @@ function PaymentDetails({open}) {
   useEffect(() => {
     if (success) clearInterval(intervalID)
   }, [success])
-
-//   console.log(transfer)
     return (  
         <>
       <Modal

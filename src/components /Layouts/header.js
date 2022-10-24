@@ -1,5 +1,5 @@
 import React from "react";
-import '../../styles/Header.css'
+import '../../styles/Layouts/Header.css'
 import logo from '../../images/Logo.png';
 import { Link } from "react-router-dom";
 import { toggleLoading } from "../../redux/transfer/actions/actions";
@@ -16,24 +16,6 @@ function Header() {
     
     return ( 
         <>
-            {/* <div className="main-header">
-                <div className="row header-nav">
-                    <div className="col-lg-2 col-sm-4">
-                        <Link to="/">
-                            <img src={logo} alt="" className="logo" />
-                        </Link>
-                    </div>
-                    <div className="col-lg-5 col-sm-3 info">
-                        <h4 className="nav-info">Funds Transfer</h4>
-                        <p className="nav-info-2">This should take approximately 3 mins.</p>
-                    </div>
-                    <div className="col-lg-5 col-sm-4 create-btn d-flex justify-content-around">
-                        <Link to={token != null ? "/dashboard" : "/account"}>
-                            <button type="button" className="btn btn-outline-primary">{token != null ? 'Go to Dasboard' : 'Create an Account'}</button>
-                        </Link>
-                    </div>
-                </div>
-            </div> */}
             <div className="second-nav">
                 <nav className="navbar navbar-expand-lg">
                     <div className="container">
@@ -57,7 +39,7 @@ function Header() {
                         </button>
                         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div className="navbar-nav ms-auto mt-4">
-                            <Link to={token != null ? "/dashboard" : "/login"}>
+                            <Link to={token != null ? "/dashboard" : "/register"}>
                             <button type="button" className="btn btn-outline-primary">{token != null ? 'Go to Dasboard' : 'Create an Account'}</button>
                             </Link>
                             </div>

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import '../../styles/dashboard.css';
+import '../../styles/authentication/dashboard.css';
 import SideNavbar from "./SideNavbar";
 import DashboardOverview from "./dashboardOverview";
 import { useDispatch } from "react-redux";

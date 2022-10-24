@@ -1,7 +1,7 @@
 import React from "react";
-import '../../styles/button.css';
+import '../../styles/Layouts/button.css';
 import styled from "styled-components";
-import { StyledError, LargeSpinner } from "../../styles/globalStyles";
+import { LargeSpinner } from "../../styles/globalStyles";
 import { useSelector } from "react-redux";
 
 const StyledSpinnerSpan = styled.span`

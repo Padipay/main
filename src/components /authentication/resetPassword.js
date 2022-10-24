@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FormContainerLayoutTwo from "../Layouts/formContainerLayoutTwo";
 import Logo from '../../images/Logo.png';
-import '../../styles/resetPassword.css';
+import '../../styles/authentication/resetPassword.css';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,11 +19,10 @@ const schema  = yup.object({
 
 
 function ResetPassword() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
     const[email, setEmail] = useState('')
-    const[success, setSucccess] = useState(true)
     const navigate = useNavigate();
 
     const onSubmit = async() => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../../styles/transactions.css';
+import '../../styles/transactions/transactions.css';
 import EmptyTransaction from "./emptyTransaction";
 import Skeleton from 'react-loading-skeleton'
 import "react-loading-skeleton/dist/skeleton.css";
@@ -17,7 +17,7 @@ function TransactionList() {
     const {transactions, loading} = useSelector(state => state.auth_details)
 
     const [currentPage, setCurrentPage] = useState(null);
-    const [currentCountries, setCurrentCountries] = useState([]);
+    // const [currentCountries, setCurrentCountries] = useState([]);
     const [totalPages, setTotalPages] = useState(null);
     
     const [postsPerPage, setPostsPerPage] = useState(10);
@@ -73,7 +73,7 @@ function TransactionList() {
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = transactions.slice(indexOfFirstPost, indexOfLastPost)
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber)
+    // const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
     const onPageChanged = (data) => {
         const { currentPage, totalPages, pageLimit } = data;

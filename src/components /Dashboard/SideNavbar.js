@@ -1,5 +1,5 @@
 import React, {  } from "react";
-import '../../styles/dashboard.css';
+import '../../styles/authentication/dashboard.css';
 import DashboardMenu from './dashboardMenu'
 import { MdDashboard } from "react-icons/md";
 import { MdSettings } from "react-icons/md";

@@ -27,7 +27,6 @@ import NotFound from '../src/components /NotFound'
 
 
 import AdminRegister from './admin/components/adminRegisteration';
-import PaymentSuccess from './components /CustomRoutes/PaymentSuccessRoute';
 
 
 import Settings from './components /Dashboard/settings';
@@ -52,7 +51,7 @@ function App() {
   const clearStorage = () => {
     setTimeout(() => {
       sessionStorage.clear()
-    }, 80000);
+    }, 480000);
   }
 
   useEffect(() => {
@@ -63,7 +62,7 @@ function App() {
       }, 7000);
       clearStorage()
       return () => clearInterval(interval)
-  }, [])
+  },[])
 
   return (
    <>

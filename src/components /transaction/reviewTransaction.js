@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import '../../styles/reviewTransaction.css'
+import '../../styles/transactions/reviewTransaction.css'
 import Stepper from "../Layouts/stepper";
 import Header from "../Layouts/header";
 import FormContainerLayout from "../Layouts/formContainerLayout";
@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 function ReviewTransaction() {
-    const {transfer, recepient, token_rates} = useSelector(state => state.transfer_details)
+    const {transfer, recepient} = useSelector(state => state.transfer_details)
     const [page ] = useState(2);
 
     const navigate = useNavigate();

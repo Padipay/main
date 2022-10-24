@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import '../../styles/transactions.css';
+import '../../styles/transactions/transactions.css';
 import TransactionList from "../transaction/TransactionList";
 import SideNavbar from "./SideNavbar";
 import DashboardInfo from "./DashboardInfo";
 import { getUser } from "../../redux/auth/actions/actions";
 
 function Transactions() {
-    const {auth_user, transactions} = useSelector(state => state.auth_details)
+    const {transactions} = useSelector(state => state.auth_details)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getUser())
-    }, [])
+    },[])
 
     return ( 
         <div className="home-page">

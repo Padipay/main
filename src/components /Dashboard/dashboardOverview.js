@@ -1,5 +1,5 @@
 import React, {  } from "react";
-import '../../styles/dashboard.css';
+import '../../styles/authentication/dashboard.css';
 import DashboardContentLayout from "./dashboardContentLayout";
 import { AiOutlineRise } from "react-icons/ai";
 import TransactionList from "../transaction/TransactionList";

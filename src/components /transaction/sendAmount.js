@@ -1,19 +1,12 @@
 import React,{useState} from "react";
-import '../../styles/sendAmount.css'
+import '../../styles/transactions/sendAmount.css'
 import Header from "../Layouts/header";
 import Stepper from "../Layouts/stepper";
 import FormContainerLayout from "../Layouts/formContainerLayout";
-import { StyledFormContainer } from "../../styles/globalStyles";
-import styled from "styled-components";
 import SendForm from "./sendForm";
 import SkeletonCard from "../Layouts/SkeletonCard";
 import { useSelector } from "react-redux";
 import "react-loading-skeleton/dist/skeleton.css";
-
-const SendAmountContainer = styled(StyledFormContainer)`
-    padding-top : 0px;
-    width: 464px;
-`
 
 function SendAmount() {
     const [page] = useState(0)

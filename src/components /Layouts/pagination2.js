@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment } from "react";
-import '../../styles/pagination.css';
+import '../../styles/Layouts/pagination.css';
 
 function Pagination2({totalRecords = null, pageLimit = 10, pageNeighbours = 0, onPageChanged}) {
     const [currentPage, setCurrentPage] = useState(1)

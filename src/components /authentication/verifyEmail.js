@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import FormContainerLayoutTwo from "../Layouts/formContainerLayoutTwo";
 import Logo from '../../images/Logo.png';
 import verify from '../../images/verify.png';
-import '../../styles/verify.css';
+import '../../styles/authentication/verify.css';
 import { Link } from "react-router-dom";
 import firebase from '../../firebase/firebase';
 import Spinner from 'react-spinkit';
@@ -31,7 +31,7 @@ function VerifyEmail({actionCode}) {
         }
 
         checkCode()
-    }, [])
+    },[])
 
     return ( 
         <>

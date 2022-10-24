@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import FormContainerLayoutTwo from "../Layouts/formContainerLayoutTwo";
 import Logo from '../../images/Logo.png';
-import '../../styles/resetPassword.css';
+import '../../styles/authentication/resetPassword.css';
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { paymentStatus } from "../../redux/transfer/actions/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const ResetInfo = styled.p `
     margin-left: 30px;
@@ -20,16 +20,11 @@ function SuccessfulTransaction() {
     // const[userId, setuserId] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const { payment_status } = useSelector(state => state.transfer_details)
+
 
     useEffect(() => {
-        // firebase.auth().onAuthStateChanged((user) =>{
-        //     setuserId(user)
-        // })
-        // console.log(userId)
         dispatch(paymentStatus())
-
-    }, [])
+    },[])
 
     const handleClick = async () => {
         const isAuthenticated = await sessionStorage.getItem('Auth-Token')

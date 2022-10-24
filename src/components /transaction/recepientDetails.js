@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import '../../index.css';
-import '../../styles/recepientDetails.css';
+import '../../styles/transactions/recepientDetails.css';
 import Stepper from "../Layouts/stepper";
 import Header from "../Layouts/header";
 import { useNavigate } from "react-router-dom";
@@ -47,9 +47,9 @@ const schema  = yup.object({
 function RecepientDetails() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {recepient, transfer} = useSelector(state => state.transfer_details)
+    const {recepient} = useSelector(state => state.transfer_details)
 
-    const { control, register, handleSubmit, watch, formState: { errors } } = useForm({
+    const { control, register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             email: recepient.email,
             purpose: recepient.purpose
@@ -57,7 +57,7 @@ function RecepientDetails() {
         resolver: yupResolver(schema),
         mode: "all",
     });
-    const [page, setPage ] = useState(1);
+    const [page ] = useState(1);
     const [accountNumber, setAccountNumber] = useState(recepient.accountNumber)
     const [recepientEmail, setRecepientEmail] = useState(recepient.email)
     const [purpose, setPurpose] = useState(recepient.purpose)
@@ -84,7 +84,7 @@ function RecepientDetails() {
                 setBankName(bankName)
                 setVisible(true)
                 setLoading(false)
-            }).catch((err) => {
+            }).catch(() => {
                 setError("Could not verify account details. Check details and try again.")
                 setLoading(false)
             }); 
@@ -134,7 +134,7 @@ function RecepientDetails() {
                             <Controller 
                             name="phone_number"
                             control={control}
-                            render={({field, field: { onChange, value } }) => (
+                            render={({field: { onChange } }) => (
                                 <PhoneInput
                                 country={'ng'}
                                 inputStyle={{borderRadius: 12, width:'92%', height:67}}

@@ -87,7 +87,6 @@ export const getUser = () => dispatch => {
             .get()
             .then((doc) => {
                 dispatch(authUser(doc.data()))
-                // dispatch(loading())
             })
             firebase.firestore().collection('users')
                 .doc(user.uid)
@@ -102,6 +101,7 @@ export const getUser = () => dispatch => {
                 })
         }
     })
+
 }
 
 export const editProfile = (fname, lname, toast) => dispatch => {
