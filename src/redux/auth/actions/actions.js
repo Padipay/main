@@ -36,6 +36,8 @@ export const signUp = (email, password, fname, lname, navigate) => dispatch => {
         }); 
 }
 
+
+
 export const login = (email, password, navigate) => dispatch => {
     dispatch(loading())
     dispatch(verifyAuth())
@@ -87,18 +89,47 @@ export const getUser = () => dispatch => {
             .get()
             .then((doc) => {
                 dispatch(authUser(doc.data()))
+                // dispatch(loading())
             })
-            firebase.firestore().collection('users')
-                .doc(user.uid)
-                .collection('transactions')
-                .orderBy("date", "desc") 
-                .onSnapshot((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        temp.push({data:doc.data(), id:doc.id})
-                    })
-                    dispatch(transactions(temp))
-                    dispatch(loading())
+            firebase.firestore().collection('users').doc(user.uid)
+                .get().then((doc) => {
+                    if (doc.exists) {
+                        firebase.firestore().collection('users').doc(user.uid).collection('transactions')
+                            .get().then((query) => {
+                                if (query.size > 0) {
+                                    console.log(query.size)
+                                    firebase.firestore().collection('users').doc(user.uid)
+                                    .collection('transactions')
+                                    .orderBy("date", "desc") 
+                                    .onSnapshot((querySnapshot) => {
+                                        querySnapshot.forEach((doc) => {
+                                            temp.push({data:doc.data(), id:doc.id})
+                                            dispatch(transactions(temp))
+                                        })
+                                    })
+                                }
+                                dispatch(loading())
+                            })
+                    }
                 })
+
+            // firebase.firestore().collection('users')
+            //     .doc(user.uid)
+            //     .collection('transactions')
+            //     .orderBy("date", "desc") 
+            //     .onSnapshot((querySnapshot) => {
+            //         if (querySnapshot.empty) {
+            //             dispatch(loading())
+            //             // console.log("true")
+            //         }else {
+            //                 console.log("true")
+            //                 querySnapshot.forEach((doc) => {
+            //                     temp.push({data:doc.data(), id:doc.id})
+            //                     dispatch(transactions(temp))
+            //                     dispatch(loading())
+            //             })
+            //         }
+            //     })
         }
     })
 

@@ -23,7 +23,7 @@ function Settings() {
 
     useEffect(() => {
         setLoading(true)
-        dispatch(getUser())
+        // dispatch(getUser())
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 firebase.firestore().collection('users')
