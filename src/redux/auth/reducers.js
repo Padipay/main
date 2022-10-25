@@ -7,7 +7,6 @@ const initialState = {
     loggedIn: false,
     auth_user: {},
     verify_auth: false,
-    signup_active: false,
     transactions: []
 };
 
@@ -18,7 +17,7 @@ export default function authReducer (state = initialState, action) {
         case types.LOGGED_IN: 
             return{ ...state, loggedIn:!state.loggedIn};
         case types.AUTH_USER:
-            return{...state, auth_user:action.payload, signup_active:!state.signup_active}
+            return{...state, auth_user:action.payload}
         case types.TRANSACTIONS:
             return{...state, transactions:action.payload}
         case types.ERROR_MESSAGE:

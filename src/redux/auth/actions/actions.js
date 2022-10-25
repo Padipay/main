@@ -55,7 +55,7 @@ export const login = (email, password, navigate) => dispatch => {
             .then(firestoreDocument => {
                 if(!firestoreDocument.exists) {
                     dispatch(loading())
-                    navigate('/login')
+                    navigate('/login', {replace: true})
                 }
                 const user = firestoreDocument.data()
                 dispatch(loggedIn())
@@ -97,7 +97,7 @@ export const getUser = () => dispatch => {
                         firebase.firestore().collection('users').doc(user.uid).collection('transactions')
                             .get().then((query) => {
                                 if (query.size > 0) {
-                                    console.log(query.size)
+                                    // console.log(query.size)
                                     firebase.firestore().collection('users').doc(user.uid)
                                     .collection('transactions')
                                     .orderBy("date", "desc") 
@@ -112,24 +112,6 @@ export const getUser = () => dispatch => {
                             })
                     }
                 })
-
-            // firebase.firestore().collection('users')
-            //     .doc(user.uid)
-            //     .collection('transactions')
-            //     .orderBy("date", "desc") 
-            //     .onSnapshot((querySnapshot) => {
-            //         if (querySnapshot.empty) {
-            //             dispatch(loading())
-            //             // console.log("true")
-            //         }else {
-            //                 console.log("true")
-            //                 querySnapshot.forEach((doc) => {
-            //                     temp.push({data:doc.data(), id:doc.id})
-            //                     dispatch(transactions(temp))
-            //                     dispatch(loading())
-            //             })
-            //         }
-            //     })
         }
     })
 

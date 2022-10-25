@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormContainerLayoutTwo from "../Layouts/formContainerLayoutTwo";
 import Logo from '../../images/Logo.png'
 import '../../styles/authentication/createAccount.css';
@@ -12,11 +12,9 @@ import CustomButton from '../Layouts/button';
 
 function CreateAccount() {
     const {auth_user } = useSelector(state => state.auth_details)
-    const [fname, setFname] = useState('' || auth_user.fname)
-    const [lname, setLname] = useState('' || auth_user.lname)
-    const [email, setEmail] = useState('' || auth_user.email)
+    const [user, setUser] = useState(null)
 
-    const { register, handleSubmit, formState: { errors } } = useForm({});
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({});
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
@@ -30,6 +28,14 @@ function CreateAccount() {
         navigate('/password')
     }
 
+    useEffect(() => {
+        setUser(auth_user)
+    }, [user])
+
+    useEffect(() => {
+        reset(user);
+    }, [user])
+
     return (
         <div className="d-flex align-items-center justify-content-center vh-100">
             <FormContainerLayoutTwo image={Logo} type="account">
@@ -40,8 +46,8 @@ function CreateAccount() {
                         type="text" 
                         className="form-control" 
                         id="floatingInputfname" 
-                        {...register("fname", {required: true, onChange:(e) => setFname(e.target.value)})}
-                        value={fname || ''}
+                        {...register("fname", {required: true})}
+                        // value={fname || ''}
                         />
                         <label htmlFor="floatingInput">First Name</label>
                     </div>
@@ -51,8 +57,8 @@ function CreateAccount() {
                         type="text" 
                         className="form-control" 
                         id="floatingInputlname" 
-                        {...register("lname", {required: true, onChange:(e) => setLname(e.target.value)})}
-                        value={lname || ''}
+                        {...register("lname", {required: true})}
+                        // value={lname || ''}
                         />
                         <label htmlFor="floatingInput">Last Name</label>
                     </div>
@@ -63,8 +69,8 @@ function CreateAccount() {
                         className="form-control" 
                         id="floatingInput1" 
                         placeholder="name@example.com" 
-                        {...register("email", {required: true, onChange:(e) => setEmail(e.target.value)})}
-                        value={email || ''}
+                        {...register("email", {required: true})}
+                        // value={email || ''}
                         />
                         <label htmlFor="floatingInput">Email address</label>
                     </div>

@@ -5,9 +5,9 @@ import {useLocation} from 'react-router-dom';
 
 
 function RegisterRoutes({ children:Component, ...otherProps}) {
-    const {signup_active } = useSelector(state => state.auth_details)
+    const {auth_user } = useSelector(state => state.auth_details)
     return ( 
-        signup_active != false ? Component : <Navigate to="/register"/>
+        Object.keys(auth_user).length > 0 ? Component : <Navigate to="/register"/>
      );
 }
 
