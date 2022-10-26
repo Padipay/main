@@ -3,7 +3,7 @@ import FormContainerLayoutTwo from "../Layouts/formContainerLayoutTwo";
 import Logo from '../../images/Logo.png';
 import '../../styles/authentication/resetPassword.css';
 import { useNavigate } from "react-router";
-import { sendVerificationEmail } from "../../api/sendEmail";
+import { sendVerificationEmail } from "../../utils/sendEmail";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useForm } from "react-hook-form";

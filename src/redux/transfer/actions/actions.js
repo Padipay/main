@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import { getRates } from '../../../api/api';
+import { getRates } from '../../../utils/api';
 
 export const transferDetails = (details) => dispatch =>{
     dispatch({

@@ -1,6 +1,6 @@
 import * as types from '../actions/actionTypes';
 import firebase from '../../../firebase/firebase';
-import { sendVerificationEmail } from '../../../api/sendEmail';
+import { sendVerificationEmail } from '../../../utils/sendEmail';
 
 export const signUp = (email, password, fname, lname, navigate) => dispatch => {
     dispatch(loading())

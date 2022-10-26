@@ -9,11 +9,12 @@ import { BiStopwatch } from "react-icons/bi";
 
 import { useNavigate } from "react-router-dom";
 
-import { transactSuccessEmail } from "../../api/transactionSuccessEmail";
+import { transactSuccessEmail } from "../../utils/transactionSuccessEmail";
 import CountdownTimer from '../Layouts/countdownTimer';
 import { useDispatch, useSelector } from "react-redux";
 import { endTimer } from "../../redux/transfer/actions/actions";
-import { payout, savePayment, getCryptoPayment, userTransaction, getCryptoPaymentBEP20 } from "../../api/api";
+import { payout, getCryptoPayment, getCryptoPaymentBEP20 } from "../../utils/api";
+import { savePayment, userTransaction } from "../../utils/savePayment";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toastNotification } from "../../utils/toasts";

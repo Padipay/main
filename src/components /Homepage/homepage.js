@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
-import '../styles/homepage.css';
-import playbutton from '../images/Play.png';
-import wallet from '../images/wallet-icon.png';
-import bankDetails from '../images/bank-details.png';
-import sendCrypto from '../images/send-crypto.png';
-import easier from '../images/easier.png';
-import faster from '../images/faster.png';
-import cheaper from '../images/cheaper.png';
+import '../../styles/homepage.css';
+import playbutton from '../../images/Play.png';
+import wallet from '../../images/wallet-icon.png';
+import bankDetails from '../../images/bank-details.png';
+import sendCrypto from '../../images/send-crypto.png';
+import easier from '../../images/easier.png';
+import faster from '../../images/faster.png';
+import cheaper from '../../images/cheaper.png';
 import Questions from "./questions";
-import Footer from "./Layouts/footer";
-import SendFormTab from "./transaction/SendFormTab";
-import Navbar from "./Layouts/navbar";
-import logo from '../images/Logo3.png';
-import firebase from '../firebase/firebase';
+import Footer from '../Layouts/footer'
+import SendFormTab from "../transaction/SendFormTab";
+import Navbar from "../Layouts/navbar";
+import logo from '../../images/Logo3.png';
+import firebase from '../../firebase/firebase';
 
 function Homepage() {
     return ( 

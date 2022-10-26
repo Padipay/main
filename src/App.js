@@ -5,7 +5,7 @@ import CompleteTransaction from './components /transaction/completeTransaction';
 import SuccessfulTransaction from './components /transaction/SuccessfulTransaction';
 import PaymentDetails from './components /transaction/paymentDetails';
 
-import Homepage from './components /homepage';
+import Homepage from './components /Homepage/homepage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import CreateAccount from './components /authentication/createAccount';
@@ -23,7 +23,7 @@ import RegisterRoutes from './components /CustomRoutes/RegisterRoutes';
 import VerifyRoutes from './components /CustomRoutes/VerifyRoutes';
 
 
-import NotFound from '../src/components /NotFound'
+import NotFound from './components /Layouts/NotFound';
 
 
 import AdminRegister from './admin/components/adminRegisteration';
@@ -33,7 +33,7 @@ import Settings from './components /Dashboard/settings';
 import Dashboard from './components /Dashboard/Dashboard';
 import Transactions from './components /Dashboard/Transactions';
 
-import Action from './components /action';
+import Action from './components /Layouts/action';
 import Admin from './admin/admin';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

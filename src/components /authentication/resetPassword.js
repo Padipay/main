@@ -5,7 +5,7 @@ import '../../styles/authentication/resetPassword.css';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { sendPasswordResetEmail } from "../../api/sendEmail";
+import { sendPasswordResetEmail } from "../../utils/sendEmail";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';

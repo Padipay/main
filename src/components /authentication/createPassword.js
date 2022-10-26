@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import firebase from '../../firebase/firebase';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { sendVerificationEmail } from "../../api/sendEmail";
+import { sendVerificationEmail } from "../../utils/sendEmail";
 import styled from "styled-components";
 import { StyledError, LargeSpinner } from "../../styles/globalStyles";
 import {useLocation} from 'react-router-dom';

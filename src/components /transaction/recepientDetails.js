@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import {bankCodes} from '../../data/data.js';
+import { bankCodes } from "../../utils/bankCodes";
 import FormContainerLayout from "../Layouts/formContainerLayout";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/bootstrap.css';
@@ -15,7 +15,7 @@ import styled from "styled-components";
 import { StyledSpinnerSpan, LargeSpinner } from "../../styles/globalStyles";
 import { recepientDetails } from "../../redux/transfer/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { bankVerify } from "../../api/api";
+import { bankVerify } from "../../utils/api";
 
 
 const StyledFormContainerLayout = styled(FormContainerLayout).attrs(() => ({
