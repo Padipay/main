@@ -417,3 +417,56 @@
                     <img src={nig} alt="ngn" className="select-country-image"/>
                 </div> : null } */}
                 
+
+ //   if (transfer.tokenValue === 'USDT') {
+    //     await getCryptoPaymentBEP20('0x337610d27c682E347C9cD60BD4b3b107C9d34dDd').then((res) => {
+    //         console.log(res.result[0].timeStamp)
+    //             const response = res.result[0].timeStamp
+    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+    //                 const sentToken = res.result[0].value / 1000000000000000000
+    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+    //                 setSuccess(true)
+    //                 paymentNotification(paidAmount, sentToken)
+    //             }
+    //        })
+    //   }else if (transfer.tokenValue === 'ETH') {
+    //     await getCryptoPaymentBEP20('0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378').then((res) => {
+    //         console.log(res.result[0].timeStamp)
+    //             const response = res.result[0].timeStamp
+    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+    //                 const sentToken = res.result[0].value / 1000000000000000000
+    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+    //                 setSuccess(true)
+    //                 paymentNotification(paidAmount, sentToken)
+    //             }
+    //        })
+    //   }else if (transfer.tokenValue === 'BUSD') {
+    //     await getCryptoPaymentBEP20('0xed24fc36d5ee211ea25a80239fb8c4cfd80f12ee').then((res) => {
+    //         console.log(res.result[0].timeStamp)
+    //             const response = res.result[0].timeStamp
+    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+    //                 const sentToken = res.result[0].value / 1000000000000000000
+    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+    //                 setSuccess(true)
+    //                 paymentNotification(paidAmount, sentToken)
+    //             }
+    //        })
+    //   }else if(transfer.tokenValue === 'BNB'){
+    //     await getCryptoPayment().then((res) => {
+    //         //    res.result.filter((item) => {
+    //         //        if (item.timeStamp === '1665718323') {
+    //         //             console.log(item.value / 1000000000000000000)
+    //         //        }
+    //         //     })
+    //         console.log(res.result[0].timeStamp)
+    //             const response = res.result[0].timeStamp
+    //                 // setSuccess(true)
+    //                 // paymentNotification()
+    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+    //                 const sentToken = res.result[0].value / 1000000000000000000
+    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+    //                 setSuccess(true)
+    //                 paymentNotification(paidAmount, sentToken)
+    //             }
+    //        })
+    //   }

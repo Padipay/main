@@ -136,6 +136,7 @@ function Pagination2({totalRecords = null, pageLimit = 10, pageNeighbours = 0, o
 
     return ( 
         <Fragment>
+        {totalRecords >= pageLimit ? 
         <nav aria-label="Countries Pagination">
           <ul className="pagination">
             { pages.map((page, index) => {
@@ -167,7 +168,7 @@ function Pagination2({totalRecords = null, pageLimit = 10, pageNeighbours = 0, o
             }) }
 
           </ul>
-        </nav>
+        </nav> : null }
       </Fragment>
      );
 }
