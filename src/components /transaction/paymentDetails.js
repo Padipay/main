@@ -13,7 +13,7 @@ import { transactSuccessEmail } from "../../api/transactionSuccessEmail";
 import CountdownTimer from '../Layouts/countdownTimer';
 import { useDispatch, useSelector } from "react-redux";
 import { endTimer } from "../../redux/transfer/actions/actions";
-import { payout, savePayment, getCryptoPayment, userTransaction } from "../../api/api";
+import { payout, savePayment, getCryptoPayment, userTransaction, getCryptoPaymentBEP20 } from "../../api/api";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toastNotification } from "../../utils/toasts";
@@ -23,9 +23,6 @@ import { MdOutlineClose } from "react-icons/md";
 function PaymentDetails({open}) {
     const dispatch = useDispatch();
     const { payment_status, transfer, recepient, payment_timestamp } = useSelector(state => state.transfer_details)
-
-//   const {tokenValue, sendAmount, receiveAmount} = JSON.parse(sessionStorage.getItem("transferDetails"));
-//   const {phoneNumber, email} = JSON.parse(sessionStorage.getItem("recepientDetails"));
   const [, setShow] = useState(false); 
   const handleClose = () => {
         window.location.reload()
@@ -41,26 +38,78 @@ function PaymentDetails({open}) {
   const customer_ref = "PP_" + Math.floor(Math.random() * 5000000000)
   const date = new Date().toLocaleString()
 
-    
+  const usdt = (resolve, reject) => resolve(getCryptoPaymentBEP20('0x337610d27c682E347C9cD60BD4b3b107C9d34dDd'))
+  const eth =  (resolve, reject) => resolve(getCryptoPaymentBEP20('0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378'))
+  const busd = (resolve, reject) => resolve(getCryptoPaymentBEP20('0xed24fc36d5ee211ea25a80239fb8c4cfd80f12ee'))
+  const btc = (resolve, reject) => resolve(getCryptoPaymentBEP20('0x6ce8da28e2f864420840cf74474eff5fd80e65b8'))
+  const bnb =  (resolve, reject) => resolve(getCryptoPayment())
 
   const checkPayment = async () => {
-   await getCryptoPayment().then((res) => {
-    //    res.result.filter((item) => {
-    //        if (item.timeStamp === '1665718323') {
-    //             console.log(item.value / 1000000000000000000)
-    //        }
-    //     })
-    console.log(res.result[0].timeStamp)
-        const response = res.result[0].timeStamp
-            // setSuccess(true)
-            // paymentNotification()
+    Promise.all([transfer.tokenValue === 'USDT' ? new Promise(usdt) : transfer.tokenValue === 'ETH' ? new Promise(eth) : 
+    transfer.tokenValue === 'BUSD' ? new Promise(busd) : transfer.tokenValue === 'BNB' ? new Promise(bnb) : transfer.tokenValue === 'BTC' ?
+    new Promise(btc) : ''
+    ]).then((res) => {
+    console.log(res[0].result)
+        const response = res[0].result[0].timeStamp
         if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
-            const sentToken = res.result[0].value / 1000000000000000000
-            const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+            const sentToken = res[0].result[0].value / 1000000000000000000
+            const paidAmount = (res[0].result[0].value / 1000000000000000000) * transfer.rate
             setSuccess(true)
             paymentNotification(paidAmount, sentToken)
         }
    })
+    //   if (transfer.tokenValue === 'USDT') {
+    //     await getCryptoPaymentBEP20('0x337610d27c682E347C9cD60BD4b3b107C9d34dDd').then((res) => {
+    //         console.log(res.result[0].timeStamp)
+    //             const response = res.result[0].timeStamp
+    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+    //                 const sentToken = res.result[0].value / 1000000000000000000
+    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+    //                 setSuccess(true)
+    //                 paymentNotification(paidAmount, sentToken)
+    //             }
+    //        })
+    //   }else if (transfer.tokenValue === 'ETH') {
+    //     await getCryptoPaymentBEP20('0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378').then((res) => {
+    //         console.log(res.result[0].timeStamp)
+    //             const response = res.result[0].timeStamp
+    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+    //                 const sentToken = res.result[0].value / 1000000000000000000
+    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+    //                 setSuccess(true)
+    //                 paymentNotification(paidAmount, sentToken)
+    //             }
+    //        })
+    //   }else if (transfer.tokenValue === 'BUSD') {
+    //     await getCryptoPaymentBEP20('0xed24fc36d5ee211ea25a80239fb8c4cfd80f12ee').then((res) => {
+    //         console.log(res.result[0].timeStamp)
+    //             const response = res.result[0].timeStamp
+    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+    //                 const sentToken = res.result[0].value / 1000000000000000000
+    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+    //                 setSuccess(true)
+    //                 paymentNotification(paidAmount, sentToken)
+    //             }
+    //        })
+    //   }else if(transfer.tokenValue === 'BNB'){
+    //     await getCryptoPayment().then((res) => {
+    //         //    res.result.filter((item) => {
+    //         //        if (item.timeStamp === '1665718323') {
+    //         //             console.log(item.value / 1000000000000000000)
+    //         //        }
+    //         //     })
+    //         console.log(res.result[0].timeStamp)
+    //             const response = res.result[0].timeStamp
+    //                 // setSuccess(true)
+    //                 // paymentNotification()
+    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+    //                 const sentToken = res.result[0].value / 1000000000000000000
+    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+    //                 setSuccess(true)
+    //                 paymentNotification(paidAmount, sentToken)
+    //             }
+    //        })
+    //   }
   }
 
   const paymentNotification = async (paidAmount, sentToken) => {
