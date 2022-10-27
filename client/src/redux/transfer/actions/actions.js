@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import { getRates } from '../../../api/api';
+import { getRates } from '../../../utils/api';
 
 export const transferDetails = (details) => dispatch =>{
     dispatch({
@@ -17,7 +17,14 @@ export const recepientDetails = (recepient) => dispatch => {
 
 export const paymentStatus = () => dispatch => {
     dispatch({
-        type: types.PAYMENT
+        type: types.PAYMENT_STATUS,
+    })
+}
+
+export const paymentTimestamp = (data) => dispatch => {
+    dispatch({
+        type: types.PAYMENT_TIMESTAMP,
+        payload:data
     })
 }
 
@@ -60,5 +67,18 @@ export const endTimer = (timer) => dispatch => {
     dispatch({
         type:types.END_TIMER,
         payload: timer
+    })
+}
+
+export const binancePay = (data) => dispatch => {
+    dispatch({
+        type: types.BINANCE_PAY,
+        payload:data
+    })
+}
+
+export const editTransfer = () => dispatch => {
+    dispatch({
+        type: types.EDIT_TRANSFER
     })
 }

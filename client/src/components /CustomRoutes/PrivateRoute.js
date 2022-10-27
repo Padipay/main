@@ -5,7 +5,7 @@ function PrivateRoute({ children:Component, ...otherProps}) {
     // const [isAuthenticated, setIsAuthenticated ] = useState(null);
     const isAuthenticated = sessionStorage.getItem('Auth-Token')
     return (  
-        isAuthenticated ? Component : <Navigate to="/"/>
+        isAuthenticated ? Component : <Navigate to="/login"/>
     );
 }
 

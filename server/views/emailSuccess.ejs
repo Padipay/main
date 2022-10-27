@@ -10,6 +10,7 @@
 
         body{
             font-family: "Montserrat";
+            color: black;
         }
         .logo{
             width: 20%;
@@ -27,6 +28,10 @@
         .main-row p{
             margin-bottom: 30px;
         }
+        .heading-info{
+            font-weight: 700;
+            font-size: 17px;
+        }
         .last-item{
             border-bottom: 1px solid #EEEEEE;
             margin-top: 30px;
@@ -35,6 +40,11 @@
             display: flex;
             margin-left: 180px;
             margin-top: 40px;
+        }
+        .apps img {
+            width: 150px;
+            height: 45px;
+            margin: 5px;
         }
         .img-row{
             display: flex;
@@ -52,14 +62,15 @@
             border: 1px solid #F4F5F6;
             border-radius: 8px;
             width: 90%;
-            margin: 0 auto;
+            /* margin: 0 auto;
             padding-left: 5px;
-            padding-right: 5px;
+            padding-right: 5px; */
         }
         .item p {
             margin-bottom: 40px;
             margin-left: 30px;
             margin-right: 300px;
+            font-weight: 600;
         }
         .info p {
             text-align: end;
@@ -80,20 +91,21 @@
     <div class="container">
         <div class="row main-row">
             <img src="http://drive.google.com/uc?export=view&id=104yJg2mEaPWtnda3M4DoHdZaXJsYQwQl" alt="logo" class="logo">
-            <p class="mb-5">Hello <%= userEmail %>,</p>
+            <p class="heading-info">Hello, <%=userEmail%> 👋</p>
             <p>Your transaction was successful. Below are details of the transaction.</p>
             <div class="row success-details">
                 <div class="item">
-                    <p>Date</p>
+                    <p>Date/Time</p>
                     <p>Transaction ID</p>
                     <p>Amount Sent</p>
                     <p>Received</p>
                 </div>
                 <div class="info">
-                    <p><%= date %></p>
-                    <p><%= id %></p>
-                    <p><%= send %> <%= token %></p>
-                    <p><%= ₦receive %></p>
+                    <p><%=date%></p>
+                    <p><%=id%></p>
+                    <p><%= send %><%= token %></p>
+                    <!-- <span><%=token%></span> -->
+                    <p>₦<%= receive %></p>
                 </div>
             </div>
             <p class="message">The Padipay team 💙</p>
@@ -101,10 +113,10 @@
         </div>
         <div class="row apps">
             <div class="col-3 me-3">
-                <img src="http://drive.google.com/uc?export=view&id=1eHrPpgCDvqPyCa7Rgr99f1LKMkm9KAog" alt="appstore">
+                <img src="http://drive.google.com/uc?export=view&id=1Yer2IHd9n_10a5FGOiEQYr-qtyT0PzHY" alt="appstore">
             </div>
             <div class="col-3">
-                <img src="http://drive.google.com/uc?export=view&id=1eHrPpgCDvqPyCa7Rgr99f1LKMkm9KAog" alt="playstore">
+                <img src="http://drive.google.com/uc?export=view&id=1K4ifPeEjd1Bl2VeGGEWlPzVccVkjHV7i" alt="playstore">
             </div>
         </div>
         <div class="row img-row">
@@ -120,6 +132,6 @@
         </div>
         <p class="address">365, Milton Avenue, NW4. London, United Kingdom</p>
     </div>
-    <span style="color: #f1f1f1; display: none;"><%= randomNumber %></span>
+    <span style="color: #f1f1f1; display: none;"><%=randomNumber%></span>
 </body>
 </html>

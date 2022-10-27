@@ -1,9 +1,15 @@
 export const TRANSFER_DETAILS = 'TRANSFER_DETAILS';
 export const RECEPIENT_DETAILS = 'RECEPIENT_DETAILS';
-export const PAYMENT = 'PAYMENT';
+export const PAYMENT_TIMESTAMP = 'PAYMENT_TIMESTAMP';
 export const CONVERSION_RATES = 'CONVERSION_RATES';
 export const RATES = 'RATES';
 export const TOGGLE_LOADING = 'TOGGLE_LOADING';
 export const ERROR_FETCHING = 'ERROR_FETCHING';
 export const END_TIMER = 'END_TIMER';
+export const BINANCE_PAY = 'BINANCE_PAY';
+export const PAYMENT_STATUS = 'PAYMENT_STATUS';
+export const EDIT_TRANSFER = 'EDIT_TRANSFER';
+
+
+
 

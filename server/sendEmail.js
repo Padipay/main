@@ -1,4 +1,4 @@
-require('dotenv').config
+require('dotenv').config({path: './.env'})
 const sgMail = require('@sendgrid/mail')
 
 const SENDGRID_KEY = process.env.SENDGRID_API_KEY
@@ -9,7 +9,7 @@ sgMail.setApiKey(SENDGRID_KEY)
 module.exports = function sendVerificationEmail(userEmail, template, actionLink){
     const message = {
       from: {
-        name: 'Verify Email',
+        name: 'Padipay Verify',
         email: VERIFIED_EMAIL
       },
       to: userEmail,

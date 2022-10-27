@@ -1,5 +1,4 @@
-
-require('dotenv').config
+require('dotenv').config({path: './.env'})
 const sgMail = require('@sendgrid/mail')
 
 const SENDGRID_KEY = process.env.SENDGRID_API_KEY
@@ -10,7 +9,7 @@ sgMail.setApiKey(SENDGRID_KEY)
 module.exports = function sendSuccessfulTransactionEmail(userEmail, template, send, receive, token, date, id){
   const message = {
     from: {
-      name: 'Successful Transaction',
+      name: 'Padipay Success',
       email: VERIFIED_EMAIL
     },
     to: userEmail,

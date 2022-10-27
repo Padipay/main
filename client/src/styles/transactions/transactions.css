@@ -1,0 +1,42 @@
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    /* color: #495057; */
+    /* background-color: #fff; */
+    /* border-color: #dee2e6 #dee2e6 #fff; */
+    border-bottom: 5px solid #003399;
+    position: relative;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    /* border-color: #e9ecef #e9ecef #dee2e6; */
+    isolation: isolate;
+}
+.table>:not(:last-child)>:last-child>* {
+    border-bottom-color: white;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    border-color: transparent;
+    border-bottom: 5px solid #003399;
+    position: relative;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    /* border-color: #e9ecef #e9ecef #dee2e6; */
+    isolation: isolate;
+}
+.table-header .success {
+    color: #15A336;
+    width: 0px;
+    /* background: rgba(21, 163, 54, 0.1); */
+    border-radius: 9px;
+    font-style: normal;
+    font-weight: 600;
+
+}
+.table-header td {
+    padding-bottom: 1.5em;
+   
+}
+.table-header tr {
+    font-size: 14px;
+    font-weight: 600;
+}

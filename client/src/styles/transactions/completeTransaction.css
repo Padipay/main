@@ -1,0 +1,32 @@
+.steps-details {
+    margin-left: 20px;
+}
+
+.steps-details p {
+    width: auto;
+    left: 0px;
+    top: calc(50% - 192px/2);
+    
+    font-style: normal;
+    font-weight:700;
+    font-size: 17px;
+    line-height: inherit;
+    /* or 171%
+     */
+    
+    letter-spacing: -0.4px;
+    
+    /* Neutral/3 */
+    
+    color: #000;
+}
+
+@media (max-width: 978px) {
+   .steps-details p{
+        font-size: 13px;
+   }
+}
+
+.details-content {
+    height: auto;
+}

@@ -260,4 +260,213 @@
   //           const rates = {busd: amount[0], usdt: amount[1], trx: amount[1]}
   //           dispatch(conversionRates(rates))
   //         });
-  // };
+  // };\
+
+//   if (!(payment.timestamp < data[0].timestamp) && !(payment.timestamp > data[0].timestamp)) 
+//   console.log(payment.active)
+//   console.log(payment.active)
+    // useEffect(() => {
+    //     const getStatus = setInterval( async () => {
+    //         const transactionid = sessionStorage.getItem("transactionId")
+    //         const temp = []
+    //         if (transactionid) {
+    //             await firebase
+    //                 .firestore().collection('transactions')
+    //                 .doc(transactionid)
+    //                 .onSnapshot((doc) => {
+    //                     temp.push(doc.data())
+    //                     setTransactions(temp)
+    //                     if (transactions && transactions[0].status === true) {
+    //                         const date = new Date(transactions[0].date.toDate()).toDateString()
+    //                         const body = `Your transaction with ID number: ${transactionid} on padipay was successful.`
+    //                         const phone_number = `+${phoneNumber}`
+    //                         sendSms(phone_number, body)
+    //                         transactSuccessEmail(email, sendAmount, receiveAmount, tokenValue, date, transactionid)
+    //                         console.log("status has changed")
+    //                         setSuccess(true)
+    //                         sessionStorage.setItem("success", true)
+    //                         navigate('/success-transact')
+    //                     }
+    //                 })         
+    //             }
+    //     }, 5000);
+    //     return () => clearInterval(getStatus)
+    // }, [transactions]) 
+
+    // "100,000,000,000,000,000"
+    // "100,000,000,000,000,000"
+
+
+    // 1665438254239
+    // 1665439454239
+    // 1665438325
+    
+// "proxy": "http://localhost:5000",
+
+// export const savePayment = (ref, receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber) => {
+//     const transaction = firebase.firestore().collection('transactions').doc()
+//         transaction
+//         .set({
+//             receive: receiveAmount,
+//             send: sendAmount,
+//             token: tokenValue,
+//             bankName: bankName,
+//             account_name: accountName,
+//             account_number: accountNumber,
+//             status: "paid",
+//             payment_ref: ref,
+//             date: firebase.firestore.FieldValue.serverTimestamp()
+//         }).then(() => {
+//             console.log('Payment saved successfully')
+//             return transaction.get();
+//         }).then((doc) => {
+//             if (!doc.exists) {
+//                 console.log("No such document!"); //Error
+//               } else {
+//                   console.log(doc.data())
+//             }
+//         })
+//         .catch((err) => console.log(err.message))
+// }
+
+// eth = '0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378'
+// usdt = '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd'
+// busd = '0xed24fc36d5ee211ea25a80239fb8c4cfd80f12ee'
+
+// res.result[0].timeStamp 
+
+
+{/* <Controller
+                            name="send"
+                            control={control}
+                            render={({ field: { value, onChange, ...field } }) => (
+                                <input 
+                                type="number" 
+                                className="input-amount" 
+                                placeholder="0.001"
+                                onChange={(e) =>{
+                                    onChange(e.target.value)
+                                    handleSend(e)
+                                }}/>
+                              )}
+                              value={sendAmount}
+                            />  */}
+
+                            {/* <Controller 
+                            name="send"
+                            control={control}
+                            render={({field, field: { onChange, value } }) => (
+                                <NumberFormat
+                                thousandSeparator={true}
+                                className="input-amount"
+                                inputMode="numeric"
+                                placeholder="0.001"
+                                // decimalScale={5}
+                                onValueChange={(values) => {
+                                    const {value} = values;
+                                    onChange(value)
+                                    handleSend(value)
+                                }}
+                                // value={value}
+                                {...field}
+                                />
+                            )}
+                        /> */}
+                        {/* <Controller
+                            name="receive"
+                            control={control}
+                            render={({ field: { value, onChange, ...field } }) => (
+                                <input 
+                                type="text" 
+                                className="input-amount" 
+                                placeholder="1,000"
+                                onChange={(e) =>{
+                                    onChange(e.target.value)
+                                    handleReceive(e)
+                                }}/>
+                              )}
+                              value={receiveAmount}
+                            />  */}
+                            {/* <Controller 
+                                name="receive"
+                                control={control}
+                                render={({field, field: { onChange, value } }) => (
+                                    <NumberFormat
+                                    thousandSeparator={true}
+                                    className="input-amount"
+                                    inputMode="numeric"
+                                    placeholder="500"
+                                    decimalScale={1}
+                                    onValueChange={(values) => {
+                                        const { value } = values;
+                                        onChange(value)
+                                        handleReceive(value)
+                                    }}
+                                    // value={receiveAmount}
+                                    {...field}
+                                    />
+                                )}
+                            /> */}
+                            {/* <div className="homepage-seperator"></div> */}
+                {/* {type === 'transfer' ? 
+                <div className="input-border">
+                    <label className="label-send">Destination</label>
+                    <select name="destination" id="" className="select-destination" onChange={handleCountry}>
+                        <option value="NGN">NGN</option>
+                    </select>
+                    <img src={nig} alt="ngn" className="select-country-image"/>
+                </div> : null } */}
+                
+
+ //   if (transfer.tokenValue === 'USDT') {
+    //     await getCryptoPaymentBEP20('0x337610d27c682E347C9cD60BD4b3b107C9d34dDd').then((res) => {
+    //         console.log(res.result[0].timeStamp)
+    //             const response = res.result[0].timeStamp
+    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+    //                 const sentToken = res.result[0].value / 1000000000000000000
+    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+    //                 setSuccess(true)
+    //                 paymentNotification(paidAmount, sentToken)
+    //             }
+    //        })
+    //   }else if (transfer.tokenValue === 'ETH') {
+    //     await getCryptoPaymentBEP20('0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378').then((res) => {
+    //         console.log(res.result[0].timeStamp)
+    //             const response = res.result[0].timeStamp
+    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+    //                 const sentToken = res.result[0].value / 1000000000000000000
+    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+    //                 setSuccess(true)
+    //                 paymentNotification(paidAmount, sentToken)
+    //             }
+    //        })
+    //   }else if (transfer.tokenValue === 'BUSD') {
+    //     await getCryptoPaymentBEP20('0xed24fc36d5ee211ea25a80239fb8c4cfd80f12ee').then((res) => {
+    //         console.log(res.result[0].timeStamp)
+    //             const response = res.result[0].timeStamp
+    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+    //                 const sentToken = res.result[0].value / 1000000000000000000
+    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+    //                 setSuccess(true)
+    //                 paymentNotification(paidAmount, sentToken)
+    //             }
+    //        })
+    //   }else if(transfer.tokenValue === 'BNB'){
+    //     await getCryptoPayment().then((res) => {
+    //         //    res.result.filter((item) => {
+    //         //        if (item.timeStamp === '1665718323') {
+    //         //             console.log(item.value / 1000000000000000000)
+    //         //        }
+    //         //     })
+    //         console.log(res.result[0].timeStamp)
+    //             const response = res.result[0].timeStamp
+    //                 // setSuccess(true)
+    //                 // paymentNotification()
+    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+    //                 const sentToken = res.result[0].value / 1000000000000000000
+    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+    //                 setSuccess(true)
+    //                 paymentNotification(paidAmount, sentToken)
+    //             }
+    //        })
+    //   }

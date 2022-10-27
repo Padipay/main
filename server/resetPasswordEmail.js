@@ -1,5 +1,5 @@
 
-require('dotenv').config
+require('dotenv').config({path: './.env'})
 const sgMail = require('@sendgrid/mail')
 const SENDGRID_KEY = process.env.SENDGRID_API_KEY
 const VERIFIED_EMAIL = process.env.VERIFIED_SENDER
@@ -9,7 +9,7 @@ sgMail.setApiKey(SENDGRID_KEY)
 module.exports = function sendResetPasswordEmail(userEmail, template, actionLink){
     const message = {
       from: {
-        name: 'Reset Password',
+        name: 'Padipay Reset',
         email: VERIFIED_EMAIL
       },
       to: userEmail,

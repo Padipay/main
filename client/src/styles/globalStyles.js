@@ -85,3 +85,9 @@ export const LargeSpinner = styled(Spinner)`
   height: 10px;
 }
 `
+
+export const StyledSpinnerSpan = styled.span`
+    position: absolute;
+    margin-left: inherit;
+    margin-top: 0px;
+`

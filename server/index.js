@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const express = require('express');
 const Cors = require('cors')
 var bodyParser = require('body-parser')
@@ -15,6 +16,7 @@ const sendVerificationEmail = require('./sendEmail');
 const sendSuccessfulTransactionEmail = require('./succesfulTransactionEmail');
 const sendResetPasswordEmail = require('./resetPasswordEmail');
 const fetchRates = require('./fetchRates');
+const dispatch_request = require('./binancepay');
 
 const client = require('twilio')(
   process.env.TWILIO_ACCOUNT_SID,
@@ -41,14 +43,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, "../client/build")))
 
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
+
   // All remaining requests return the React app, so it can handle routing.
-  app.get('*', function(request, response) {
-    response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-  });
+  // app.get('*', function(request, response) {
+  //   response.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+  // });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.get('/express_backend', (req, res) => { 
+  console.log('welcome')
     res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
 }); 
 
@@ -163,15 +169,59 @@ app.post('/api/messages', (req, res) => {
 });
 
 
-app.post('/padipay/rates', async(req, res) => {
+app.get('/padipay/rates', async(req, res) => {
     fetchRates().then((data) => {
         res.status(200).json({
           data, 
           message: "Real time rates",
           success: true 
         })
+        console.log("success")
     }).catch((error) =>{
         const message = error.message
         res.status(500).json({message})
     })
 });
+
+app.post('/notification', async(req, res) => {
+  try {
+    const event = req.body.event
+    const encryptedData =  crypto
+        .createHmac("SHA512", '80ad3f0e2db64a61b0bec492a09bcf35')
+        .update(JSON.stringify(event)) 
+        .digest("hex");
+    const signatureFromWebhook = req.headers['signature'];
+    if (encryptedData === signatureFromWebhook) {
+      console.log("success")
+      console.log(event)
+
+    }
+    res.status(200).json({success: 'true'})
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+// app.post('/create-order', async (req, res) => {
+//   const { http_method, path, payload } = req.body
+
+//     try {
+//       const response = await dispatch_request(http_method, path, payload)
+//       res.status(200).json({ message: "New Order", success: true, data:response.data })
+//     } catch (error) {
+//       const message = error.message
+//         res.status(500).json({message})
+//     }
+// })
+
+// app.post('/query-order', async (req, res) => {
+//   const { http_method, path, payload } = req.body
+
+//     try {
+//       const response = await dispatch_request(http_method, path, payload)
+//       res.status(200).json({ message: "Order", success: true, data:response.data })
+//     } catch (error) {
+//       const message = error.message
+//         res.status(500).json({message})
+//     }
+// })

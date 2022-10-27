@@ -11,7 +11,7 @@ import TransactionFilter from "./transactionFilter";
 function TransactionList(props) {
     return ( 
         <>
-        <List {...props} filters={<TransactionFilter />}>
+        <List {...props} s={<TransactionFilter />}>
             <Datagrid>
                 <TextField source='id'/>
                 <TextField source='receive'/>

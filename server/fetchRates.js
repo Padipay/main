@@ -58,8 +58,9 @@ module.exports = fetchRates = async() => {
      const usdt = await getRate("USDT", "NGN");
      const eth = await getRate("ETH", "NGN");
      const busd = await getRate("BUSD", "NGN");
+     const bnb = await getRate("BNB", "NGN");
 
-     const allRates = [btc, usdt, eth, busd]
+     const allRates = [btc, usdt, eth, busd, bnb]
      return allRates
 }
 
