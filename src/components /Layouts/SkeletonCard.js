@@ -34,7 +34,7 @@ function SkeletonCard() {
                 height={70} 
                 count={4} 
                 borderRadius={12} 
-                style={{marginLeft: 24, marginBottom: 20, width: '88%'}}/>
+                style={{marginLeft: 26, marginBottom: 20, width: '88%'}}/>
               </StyledLi>
             ))}
         </ul>
