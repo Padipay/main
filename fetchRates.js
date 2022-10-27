@@ -47,7 +47,7 @@ const getRate = async (asset, fiat) =>
           return rate - off
      }
 
-     const percentValue = percentRange(0.9, 1.0)
+     const percentValue = percentRange(0.5, 0.9)
 
      const final_rate = percentOff(percentValue, price[maxPrice])
 
