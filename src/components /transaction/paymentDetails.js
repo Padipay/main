@@ -50,7 +50,7 @@ function PaymentDetails({open}) {
     transfer.tokenValue === 'BUSD' ? new Promise(busd) : transfer.tokenValue === 'BNB' ? new Promise(bnb) : transfer.tokenValue === 'BTC' ?
     new Promise(btc) : ''
     ]).then((res) => {
-    console.log(res[0].result)
+    console.log(res[0].result.timeStamp)
         const response = res[0].result[0].timeStamp
         if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
             const sentToken = res[0].result[0].value / 1000000000000000000

@@ -15,16 +15,7 @@ const SendFormContainer = styled(StyledFormContainer)`
 
 function SendFormTab({className}) {
     const {loading} = useSelector(state => state.transfer_details)
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(fetch_api_rates())
-            const interval = setInterval(() => {
-                dispatch(fetch_api_rates())
-            }, 7000);
-        return () => clearInterval(interval)
-    },[])
-
+    
     return ( 
         <div className={className}>
             {loading && <SkeletonCard />}
