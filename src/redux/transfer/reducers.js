@@ -1,7 +1,7 @@
 import * as types from './actions/actionTypes';
 
 const initialState = {
-    error: "",
+    error: null,
     loading: true,
     transfer:{},
     edit_transfer: false,

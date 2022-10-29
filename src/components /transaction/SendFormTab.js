@@ -1,12 +1,12 @@
-import React, {  } from "react";
+import React, { useEffect } from "react";
 import '../../styles/Hometab.css'
 import '../../styles/homepage.css';
 import styled from "styled-components";
 import { StyledFormContainer } from "../../styles/globalStyles";
 import SkeletonCard from "../Layouts/SkeletonCard";
 import SendForm from "./sendForm";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetch_api_rates } from "../../redux/transfer/actions/actions";
 
 const SendFormContainer = styled(StyledFormContainer)`
     padding-top : 20px;
@@ -15,6 +15,16 @@ const SendFormContainer = styled(StyledFormContainer)`
 
 function SendFormTab({className}) {
     const {loading} = useSelector(state => state.transfer_details)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetch_api_rates())
+            const interval = setInterval(() => {
+                dispatch(fetch_api_rates())
+            }, 7000);
+        return () => clearInterval(interval)
+    },[])
+
     return ( 
         <div className={className}>
             {loading && <SkeletonCard />}
@@ -25,8 +35,6 @@ function SendFormTab({className}) {
                         <div className="tabs">
                             <input type="radio" id="radio-1" name="tabs" defaultChecked/>
                             <label className="tab" htmlFor="radio-1">Transfer Money</label>
-                            {/* <input type="radio" id="radio-2" name="tabs" onClick={() => setState('crypto')}/> */}
-                            {/* <label className="tab" htmlFor="radio-2">Sell Crypto</label> */}
                             <span className="glider"></span>
                         </div>
                     </div>

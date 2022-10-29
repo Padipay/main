@@ -56,11 +56,10 @@ export const fetchError = (error) => dispatch => {
 };
 
 export const fetch_api_rates = () => dispatch => {
-    // dispatch(toggleLoading())
     const rates = getRates()
     rates.then((res) => {
         dispatch(api_rates(res))
-    }).catch((err) => dispatch(fetchError(err)))
+    }).catch((err) => dispatch(fetchError(err.message)))
 };
 
 export const endTimer = (timer) => dispatch => {
