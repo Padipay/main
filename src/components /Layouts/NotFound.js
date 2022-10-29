@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from '../../images/Logo.png';
 import notfound from '../../images/10.png';
-import Logo from '../../images/Logo.png';
 import Navbar from "./navbar";
 
 function NotFound() {

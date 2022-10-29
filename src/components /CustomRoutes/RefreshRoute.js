@@ -6,7 +6,7 @@ const RefreshRoute = ({children:Component}) => {
     const {active} = useSelector(state => state.transfer_details)
 
     return ( 
-        active != false ? Component : <Navigate to="/send"/>
+        active !== false ? Component : <Navigate to="/send"/>
      );
 }
 

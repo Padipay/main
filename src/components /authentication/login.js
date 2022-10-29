@@ -5,7 +5,6 @@ import '../../styles/authentication/createAccount.css';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
-import styled from "styled-components";
 import { login, verifyError, authError } from "../../redux/auth/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from '../Layouts/button';

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Countdown from 'react-countdown';
 import { endTimer } from "../../redux/transfer/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import TimeOutModal from "./timeoutModal";
 
 function CountdownTimer() {
-    const navigate = useNavigate();
     const [data, setData] = useState(
         { date: Date.now(), delay: 600000 } //60 seconds
       );

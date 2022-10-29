@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import '../../styles/homepage.css';
 import playbutton from '../../images/Play.png';
 import wallet from '../../images/wallet-icon.png';
@@ -12,7 +12,6 @@ import Footer from '../Layouts/footer'
 import SendFormTab from "../transaction/SendFormTab";
 import Navbar from "../Layouts/navbar";
 import logo from '../../images/Logo3.png';
-import firebase from '../../firebase/firebase';
 
 function Homepage() {
     return ( 
