@@ -470,3 +470,14 @@
     //             }
     //        })
     //   }
+
+    // await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/padipay/rates`, {
+//         method: 'GET',
+//     }).then((res) => {
+//         if (!res.ok) {
+//             throw Error('Could not load the data for the resource ')
+//         }
+//         return res.json()
+//     }).then((data) => {
+//         return data
+//     }).catch((err) => {})

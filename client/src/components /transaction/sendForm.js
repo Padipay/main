@@ -209,6 +209,7 @@ function SendForm({type}) {
             navigate("/details")
         }
     };
+
     return ( 
         <>
         <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">

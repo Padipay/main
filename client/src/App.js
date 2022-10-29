@@ -36,18 +36,15 @@ import Transactions from './components /Dashboard/Transactions';
 import Action from './components /Layouts/action';
 import Admin from './admin/admin';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import TimeOutModal from './components /Layouts/timeoutModal';
 
-import { fetch_api_rates } from './redux/transfer/actions/actions';
 
 
 
 function App() {
   const { payment_status } = useSelector(state => state.transfer_details)
-  const dispatch = useDispatch()
-
   const clearStorage = () => {
     setTimeout(() => {
       sessionStorage.clear()
@@ -55,13 +52,7 @@ function App() {
   }
 
   useEffect(() => {
-      // dispatch(toggleLoading())
-      dispatch(fetch_api_rates())
-      const interval = setInterval(() => {
-          dispatch(fetch_api_rates())
-      }, 7000);
       clearStorage()
-      return () => clearInterval(interval)
   },[])
 
   return (

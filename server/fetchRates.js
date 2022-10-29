@@ -30,6 +30,7 @@ const getRate = async (asset, fiat) =>
           // allRates[item.adv.asset] = parseFloat(item.adv.price)
           return allRates
      });
+
      const getMid = (arr) => {
           const mid = Math.floor(arr.length / 2),
           nums = arr.map(parseFloat).sort((a, b) => a - b);
@@ -37,14 +38,18 @@ const getRate = async (asset, fiat) =>
      }
      const midPrice = getMid(price)
 
+     const maxPrice = price.length -1
+
+     // console.log(price[maxPrice])
+
      const percentOff = (percent, rate) => {
           const off  = percent / 100 * rate 
           return rate - off
      }
 
-     const percentValue = percentRange(1.2, 1.5)
+     const percentValue = percentRange(0.5, 0.9)
 
-     const final_rate = percentOff(percentValue, midPrice)
+     const final_rate = percentOff(percentValue, price[maxPrice])
 
      const data = {}
      data[asset] = final_rate
@@ -64,4 +69,6 @@ module.exports = fetchRates = async() => {
      return allRates
 }
 
-fetchRates()
+fetchRates().then((res) => {
+     console.log(res)
+})
