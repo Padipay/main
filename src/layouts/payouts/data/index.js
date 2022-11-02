@@ -8,9 +8,9 @@ function PayoutsData({ data }) {
   const payouts = data.map((item) => ({
     id: item.id,
     beneficiary: item.beneficiaryName,
-    sent: `₦ ${item.amountSent}`,
-    receive: `₦${item.amountReceived}`,
-    fee: `₦${item.fee}`,
+    sent: `₦ ${item.amountSent.toLocaleString()}`,
+    receive: `₦${item.amountReceived.toLocaleString()}`,
+    fee: `₦${item.fee.toLocaleString()}`,
     ref_id: item.reference,
     date: new Date(item.updatedAt).toGMTString(),
   }));

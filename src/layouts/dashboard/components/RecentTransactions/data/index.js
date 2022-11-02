@@ -11,7 +11,7 @@ function TransactionData({ data }) {
     pay_ref: item.data.payment_ref,
     date: item.data.date.toDate().toLocaleDateString(),
     sent: item.data.send,
-    receive: `₦${Number(item.data.receive).toFixed(2)}`,
+    receive: `₦${Number(item.data.receive).toLocaleString()}`,
     token: item.data.token,
     status: (
       <MDBadge badgeContent={item.data.status} color="success" variant="gradient" size="md" />

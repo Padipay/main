@@ -73,7 +73,7 @@ function PayoutsOverview() {
             <TimelineItem
               color="success"
               icon="notifications"
-              title={`${item.beneficiaryName}, ₦${item.amountSent}`}
+              title={`${item.beneficiaryName}, ₦${item.amountSent.toLocaleString()}`}
               dateTime={String(item.date.toGMTString())}
               key={item.date}
             />
