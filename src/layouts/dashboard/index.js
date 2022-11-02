@@ -34,6 +34,7 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
 // utils function
 import fincraBalance from "utils";
+import getBnbalance from "../../utils/GetBnbalance";
 // Dashboard components
 // import Projects from "layouts/dashboard/components/Projects";
 import PayoutsOverview from "./components/PayoutsOverview";
@@ -49,10 +50,14 @@ import BUSD from "../../assets/images/busd.png";
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const [fincraBlnce, setFincraBalance] = useState("");
+  const [bnbBalance, setBnbBalance] = useState("");
 
   useEffect(() => {
     fincraBalance().then((res) => {
       setFincraBalance(res.data.ledgerBalance);
+    });
+    getBnbalance().then((res) => {
+      setBnbBalance(res.result / 1000000000000000000);
     });
   }, []);
 
@@ -81,7 +86,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="dark"
                 title="BNB Balance"
-                count="2,300"
+                count={bnbBalance}
                 image={BNB}
                 details={{
                   color: "success",
