@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState, useEffect } from "react";
 
 // react-router components
-import { useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -27,6 +27,8 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
+
+import Cookies from "universal-cookie";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -59,7 +61,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
-
+  const cookies = new Cookies();
   useEffect(() => {
     // Setting the navbar type
     if (fixedNavbar) {
@@ -91,6 +93,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
 
+  const logout = () => {
+    // destroy the cookie
+    cookies.remove("TOKEN", { path: "/" });
+    // redirect user to the landing page
+    window.location.href = "/login";
+  };
+
   // Render the notifications menu
   const renderMenu = () => (
     <Menu
@@ -104,9 +113,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
-      <NotificationItem icon={<Icon>email</Icon>} title="Check new messages" />
-      <NotificationItem icon={<Icon>podcasts</Icon>} title="Manage Podcast sessions" />
-      <NotificationItem icon={<Icon>shopping_cart</Icon>} title="Payment successfully completed" />
+      {/* <NotificationItem icon={<Icon>email</Icon>} title="Check new messages" />
+      <NotificationItem icon={<Icon>podcasts</Icon>} title="Manage Podcast sessions" /> */}
+      <NotificationItem icon={<Icon>logout</Icon>} title="Logout" onClick={logout} />
     </Menu>
   );
 
@@ -139,11 +148,11 @@ function DashboardNavbar({ absolute, light, isMini }) {
               <MDInput label="Search here" />
             </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
+              {/* <Link to="/authentication/sign-in/basic">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
                   <Icon sx={iconsStyle}>account_circle</Icon>
                 </IconButton>
-              </Link>
+              </Link> */}
               <IconButton
                 size="small"
                 disableRipple
@@ -174,7 +183,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 variant="contained"
                 onClick={handleOpenMenu}
               >
-                <Icon sx={iconsStyle}>notifications</Icon>
+                <Icon sx={iconsStyle}>account_circle</Icon>
               </IconButton>
               {renderMenu()}
             </MDBox>

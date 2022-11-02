@@ -45,13 +45,17 @@ import createCache from "@emotion/cache";
 
 // Material Dashboard 2 React routes
 import routes from "routes";
+import ProtectedRoutes from "ProtectedRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
+import UserInfo from "layouts/Users/components/UserInfo";
+import SignIn from "layouts/authentication/sign-in";
+
 // Images
-import brandWhite from "assets/images/logo-ct.png";
-import brandDark from "assets/images/logo-ct-dark.png";
+import brandWhite from "assets/images/favicon.ico";
+import brandDark from "assets/images/faviconcopy.ico";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -116,7 +120,13 @@ export default function App() {
       }
 
       if (route.route) {
-        return <Route exact path={route.route} element={route.component} key={route.key} />;
+        return (
+          <Route
+            path={route.route}
+            element={<ProtectedRoutes>{route.component}</ProtectedRoutes>}
+            key={route.key}
+          />
+        );
       }
 
       return null;
@@ -155,7 +165,7 @@ export default function App() {
             <Sidenav
               color={sidenavColor}
               brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="Material Dashboard 2"
+              brandName="Padipay Admin"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
@@ -179,7 +189,7 @@ export default function App() {
           <Sidenav
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="Material Dashboard 2"
+            brandName="Padipay Admin"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
@@ -191,7 +201,23 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        <Route
+          path="*"
+          element={
+            <ProtectedRoutes>
+              <Navigate to="/dashboard" />
+            </ProtectedRoutes>
+          }
+        />
+        <Route path="/login" element={<SignIn />} />
+        <Route
+          path="/userinfo/:id"
+          element={
+            <ProtectedRoutes>
+              <UserInfo />
+            </ProtectedRoutes>
+          }
+        />
       </Routes>
     </ThemeProvider>
   );

@@ -13,6 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import { useEffect, useState } from "react";
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -31,12 +32,29 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
+// utils function
+import fincraBalance from "utils";
 // Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+// import Projects from "layouts/dashboard/components/Projects";
+import PayoutsOverview from "./components/PayoutsOverview";
+import RecentTransactions from "./components/RecentTransactions";
+
+// images
+import BNB from "../../assets/images/bnb.png";
+import ETH from "../../assets/images/eth.png";
+import BTC from "../../assets/images/btc.png";
+import USDT from "../../assets/images/usdt.png";
+import BUSD from "../../assets/images/busd.png";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+  const [fincraBlnce, setFincraBalance] = useState("");
+
+  useEffect(() => {
+    fincraBalance().then((res) => {
+      setFincraBalance(res.data.ledgerBalance);
+    });
+  }, []);
 
   return (
     <DashboardLayout>
@@ -47,13 +65,13 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="dark"
-                icon="weekend"
-                title="Bookings"
-                count={281}
-                percentage={{
+                icon="wallet"
+                title="Fincra Balance"
+                count={`₦${fincraBlnce}`}
+                details={{
                   color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
+                  label: "Business ID:",
+                  amount: "632b9f641fb7fff68e41052d",
                 }}
               />
             </MDBox>
@@ -61,13 +79,14 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Today's Users"
+                color="dark"
+                title="BNB Balance"
                 count="2,300"
-                percentage={{
+                image={BNB}
+                details={{
                   color: "success",
-                  amount: "+3%",
-                  label: "than last month",
+                  label: "Wallet Address",
+                  amount: "0x78565af....9D31aeaA763b848",
                 }}
               />
             </MDBox>
@@ -75,14 +94,14 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="success"
-                icon="store"
-                title="Revenue"
-                count="34k"
-                percentage={{
+                color="dark"
+                title="BTC Balance"
+                count="2,300"
+                image={BTC}
+                details={{
                   color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
+                  label: "Wallet Address",
+                  amount: "0x78565af....9D31aeaA763b848",
                 }}
               />
             </MDBox>
@@ -90,14 +109,44 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="primary"
-                icon="person_add"
-                title="Followers"
-                count="+91"
-                percentage={{
+                color="dark"
+                title="ETH Balance"
+                count="2,300"
+                image={ETH}
+                details={{
                   color: "success",
-                  amount: "",
-                  label: "Just updated",
+                  label: "Wallet Address",
+                  amount: "0x78565af....9D31aeaA763b848",
+                }}
+              />
+            </MDBox>
+          </Grid>
+          <Grid item xs={12} md={6} lg={3}>
+            <MDBox mb={1.5}>
+              <ComplexStatisticsCard
+                color="dark"
+                title="USDT Balance"
+                count="2,300"
+                image={USDT}
+                details={{
+                  color: "success",
+                  label: "Wallet Address",
+                  amount: "0x78565af....9D31aeaA763b848",
+                }}
+              />
+            </MDBox>
+          </Grid>
+          <Grid item xs={12} md={6} lg={3}>
+            <MDBox mb={1.5}>
+              <ComplexStatisticsCard
+                color="dark"
+                title="BUSD Balance"
+                count="2,300"
+                image={BUSD}
+                details={{
+                  color: "success",
+                  label: "Wallet Address",
+                  amount: "0x78565af....9D31aeaA763b848",
                 }}
               />
             </MDBox>
@@ -109,9 +158,9 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
+                  title="Daily Transactions"
+                  description="Transactions per day across each wallet address"
+                  date="updated 2 min ago"
                   chart={reportsBarChartData}
                 />
               </MDBox>
@@ -120,13 +169,13 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="success"
-                  title="daily sales"
+                  title="Monthly transactions"
                   description={
                     <>
-                      (<strong>+15%</strong>) increase in today sales.
+                      (<strong>%</strong>) increase in monthly transactions.
                     </>
                   }
-                  date="updated 4 min ago"
+                  date="updated 1 min ago"
                   chart={sales}
                 />
               </MDBox>
@@ -135,8 +184,8 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="dark"
-                  title="completed tasks"
-                  description="Last Campaign Performance"
+                  title="Monthly Payouts"
+                  description="Successful payouts from fincra"
                   date="just updated"
                   chart={tasks}
                 />
@@ -147,10 +196,10 @@ function Dashboard() {
         <MDBox>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={8}>
-              <Projects />
+              <RecentTransactions />
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
+              <PayoutsOverview />
             </Grid>
           </Grid>
         </MDBox>

@@ -16,24 +16,25 @@ Coded by www.creative-tim.com
 import { useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
-import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
+// import Grid from "@mui/material/Grid";
+// import MuiLink from "@mui/material/Link";
 
 // @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
+// import FacebookIcon from "@mui/icons-material/Facebook";
+// import GitHubIcon from "@mui/icons-material/GitHub";
+// import GoogleIcon from "@mui/icons-material/Google";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
+import Cookies from "universal-cookie";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
@@ -43,8 +44,35 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const cookies = new Cookies();
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const options = {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "content-type": "application/json",
+        "api-key": "C2WwqRrycjgSgT9BIDS1Uhz5kMVlaY0R",
+      },
+      body: JSON.stringify({ email, password }),
+    };
+    await fetch("https://padipay-server.herokuapp.com/admin-login", options)
+      .then((res) => res.json())
+      .then((data) => {
+        cookies.set("TOKEN", data.token, {
+          path: "/",
+        });
+        window.location.href = "/dashboard";
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
 
   return (
     <BasicLayout image={bgImage}>
@@ -61,9 +89,12 @@ function Basic() {
           textAlign="center"
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+            Padipay Admin
+          </MDTypography>
+          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Sign in
           </MDTypography>
-          <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
+          {/* <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
             <Grid item xs={2}>
               <MDTypography component={MuiLink} href="#" variant="body1" color="white">
                 <FacebookIcon color="inherit" />
@@ -79,15 +110,27 @@ function Basic() {
                 <GoogleIcon color="inherit" />
               </MDTypography>
             </Grid>
-          </Grid>
+          </Grid> */}
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput
+                type="email"
+                label="Email"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput
+                type="password"
+                label="Password"
+                fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -102,11 +145,11 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton variant="gradient" color="info" fullWidth onClick={(e) => handleSubmit(e)}>
                 sign in
               </MDButton>
             </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
+            {/* <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
                 Don&apos;t have an account?{" "}
                 <MDTypography
@@ -120,7 +163,7 @@ function Basic() {
                   Sign up
                 </MDTypography>
               </MDTypography>
-            </MDBox>
+            </MDBox> */}
           </MDBox>
         </MDBox>
       </Card>

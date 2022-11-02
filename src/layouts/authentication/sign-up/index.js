@@ -27,14 +27,14 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 
 // Authentication layout components
-import CoverLayout from "layouts/authentication/components/CoverLayout";
+import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
 function Cover() {
   return (
-    <CoverLayout image={bgImage}>
+    <BasicLayout image={bgImage}>
       <Card>
         <MDBox
           variant="gradient"
@@ -48,7 +48,7 @@ function Cover() {
           textAlign="center"
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Join us today
+            Padipay Admin
           </MDTypography>
           <MDTypography display="block" variant="button" color="white" my={1}>
             Enter your email and password to register
@@ -109,7 +109,7 @@ function Cover() {
           </MDBox>
         </MDBox>
       </Card>
-    </CoverLayout>
+    </BasicLayout>
   );
 }
 
