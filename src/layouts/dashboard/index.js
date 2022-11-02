@@ -67,7 +67,7 @@ function Dashboard() {
                 color="dark"
                 icon="wallet"
                 title="Fincra Balance"
-                count={`₦${fincraBlnce.toLocaleString()}`}
+                count={`₦${fincraBlnce.toLocaleString(undefined, { maximumFractionDigits: 2 })}`}
                 details={{
                   color: "success",
                   label: "Business ID:",

@@ -8,9 +8,9 @@ function PayoutsData({ data }) {
   const payouts = data.map((item) => ({
     id: item.id,
     beneficiary: item.beneficiaryName,
-    sent: `₦ ${item.amountSent.toLocaleString()}`,
-    receive: `₦${item.amountReceived.toLocaleString()}`,
-    fee: `₦${item.fee.toLocaleString()}`,
+    sent: `₦ ${item.amountSent.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+    receive: `₦${item.amountReceived.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+    fee: `₦${item.fee.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
     ref_id: item.reference,
     date: new Date(item.updatedAt).toGMTString(),
   }));
