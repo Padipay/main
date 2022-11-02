@@ -11,7 +11,19 @@ import MDTypography from "components/MDTypography";
 function UsersData({ data }) {
   const users = data.map((item) => ({
     fname: (
-      <NavLink
+      // <NavLink
+      //   to={`/userinfo/${item.data.FirstName}`}
+      //   state={{
+      //     id: item.id,
+      //     fname: item.data.FirstName,
+      //     lname: item.data.LastName,
+      //     email: item.data.Email,
+      //   }}
+      // >
+      //   {item.data.FirstName}
+      // </NavLink>
+      <MDTypography
+        component={NavLink}
         to={`/userinfo/${item.data.FirstName}`}
         state={{
           id: item.id,
@@ -19,18 +31,11 @@ function UsersData({ data }) {
           lname: item.data.LastName,
           email: item.data.Email,
         }}
+        fontWeight="bold"
+        fontSize={14}
       >
         {item.data.FirstName}
-      </NavLink>
-      // <MDTypography
-      //   component={NavLink}
-      //   to={`/userinfo/${item.data.FirstName}`}
-      //   state={{ id: item.id }}
-      //   fontWeight="bold"
-      //   fontSize={14}
-      // >
-      //   {item.data.FirstName}
-      // </MDTypography>
+      </MDTypography>
     ),
     lname: (
       <MDTypography variant="p" fontWeight="bold">
