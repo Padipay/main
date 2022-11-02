@@ -69,6 +69,6 @@ module.exports = fetchRates = async() => {
      return allRates
 }
 
-fetchRates().then((res) => {
-     console.log(res)
-})
+// fetchRates().then((res) => {
+//      console.log(res)
+// })
