@@ -24,7 +24,8 @@ function TransactionData({ data }) {
       showTotalEntries={false}
       isSorted={false}
       noEndBorder
-      entriesPerPage={false}
+      entriesPerPage
+      canSearch
       table={{
         columns: [
           {

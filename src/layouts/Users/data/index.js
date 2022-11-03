@@ -56,6 +56,7 @@ function UsersData({ data }) {
   return (
     <DataTable
       isSorted={false}
+      canSearch
       table={{
         columns: [
           { Header: "First name", accessor: "fname", width: "25%" },
