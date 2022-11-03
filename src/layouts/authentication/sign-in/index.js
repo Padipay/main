@@ -39,37 +39,65 @@ import Cookies from "universal-cookie";
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
+import { useForm } from "react-hook-form";
+import login from "utils/login";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({});
   const [rememberMe, setRememberMe] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const cookies = new Cookies();
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const options = {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        "content-type": "application/json",
-        "api-key": "C2WwqRrycjgSgT9BIDS1Uhz5kMVlaY0R",
-      },
-      body: JSON.stringify({ email, password }),
-    };
-    await fetch("https://padipay-server.herokuapp.com/admin-login", options)
-      .then((res) => res.json())
-      .then((data) => {
-        cookies.set("TOKEN", data.token, {
+  const onSubmit = async ({ email, password }) => {
+    setLoading(true);
+    // const options = {
+    //   method: "POST",
+    //   headers: {
+    //     accept: "application/json",
+    //     "content-type": "application/json",
+    //     "api-key": "C2WwqRrycjgSgT9BIDS1Uhz5kMVlaY0R",
+    //   },
+    //   body: JSON.stringify({ email, password }),
+    // };
+    // await fetch("https://padipay-server.herokuapp.com/admin-login", options)
+    //   .then((res) => {
+    //     if (!res.ok) {
+    //       throw new Error("Email or password is wrong. Try again");
+    //     }
+    //     return res.json();
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //     cookies.set("TOKEN", res.token, {
+    //       path: "/",
+    //     });
+    //     window.location.href = "/dashboard";
+    //     setLoading(false);
+    //   })
+    //   .catch((e) => {
+    //     setError(e.message);
+    //     setLoading(false);
+    //   });
+    login(email, password)
+      .then((res) => {
+        cookies.set("TOKEN", res.token, {
           path: "/",
         });
+        setLoading(false);
         window.location.href = "/dashboard";
       })
       .catch((err) => {
+        setError(err.message);
+        setLoading(false);
         console.log(err.message);
       });
   };
@@ -113,25 +141,42 @@ function Basic() {
           </Grid> */}
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
+          <MDBox component="form" role="form" onSubmit={handleSubmit(onSubmit)}>
             <MDBox mb={2}>
               <MDInput
                 type="email"
                 label="Email"
                 fullWidth
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                // value={email}
+                {...register("email", { required: true })}
+                // onChange={(e) => setEmail(e.target.value)}
               />
             </MDBox>
+            {errors.email && (
+              <MDTypography variant="subtitle2" fontWeight="medium" color="error" mb={3}>
+                Email is required
+              </MDTypography>
+            )}
             <MDBox mb={2}>
               <MDInput
                 type="password"
                 label="Password"
                 fullWidth
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                // value={password}
+                {...register("password", { required: true })}
+                // onChange={(e) => setPassword(e.target.value)}
               />
             </MDBox>
+            {error != null ? (
+              <MDTypography variant="subtitle2" fontWeight="medium" color="error">
+                {error}
+              </MDTypography>
+            ) : null}
+            {errors.password && (
+              <MDTypography variant="subtitle2" fontWeight="medium" color="error">
+                Password is required
+              </MDTypography>
+            )}
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
               <MDTypography
@@ -145,7 +190,7 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth onClick={(e) => handleSubmit(e)}>
+              <MDButton variant="gradient" color="info" disabled={loading} fullWidth type="submit">
                 sign in
               </MDButton>
             </MDBox>
