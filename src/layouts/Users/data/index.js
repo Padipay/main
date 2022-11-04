@@ -37,11 +37,7 @@ function UsersData({ data }) {
         {item.data.FirstName}
       </MDTypography>
     ),
-    lname: (
-      <MDTypography variant="p" fontWeight="bold">
-        {item.data.LastName}
-      </MDTypography>
-    ),
+    lname: item.data.LastName,
     email: item.data.Email,
     verify: (
       <MDBadge
