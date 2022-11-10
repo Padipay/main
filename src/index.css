@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;600&display=swap');
+
+body, html{
+  font-family: "Montserrat";
+  background-color: #003399;
+}
+.navbar {
+  border-bottom: none;
+  padding-top: 40px;
+  padding-left: 80px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0px;
+}
+  @media (max-width: 768px) {
+      .navbar {
+      padding-left:0;
+      }
+  }
+  .fancy-toggler.navbar-toggler .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+  
+  .fancy-toggler.navbar-toggler {
+      border-color: white
+  }
+  
+  .fancy-toggler.navbar-toggler:focus {
+      outline-color: white;
+  }
+  
+  .fancy-toggler.navbar-toggler:active {
+      outline-color: white;
+  }
+  
+  .navbar-toggler:focus {
+      box-shadow: none;
+  } 
+  .get-started{
+      background-color: #00CCFF;
+      border-radius: 8px;
+  }
+  .main-text-row{
+      margin-top: 100px;
+      color: #FFF;
+      width: fit-content;
+      margin-left: 60px;
+  }
+  .main-text-row h1{
+      font-weight: 800;
+      font-size: 52px;
+      line-height: 60px;
+  }
+  @media screen and (max-width: 992px) {
+      .main-text-row{
+          margin-left: 0px;
+      }
+  }
+  .waitlist{
+      display: flex;
+      background: #FFFFFF;
+      box-shadow: 0px 44px 64px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      width: 560px;
+      height: 80px;
+  }
+  .waitlist p{
+      color: #000;
+      margin: 5px;
+      padding: 3px;
+  }
+  .waitlist-btn{
+      background-color: #003399;
+      font-weight: bold;
+      width: 160px;
+      height: 56px;  
+      border-radius: 8px; 
+      margin-top: 12px;  
+      margin-left: 10px;      
+  }
+  .wallet-img{
+      position: relative;
+      bottom: 100px;
+      left: 100px;
+  }
+  @media screen and (max-width: 992px) {
+      .wallet-img{
+          position: relative;
+          bottom: 100px;
+          left: 0px;
+      }
+  }
+  .modal-header h5{
+      color: #000;
+      font-weight: bold;
+      text-align: center;
+  }
+  .modal-body{
+      color: #000;
+  }
+  .join-btn{
+      background-color: #003399;
+      color: #FFF;
+      font-weight: bold;
+      width: 400px;
+      height: 56px;
+      border-radius: 8px;
+      margin: 0 auto;
+  }
+  .modal-body h4 {
+      font-weight: 800;
+      font-size: 33px;
+      line-height: 150%;
+  }
+  .added-info{
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
+  }
+  .modal-footer{
+      border-top: none;
+  }
+  .modal-backdrop {
+      height: 100%;
+      width: 100%;
+  }
+  .modal-content{
+      margin: 0 auto;
+  }
+  @media screen and (max-width: 992px) {
+      .modal-dialog{
+          position: relative;
+          left: 110px;
+      }
+  }
