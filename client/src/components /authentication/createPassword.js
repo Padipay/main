@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import FormContainerLayoutTwo from "../Layouts/formContainerLayoutTwo";
 import Logo from '../../images/Logo.png';
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
-import firebase from '../../firebase/firebase';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { sendVerificationEmail } from "../../utils/sendEmail";
-import styled from "styled-components";
-import { StyledError, LargeSpinner } from "../../styles/globalStyles";
+// import styled from "styled-components";
+import { StyledError } from "../../styles/globalStyles";
 import {useLocation} from 'react-router-dom';
 import { signUp, authError } from "../../redux/auth/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from '../Layouts/button';
 
-const StyledSpinnerSpan = styled.span`
-    position: absolute;
-    margin-left: inherit;
-    margin-top: 0px;
-`
+// const StyledSpinnerSpan = styled.span`
+//     position: absolute;
+//     margin-left: inherit;
+//     margin-top: 0px;
+// `
 
 const schema = yup.object({
     password: yup.string()
@@ -34,8 +32,7 @@ const schema = yup.object({
 })
 
 function CreatePassword() {
-    const location = useLocation();
-    const {loading, error, verify_error, auth_user, verify_auth } = useSelector(state => state.auth_details)
+    const {error, auth_user } = useSelector(state => state.auth_details)
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });

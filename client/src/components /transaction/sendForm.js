@@ -247,10 +247,10 @@ function SendForm({type}) {
                             <option value="BNB" >BNB</option>
                         </StyledSelect>
                         {token === 'BTC' && <img src={btc_img} alt="btc" className="select-token-image"/>}
-                        {token === 'BUSD' && <img src={busd_img} alt="btc" className="select-token-image"/>}
-                        {token === 'USDT' && <img src={usdt_img} alt="trc20" className="select-token-image"/>}
-                        {token === 'ETH' && <img src={eth_img} alt="tron" className="select-token-image"/>}
-                        {token === 'BNB' && <img src={bnb} alt="tron" className="select-token-image"/>}
+                        {token === 'BUSD' && <img src={busd_img} alt="busd" className="select-token-image"/>}
+                        {token === 'USDT' && <img src={usdt_img} alt="usdt" className="select-token-image"/>}
+                        {token === 'ETH' && <img src={eth_img} alt="eth" className="select-token-image"/>}
+                        {token === 'BNB' && <img src={bnb} alt="bnb" className="select-token-image"/>}
                     </div>
                     { errors.send && <p className="errors mt-4">{errors.send?.message}</p>}
                     

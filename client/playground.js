@@ -1,4 +1,5 @@
-{/* <div className="send-form">
+{
+  /* <div className="send-form">
                 <div className="input-border">
                     <label className="label-send">You send</label>
                     <input type="text" className="input-amount" /> 
@@ -28,146 +29,145 @@
                 <div className="homepage-send-btn">
                     <button type="button" className="btn btn-primary btn-lg">Continue</button>
                 </div>
-            </div> */}
+            </div> */
+}
 
+// <input
+//     type="text"
+//     placeholder="0.0001"
+//     onInput={(value) => String(value).replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')}
+//     {...register("send")}
+//     className="input-amount"
+//     value={send}
+//     onChange={handleSend}
+// />
 
-                    // <input 
-                    //     type="text" 
-                    //     placeholder="0.0001"
-                    //     onInput={(value) => String(value).replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')}
-                    //     {...register("send")}
-                    //     className="input-amount" 
-                    //     value={send}
-                    //     onChange={handleSend}
-                    // />
+// <input
+//     type="text"
+//     placeholder="500"
+//     pattern="[1-9]\d*"
+//     {...register("receive")}
+//     className="input-amount"
+//     value={receive}
+//     onChange={handleReceive}
+// />
 
-                    // <input 
-                    //     type="text" 
-                    //     placeholder="500"
-                    //     pattern="[1-9]\d*"
-                    //     {...register("receive")}
-                    //     className="input-amount" 
-                    //     value={receive}
-                    //     onChange={handleReceive}
-                    // />
-
-                    //     .get()
-                    //     .then((querySnapshot) => {
-                    //         if (querySnapshot.empty) {
-                    //             setLoading(false)
-                    //         }
-                    //         querySnapshot.forEach((doc) => {
-                    //             const data = {
-                    //                 data: doc.data()
-                    //             }
-                    //             temp.push(data)
-                    //             setTransactions(temp)
-                    //             totalTransaction(temp.length)
-                    //             setLoading(false)
-                    //         })
-                    //     }).catch((err) => {
-                    //         console.log(err.message)
-                    // })
+//     .get()
+//     .then((querySnapshot) => {
+//         if (querySnapshot.empty) {
+//             setLoading(false)
+//         }
+//         querySnapshot.forEach((doc) => {
+//             const data = {
+//                 data: doc.data()
+//             }
+//             temp.push(data)
+//             setTransactions(temp)
+//             totalTransaction(temp.length)
+//             setLoading(false)
+//         })
+//     }).catch((err) => {
+//         console.log(err.message)
+// })
 
 // const convRates = async () => {
-    //     const temp = []
-    //     await firebase.firestore().collection("rates")
-    //         .onSnapshot((querySnapshot) => {
-    //             querySnapshot.forEach((doc) => {
-    //                 if (doc.exists) {
-    //                     temp.push({
-    //                         token: doc.data().Token,
-    //                         rate:  doc.data().currentRate
-    //                     });
-    //                 }
-    //                 setRates(temp)
-    //                 setLoading(false)
-    //             });
-    //         })
-    //     }
+//     const temp = []
+//     await firebase.firestore().collection("rates")
+//         .onSnapshot((querySnapshot) => {
+//             querySnapshot.forEach((doc) => {
+//                 if (doc.exists) {
+//                     temp.push({
+//                         token: doc.data().Token,
+//                         rate:  doc.data().currentRate
+//                     });
+//                 }
+//                 setRates(temp)
+//                 setLoading(false)
+//             });
+//         })
+//     }
 
-    // const getBusdPrice = async () => {
-    //     await fetch(`https://api.coinbase.com/v2/prices/BUSD-NGN/spot`)
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //         const price = data.data.amount
-    //         setBusdPrice(price)
-            
-    //     }).catch((err) => {
-    //         console.log(err.message)
-    //     }) 
-    // }
+// const getBusdPrice = async () => {
+//     await fetch(`https://api.coinbase.com/v2/prices/BUSD-NGN/spot`)
+//     .then((res) => res.json())
+//     .then((data) => {
+//         const price = data.data.amount
+//         setBusdPrice(price)
 
-    // const getUSDTPrice = async () => {
-    //     await fetch(`https://api.coinbase.com/v2/prices/USDT-NGN/spot`)
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //         const price = data.data.amount
-    //         setUsdtPrice(price)
-    //     }).catch((err) => {
-    //         console.log(err.message)
-    //     }) 
-    // }
+//     }).catch((err) => {
+//         console.log(err.message)
+//     })
+// }
 
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         getUSDTPrice()
-    //         getBusdPrice()
-    //     }, 7000);
-    //     convRates()
+// const getUSDTPrice = async () => {
+//     await fetch(`https://api.coinbase.com/v2/prices/USDT-NGN/spot`)
+//     .then((res) => res.json())
+//     .then((data) => {
+//         const price = data.data.amount
+//         setUsdtPrice(price)
+//     }).catch((err) => {
+//         console.log(err.message)
+//     })
+// }
 
-    //     return () => clearInterval(interval)
-    // }, [])
+// useEffect(() => {
+//     const interval = setInterval(() => {
+//         getUSDTPrice()
+//         getBusdPrice()
+//     }, 7000);
+//     convRates()
 
-    // <div className="row main-content">
-    //             <div className="col-lg-3 col-sm-2 d-none d-sm-block d-md-block">
-    //                 <Stepper page_num={page}/>
-    //             </div>
-    //                 <FormContainerLayout title="How much are you sending?">
-    //                     <SendAmountContainer>
-    //                         <div className="home-tab">
-    //                             <div className="tabs-container">
-    //                                 <div className="tabs">
-    //                                     <input type="radio" id="radio-1" name="tabs" defaultChecked onClick={() => setState('transfer')}/>
-    //                                     <label className="tab" htmlFor="radio-1">Transfer Money</label>
-    //                                     {/* <input type="radio" id="radio-2" name="tabs" onClick={() => setState('crypto')}/> */}
-    //                                     {/* <label className="tab" htmlFor="radio-2">Sell Crypto</label> */}
-    //                                     <span className="glider"></span>
-    //                                 </div>
-    //                             </div>
-    //                         </div>
-    //                         {state === 'transfer' ?<TransferMoney /> : <SellCrypto /> }
-    //                     </SendAmountContainer>
-    //                 </FormContainerLayout>
+//     return () => clearInterval(interval)
+// }, [])
 
-    // const getBusdPrice = async () => {
-    //     await fetch(`https://api.coinbase.com/v2/prices/BUSD-NGN/spot`)
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //         const price = data.data.amount
-    //         setBusdPrice(price)
-    //         setLoading(false)
-            
-    //     }).catch((err) => {
-    //         console.log(err.message)
-    //     }) 
-    // }
+// <div className="row main-content">
+//             <div className="col-lg-3 col-sm-2 d-none d-sm-block d-md-block">
+//                 <Stepper page_num={page}/>
+//             </div>
+//                 <FormContainerLayout title="How much are you sending?">
+//                     <SendAmountContainer>
+//                         <div className="home-tab">
+//                             <div className="tabs-container">
+//                                 <div className="tabs">
+//                                     <input type="radio" id="radio-1" name="tabs" defaultChecked onClick={() => setState('transfer')}/>
+//                                     <label className="tab" htmlFor="radio-1">Transfer Money</label>
+//                                     {/* <input type="radio" id="radio-2" name="tabs" onClick={() => setState('crypto')}/> */}
+//                                     {/* <label className="tab" htmlFor="radio-2">Sell Crypto</label> */}
+//                                     <span className="glider"></span>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                         {state === 'transfer' ?<TransferMoney /> : <SellCrypto /> }
+//                     </SendAmountContainer>
+//                 </FormContainerLayout>
 
-    // const getUSDTPrice = async () => {
-    //     await fetch(`https://api.coinbase.com/v2/prices/USDT-NGN/spot`)
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //         const price = data.data.amount
-    //         setUsdtPrice(price)
-    //     }).catch((err) => {
-    //         console.log(err.message)
-    //     }) 
-    // }
+// const getBusdPrice = async () => {
+//     await fetch(`https://api.coinbase.com/v2/prices/BUSD-NGN/spot`)
+//     .then((res) => res.json())
+//     .then((data) => {
+//         const price = data.data.amount
+//         setBusdPrice(price)
+//         setLoading(false)
 
+//     }).catch((err) => {
+//         console.log(err.message)
+//     })
+// }
+
+// const getUSDTPrice = async () => {
+//     await fetch(`https://api.coinbase.com/v2/prices/USDT-NGN/spot`)
+//     .then((res) => res.json())
+//     .then((data) => {
+//         const price = data.data.amount
+//         setUsdtPrice(price)
+//     }).catch((err) => {
+//         console.log(err.message)
+//     })
+// }
 
 //     <div className="input-border d-none">
 //     <label className="label-send">Recipient gets</label>
-//     <Controller 
+//     <Controller
 //         name="receive"
 //         control={control}
 //         render={({field, field: { onChange, value } }) => (
@@ -190,7 +190,7 @@
 //     <StyledSelectTwo
 //     {...register("fiat")}
 //     defaultValue="NGN"
-//     name="token" id="fiat" 
+//     name="token" id="fiat"
 //     onChange={handleCountry}>
 //         <option value="ngn">NGN</option>
 //     </StyledSelectTwo>
@@ -232,7 +232,7 @@
 // //    const minPrice = price[price.length -1].toLocaleString()
 
 //    const percentOff = (percent, rate) => {
-//         const off  = percent / 100 * rate 
+//         const off  = percent / 100 * rate
 //         return rate - off
 //    }
 
@@ -242,65 +242,62 @@
 
 //    console.log(final_rate_three, final_rate_two, final_rate_one)
 
+// const urls = [
+//   `https://api.coinbase.com/v2/prices/BUSD-NGN/spot`,
+//   `https://api.coinbase.com/v2/prices/USDT-NGN/spot`
+// ];
 
+// const fetchRates = () => {
+//     Promise.all(
+//         urls.map(url =>
+//           fetch(url)
+//               .then(res => res.json())
+//               .then(res => res.data.amount)
+//           )
+//       ).then(amount => {
+//           const rates = {busd: amount[0], usdt: amount[1], trx: amount[1]}
+//           dispatch(conversionRates(rates))
+//         });
+// };\
 
-  // const urls = [
-  //   `https://api.coinbase.com/v2/prices/BUSD-NGN/spot`,
-  //   `https://api.coinbase.com/v2/prices/USDT-NGN/spot`
-  // ];
-
-  // const fetchRates = () => {
-  //     Promise.all(
-  //         urls.map(url => 
-  //           fetch(url)
-  //               .then(res => res.json())
-  //               .then(res => res.data.amount)
-  //           )
-  //       ).then(amount => {
-  //           const rates = {busd: amount[0], usdt: amount[1], trx: amount[1]}
-  //           dispatch(conversionRates(rates))
-  //         });
-  // };\
-
-//   if (!(payment.timestamp < data[0].timestamp) && !(payment.timestamp > data[0].timestamp)) 
+//   if (!(payment.timestamp < data[0].timestamp) && !(payment.timestamp > data[0].timestamp))
 //   console.log(payment.active)
 //   console.log(payment.active)
-    // useEffect(() => {
-    //     const getStatus = setInterval( async () => {
-    //         const transactionid = sessionStorage.getItem("transactionId")
-    //         const temp = []
-    //         if (transactionid) {
-    //             await firebase
-    //                 .firestore().collection('transactions')
-    //                 .doc(transactionid)
-    //                 .onSnapshot((doc) => {
-    //                     temp.push(doc.data())
-    //                     setTransactions(temp)
-    //                     if (transactions && transactions[0].status === true) {
-    //                         const date = new Date(transactions[0].date.toDate()).toDateString()
-    //                         const body = `Your transaction with ID number: ${transactionid} on padipay was successful.`
-    //                         const phone_number = `+${phoneNumber}`
-    //                         sendSms(phone_number, body)
-    //                         transactSuccessEmail(email, sendAmount, receiveAmount, tokenValue, date, transactionid)
-    //                         console.log("status has changed")
-    //                         setSuccess(true)
-    //                         sessionStorage.setItem("success", true)
-    //                         navigate('/success-transact')
-    //                     }
-    //                 })         
-    //             }
-    //     }, 5000);
-    //     return () => clearInterval(getStatus)
-    // }, [transactions]) 
+// useEffect(() => {
+//     const getStatus = setInterval( async () => {
+//         const transactionid = sessionStorage.getItem("transactionId")
+//         const temp = []
+//         if (transactionid) {
+//             await firebase
+//                 .firestore().collection('transactions')
+//                 .doc(transactionid)
+//                 .onSnapshot((doc) => {
+//                     temp.push(doc.data())
+//                     setTransactions(temp)
+//                     if (transactions && transactions[0].status === true) {
+//                         const date = new Date(transactions[0].date.toDate()).toDateString()
+//                         const body = `Your transaction with ID number: ${transactionid} on padipay was successful.`
+//                         const phone_number = `+${phoneNumber}`
+//                         sendSms(phone_number, body)
+//                         transactSuccessEmail(email, sendAmount, receiveAmount, tokenValue, date, transactionid)
+//                         console.log("status has changed")
+//                         setSuccess(true)
+//                         sessionStorage.setItem("success", true)
+//                         navigate('/success-transact')
+//                     }
+//                 })
+//             }
+//     }, 5000);
+//     return () => clearInterval(getStatus)
+// }, [transactions])
 
-    // "100,000,000,000,000,000"
-    // "100,000,000,000,000,000"
+// "100,000,000,000,000,000"
+// "100,000,000,000,000,000"
 
+// 1665438254239
+// 1665439454239
+// 1665438325
 
-    // 1665438254239
-    // 1665439454239
-    // 1665438325
-    
 // "proxy": "http://localhost:5000",
 
 // export const savePayment = (ref, receiveAmount, sendAmount, tokenValue, bankName, accountName, accountNumber) => {
@@ -333,10 +330,10 @@
 // usdt = '0x337610d27c682E347C9cD60BD4b3b107C9d34dDd'
 // busd = '0xed24fc36d5ee211ea25a80239fb8c4cfd80f12ee'
 
-// res.result[0].timeStamp 
+// res.result[0].timeStamp
 
-
-{/* <Controller
+{
+  /* <Controller
                             name="send"
                             control={control}
                             render={({ field: { value, onChange, ...field } }) => (
@@ -350,9 +347,11 @@
                                 }}/>
                               )}
                               value={sendAmount}
-                            />  */}
+                            />  */
+}
 
-                            {/* <Controller 
+{
+  /* <Controller 
                             name="send"
                             control={control}
                             render={({field, field: { onChange, value } }) => (
@@ -371,8 +370,10 @@
                                 {...field}
                                 />
                             )}
-                        /> */}
-                        {/* <Controller
+                        /> */
+}
+{
+  /* <Controller
                             name="receive"
                             control={control}
                             render={({ field: { value, onChange, ...field } }) => (
@@ -386,8 +387,10 @@
                                 }}/>
                               )}
                               value={receiveAmount}
-                            />  */}
-                            {/* <Controller 
+                            />  */
+}
+{
+  /* <Controller 
                                 name="receive"
                                 control={control}
                                 render={({field, field: { onChange, value } }) => (
@@ -406,72 +409,76 @@
                                     {...field}
                                     />
                                 )}
-                            /> */}
-                            {/* <div className="homepage-seperator"></div> */}
-                {/* {type === 'transfer' ? 
+                            /> */
+}
+{
+  /* <div className="homepage-seperator"></div> */
+}
+{
+  /* {type === 'transfer' ? 
                 <div className="input-border">
                     <label className="label-send">Destination</label>
                     <select name="destination" id="" className="select-destination" onChange={handleCountry}>
                         <option value="NGN">NGN</option>
                     </select>
                     <img src={nig} alt="ngn" className="select-country-image"/>
-                </div> : null } */}
-                
+                </div> : null } */
+}
 
- //   if (transfer.tokenValue === 'USDT') {
-    //     await getCryptoPaymentBEP20('0x337610d27c682E347C9cD60BD4b3b107C9d34dDd').then((res) => {
-    //         console.log(res.result[0].timeStamp)
-    //             const response = res.result[0].timeStamp
-    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
-    //                 const sentToken = res.result[0].value / 1000000000000000000
-    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
-    //                 setSuccess(true)
-    //                 paymentNotification(paidAmount, sentToken)
-    //             }
-    //        })
-    //   }else if (transfer.tokenValue === 'ETH') {
-    //     await getCryptoPaymentBEP20('0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378').then((res) => {
-    //         console.log(res.result[0].timeStamp)
-    //             const response = res.result[0].timeStamp
-    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
-    //                 const sentToken = res.result[0].value / 1000000000000000000
-    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
-    //                 setSuccess(true)
-    //                 paymentNotification(paidAmount, sentToken)
-    //             }
-    //        })
-    //   }else if (transfer.tokenValue === 'BUSD') {
-    //     await getCryptoPaymentBEP20('0xed24fc36d5ee211ea25a80239fb8c4cfd80f12ee').then((res) => {
-    //         console.log(res.result[0].timeStamp)
-    //             const response = res.result[0].timeStamp
-    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
-    //                 const sentToken = res.result[0].value / 1000000000000000000
-    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
-    //                 setSuccess(true)
-    //                 paymentNotification(paidAmount, sentToken)
-    //             }
-    //        })
-    //   }else if(transfer.tokenValue === 'BNB'){
-    //     await getCryptoPayment().then((res) => {
-    //         //    res.result.filter((item) => {
-    //         //        if (item.timeStamp === '1665718323') {
-    //         //             console.log(item.value / 1000000000000000000)
-    //         //        }
-    //         //     })
-    //         console.log(res.result[0].timeStamp)
-    //             const response = res.result[0].timeStamp
-    //                 // setSuccess(true)
-    //                 // paymentNotification()
-    //             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
-    //                 const sentToken = res.result[0].value / 1000000000000000000
-    //                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
-    //                 setSuccess(true)
-    //                 paymentNotification(paidAmount, sentToken)
-    //             }
-    //        })
-    //   }
+//   if (transfer.tokenValue === 'USDT') {
+//     await getCryptoPaymentBEP20('0x337610d27c682E347C9cD60BD4b3b107C9d34dDd').then((res) => {
+//         console.log(res.result[0].timeStamp)
+//             const response = res.result[0].timeStamp
+//             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+//                 const sentToken = res.result[0].value / 1000000000000000000
+//                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+//                 setSuccess(true)
+//                 paymentNotification(paidAmount, sentToken)
+//             }
+//        })
+//   }else if (transfer.tokenValue === 'ETH') {
+//     await getCryptoPaymentBEP20('0xd66c6B4F0be8CE5b39D52E0Fd1344c389929B378').then((res) => {
+//         console.log(res.result[0].timeStamp)
+//             const response = res.result[0].timeStamp
+//             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+//                 const sentToken = res.result[0].value / 1000000000000000000
+//                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+//                 setSuccess(true)
+//                 paymentNotification(paidAmount, sentToken)
+//             }
+//        })
+//   }else if (transfer.tokenValue === 'BUSD') {
+//     await getCryptoPaymentBEP20('0xed24fc36d5ee211ea25a80239fb8c4cfd80f12ee').then((res) => {
+//         console.log(res.result[0].timeStamp)
+//             const response = res.result[0].timeStamp
+//             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+//                 const sentToken = res.result[0].value / 1000000000000000000
+//                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+//                 setSuccess(true)
+//                 paymentNotification(paidAmount, sentToken)
+//             }
+//        })
+//   }else if(transfer.tokenValue === 'BNB'){
+//     await getCryptoPayment().then((res) => {
+//         //    res.result.filter((item) => {
+//         //        if (item.timeStamp === '1665718323') {
+//         //             console.log(item.value / 1000000000000000000)
+//         //        }
+//         //     })
+//         console.log(res.result[0].timeStamp)
+//             const response = res.result[0].timeStamp
+//                 // setSuccess(true)
+//                 // paymentNotification()
+//             if (!(response < payment_timestamp.timestamp) && !(response > payment_timestamp.expriryTimestamp)) {
+//                 const sentToken = res.result[0].value / 1000000000000000000
+//                 const paidAmount = (res.result[0].value / 1000000000000000000) * transfer.rate
+//                 setSuccess(true)
+//                 paymentNotification(paidAmount, sentToken)
+//             }
+//        })
+//   }
 
-    // await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/padipay/rates`, {
+// await fetch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/padipay/rates`, {
 //         method: 'GET',
 //     }).then((res) => {
 //         if (!res.ok) {
@@ -481,3 +488,24 @@
 //     }).then((data) => {
 //         return data
 //     }).catch((err) => {})
+
+// const options = {
+//     method: 'GET',
+//     headers: {
+//       accept: 'application/json',
+//       'content-type': 'application/json',
+//       'api-key': 'C2WwqRrycjgSgT9BIDS1Uhz5kMVlaY0R'
+//     },
+//     body: JSON.stringify({
+//       business: '632b9f641fb7fff68e41052d',
+//       page: '1',
+//       perPage: '10',
+//       dateFrom: '2022-10-01',
+//       dateTo: '2022-10-31'
+//     })
+//   };
+
+//   fetch('https://sandboxapi.fincra.com/disbursements/payouts', options)
+//     .then(response => response.json())
+//     .then(response => console.log(response))
+//     .catch(err => console.error(err));

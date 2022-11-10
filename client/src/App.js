@@ -33,18 +33,22 @@ import Settings from './components /Dashboard/settings';
 import Dashboard from './components /Dashboard/Dashboard';
 import Transactions from './components /Dashboard/Transactions';
 
+import Virtualcard from './components /Dashboard/virtualCard';
+import Wallet from './components /Dashboard/wallet';
+
 import Action from './components /Layouts/action';
 import Admin from './admin/admin';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import TimeOutModal from './components /Layouts/timeoutModal';
-
+import { fetch_api_rates } from './redux/transfer/actions/actions';
 
 
 
 function App() {
   const { payment_status } = useSelector(state => state.transfer_details)
+  const dispatch = useDispatch()
   const clearStorage = () => {
     setTimeout(() => {
       sessionStorage.clear()
@@ -54,6 +58,14 @@ function App() {
   useEffect(() => {
       clearStorage()
   },[])
+
+  useEffect(() => {
+    dispatch(fetch_api_rates())
+        const interval = setInterval(() => {
+            dispatch(fetch_api_rates())
+        }, 7000);
+    return () => clearInterval(interval)
+},[])
 
   return (
    <>
@@ -78,6 +90,8 @@ function App() {
           <Route path="/dashboard" element={<PrivateRoute> <Dashboard/> </PrivateRoute>} />
           <Route path="/settings" element={<PrivateRoute> <Settings/> </PrivateRoute>} />
           <Route path="/transactions" element={<PrivateRoute> <Transactions/> </PrivateRoute>} />
+          <Route path="/card" element={<PrivateRoute> <Virtualcard/> </PrivateRoute>} />
+          <Route path="/wallet" element={<PrivateRoute> <Wallet/> </PrivateRoute>} />
 
           <Route path="/admin-register" element={<AdminRegister />} />
           <Route path="/admin/*" element={<Admin />} />

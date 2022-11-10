@@ -5,6 +5,8 @@ import { MdDashboard } from "react-icons/md";
 import { MdSettings } from "react-icons/md";
 import { MdArticle } from "react-icons/md";
 import { BiLogInCircle } from "react-icons/bi";
+import { GiWallet } from "react-icons/gi";
+import { BsCreditCard } from "react-icons/bs";
 import { NavLink, useNavigate, Link } from "react-router-dom";
 import { signOut } from "../../redux/auth/actions/actions";
 import { useDispatch } from "react-redux";
@@ -16,7 +18,9 @@ function SideNavbar() {
     const values = [
         {id: 0, name: "Dashboard", to:"/dashboard", icon: <MdDashboard  size={25} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>}, 
         {id: 1, name:"Transactions", to: "/transactions", icon:<MdArticle size={25} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>}, 
-        {id: 2, name: "Settings", to: "/settings", icon:<MdSettings size={25} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>}, 
+        {id: 2, name:"Wallet", to: "/wallet", icon:<GiWallet size={25} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>}, 
+        {id: 3, name:"Virtual Card", to: "/card", icon:<BsCreditCard size={25} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>}, 
+        {id: 4, name: "Settings", to: "/settings", icon:<MdSettings size={25} style={{fill: '#7D8392'}} className="mb-1 me-2 "/>}, 
     ]
 
 
